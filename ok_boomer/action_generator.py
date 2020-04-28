@@ -46,7 +46,7 @@ def get_possible_actions_from_stack(stack_from, board, player_colour):
 
             # if a stack already exists on the board, add the stack
             if (x, y) in grid_board:
-                if is_opponent(grid_board[(x, y)], player_colour):
+                if not is_opponent(grid_board[(x, y)], player_colour):
                     for i in range(1, stack_from[0]+1):
                         possible_actions.append(Action("MOVE", i, (x_pos, y_pos), (x, y)))
                 
