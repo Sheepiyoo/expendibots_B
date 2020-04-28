@@ -13,10 +13,10 @@ def search(player):
         score = evaluate(player, actions[i])
         actions[i] = (actions[i], score)
     
-    actions.sort(reverse=False, key=lambda pair: pair[1])
+    actions.sort(reverse=True, key=lambda pair: pair[1])
     
     # Trim the list
-    trimmed_actions = [actions[i-1]]
+    trimmed_actions = [actions[0]]
 
     for i in range(1, len(actions)):
         if actions[i-1][1] == actions[i][1]:
@@ -38,7 +38,7 @@ def evaluate(player, action):
     else:
         eval = (before[0] - after[0]) - (before[1] - after[1])
 
-    return heuristic(next_board, player.colour)
+    return eval/max(1, heuristic(next_board, player.colour))
 
 
 def apply_action(player, action):
