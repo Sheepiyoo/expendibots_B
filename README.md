@@ -19,3 +19,5 @@ Research link: https://docs.google.com/document/d/1bTRwBMd7buBIY3Xg-04X7ZsGW1kFU
    
 - [ ] Implement update(self, colour, action)
   * [ ] Update our board
+  
+## Implement alpha-beta pruning
