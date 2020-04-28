@@ -3,7 +3,6 @@
 from ok_boomer.constants import *
 from ok_boomer.util import *
 
-
 def get_token_format(grid_dict):
     token_format = {"white":[], "black": []}
     for coordinate in grid_dict.keys():
@@ -32,8 +31,8 @@ def get_grid_format(board_dict):
 def move(n, from_pos, to_pos, board_dict, colour):
     grid_list = get_grid_format(board_dict)
 
-    stack_from = grid_list[(from_pos[0], from_pos[1])], from_pos[0], from_pos[1]
-    stack_to = n, to_pos[0], from_pos[1]
+    stack_from = [int(grid_list[(from_pos[0], from_pos[1])][1:]), from_pos[0], from_pos[1]]
+    stack_to = [n, to_pos[0], from_pos[1]]
 
     grid_list[from_pos] = colour[0] + str(stack_from[N_TOKENS] - stack_to[N_TOKENS])
 
@@ -56,8 +55,8 @@ def move(n, from_pos, to_pos, board_dict, colour):
     return get_token_format(grid_list)
 
 # Preprocessing for boom
-def boom(stack, board_dict):
-    _, x, y = stack   
+def boom(coordinate, board_dict):
+    x, y = coordinate
     grid_format = get_grid_format(board_dict)
     boom_recursive(x, y, grid_format)
     return get_token_format(grid_format)

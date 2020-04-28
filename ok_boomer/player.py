@@ -1,9 +1,8 @@
 from ok_boomer.constants import *
 from ok_boomer.game import *
+import ok_boomer.big_brains as bb
 
 class ExamplePlayer:
-
-    BOARD_SIZE = 8
     _BLACK_START_SQUARES = [(0,7), (1,7),   (3,7), (4,7),   (6,7), (7,7),
                         (0,6), (1,6),   (3,6), (4,6),   (6,6), (7,6)]
     _WHITE_START_SQUARES = [(0,1), (1,1),   (3,1), (4,1),   (6,1), (7,1),
@@ -39,18 +38,11 @@ class ExamplePlayer:
         represented based on the spec's instructions for representing actions.
         """
         # TODO: Decide what action to take, and return it
-        return ("BOOM", (0, 0))
+        an_action = bb.search(self)
+        return an_action
 
 
     def update(self, colour, action):
-        curr_board = self.board
-        if(action[0] == "BOOM"):
-            next_board = boom(action[X_POS], action[Y_POS], curr_board)
-            self.board = next_board
-        if(action[0] == "MOVE"):
-            next_board = move(action[1], action[2], action[3], curr_board, self.colour)
-            self.board = next_board
-
         """
         This method is called at the end of every turn (including your player’s 
         turns) to inform your player about the most recent action. You should 
@@ -69,4 +61,12 @@ class ExamplePlayer:
         against the game rules).
         """
         # TODO: Update state representation in response to action.
+        curr_board = self.board
+        if(action[0] == "BOOM"):
+            next_board = boom(action[1], curr_board)
+            self.board = next_board
+        if(action[0] == "MOVE"):
+            next_board = move(action[1], action[2], action[3], curr_board, colour)
+            self.board = next_board
+        
 
