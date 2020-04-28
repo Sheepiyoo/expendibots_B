@@ -1,3 +1,5 @@
+from ok_boomer.constants import *
+from ok_boomer.game import *
 
 class ExamplePlayer:
 
@@ -41,6 +43,14 @@ class ExamplePlayer:
 
 
     def update(self, colour, action):
+        curr_board = self.board
+        if(action[0] == "BOOM"):
+            next_board = boom(action[X_POS], action[Y_POS], curr_board)
+            self.board = next_board
+        if(action[0] == "MOVE"):
+            next_board = move(action[1], action[2], action[3], curr_board, self.colour)
+            self.board = next_board
+
         """
         This method is called at the end of every turn (including your player’s 
         turns) to inform your player about the most recent action. You should 
@@ -59,3 +69,4 @@ class ExamplePlayer:
         against the game rules).
         """
         # TODO: Update state representation in response to action.
+
