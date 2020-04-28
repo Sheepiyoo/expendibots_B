@@ -133,19 +133,24 @@ def minimax(node, depth, player_colour, alpha, beta, board):
         return evaluate(player_colour, board)
     
     if(player_colour):
+        actions = actgen.get_possible_actions(board, True)
         best = MIN
-        for child in node.children:
-            score = minimax(node, depth+1, False, alpha, beta)
-            best = max(best, score)
+        for action in actions:
+            next_board = apply_action(player_colour, action)
+            score = minimax(node, depth+1, False, alpha, beta, next_board)
+            if score > best:
+                best = score
             alpha = max(alpha, best)
             if beta <= alpha:
                 break
         return best
 
     else:
+        actions = actgen.get_possible_actions(board, False)
         best = MAX
-        for child in node.children:
-            score = minimax(node, depth+1, True, alpha, beta)
+        for action in actions:
+            next_board = apply_action(player_colour, action)
+            score = minimax(node, depth+1, True, alpha, beta, next_board)
             best = min(best, score)
             beta = min(beta, best)
             if alpha <= beta:
