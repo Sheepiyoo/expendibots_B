@@ -4,6 +4,32 @@ import random
 from ok_boomer.util import *
 from ok_boomer.constants import *
 
+
+class Node:
+    def __init__(self, board_dict, path_cost, action, parent):
+        self.board_dict = board_dict
+        self.path_cost = path_cost
+        self.action = action
+        self.parent = parent
+        self.children = []
+        self.heuristic = heuristic(self)
+        self.f = self.heuristic + self.path_cost
+
+    def __str__(self):
+        return """
+# State: {}
+# Path Cost: {}
+# Heuristic: {}
+# Action: {}
+# Parent: {}
+# Children: {}
+""".format(str(self.board_dict), str(self.path_cost), str(self.heuristic), str(self.action), hex(id(self.parent)), [hex(id(child)) for child in self.children])
+    
+    def __lt__(self, other):
+        return self.f < other.f
+
+
+
 def search(player):
     """ Returns an action for the given player. """
 
@@ -99,3 +125,31 @@ def opponent(colour):
         return "white"
     
     raise Exception("Invalid colour")
+
+MIN = -1000
+MAX = 1000
+def minimax(node, depth, player_colour, values, alpha, beta):
+    if depth == 3:
+        return node.heuristic
+    if(player_colour):
+        best = MIN
+        for child in node.children:
+            node.heuristic = minimax(node, depth+1, False, values, alpha, beta)
+            best = max(best, node.val)
+            alpha = max(alpha, best)
+            if beta <= alpha:
+                break
+        return best
+
+    else:
+        best = MAX
+        for child in node.children:
+            node.heuristic = minimax(node, depth+1, True, values, alpha, beta)
+            best = min(best, node.val)
+            beta = min(beta, best)
+            if alpha <= beta:
+                break
+        return best
+
+
+
