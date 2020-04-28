@@ -6,6 +6,14 @@ AIMA link: https://github.com/aimacode/aima-python
 
 Report link: https://docs.google.com/document/d/1FjtBbI_JmQxoeeEBA77XrQryH1CaY_etR5grYL4vsPk/edit?usp=sharing
 
+## Start with basic tests - random move
 - [ ] Implement __init__(self, colour)
+  * [ ] Set up internal representation
+    
 - [ ] Implement action(self)
+  * [ ] Generate actions
+  * [ ] Filter for valid actions
+  * [ ] Select actions
+   
 - [ ] Implement update(self, colour, action)
+  * [ ] Update our board
