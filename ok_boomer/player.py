@@ -1,5 +1,17 @@
 
 class ExamplePlayer:
+
+    BOARD_SIZE = 8
+    _BLACK_START_SQUARES = [(0,7), (1,7),   (3,7), (4,7),   (6,7), (7,7),
+                        (0,6), (1,6),   (3,6), (4,6),   (6,6), (7,6)]
+    _WHITE_START_SQUARES = [(0,1), (1,1),   (3,1), (4,1),   (6,1), (7,1),
+                        (0,0), (1,0),   (3,0), (4,0),   (6,0), (7,0)]
+
+    INITIAL_BOARD = {
+        "white": [[1, x, y] for x,y in _WHITE_START_SQUARES],
+        "black": [[1, x, y] for x,y in _BLACK_START_SQUARES]
+    }
+
     def __init__(self, colour):
         """
         This method is called once at the beginning of the game to initialise
@@ -12,7 +24,8 @@ class ExamplePlayer:
         strings "white" or "black" correspondingly.
         """
         # TODO: Set up state representation.
-
+        self.board = self.INITIAL_BOARD
+        self.colour = colour
 
     def action(self):
         """
