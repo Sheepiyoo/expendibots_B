@@ -128,14 +128,15 @@ def opponent(colour):
 
 MIN = -1000
 MAX = 1000
-def minimax(node, depth, player_colour, values, alpha, beta):
+def minimax(node, depth, player_colour, alpha, beta, board):
     if depth == 3:
-        return node.heuristic
+        return evaluate(player_colour, board)
+    
     if(player_colour):
         best = MIN
         for child in node.children:
-            node.heuristic = minimax(node, depth+1, False, values, alpha, beta)
-            best = max(best, node.val)
+            score = minimax(node, depth+1, False, alpha, beta)
+            best = max(best, score)
             alpha = max(alpha, best)
             if beta <= alpha:
                 break
@@ -144,8 +145,8 @@ def minimax(node, depth, player_colour, values, alpha, beta):
     else:
         best = MAX
         for child in node.children:
-            node.heuristic = minimax(node, depth+1, True, values, alpha, beta)
-            best = min(best, node.val)
+            score = minimax(node, depth+1, True, alpha, beta)
+            best = min(best, score)
             beta = min(beta, best)
             if alpha <= beta:
                 break
