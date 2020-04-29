@@ -61,8 +61,7 @@ def evaluate(player_colour, board):
 
     eval = (before[0]) - (before[1])
 
-    return eval/max(1, heuristic(board, player_colour))
-
+    return eval #heuristic(board, player_colour)
 
 def apply_action(player_colour, board, action):
     """ Applies an action to the board and returns the new board configuration. """
@@ -125,12 +124,9 @@ def opponent(colour):
 
 MIN = -1000
 MAX = 1000
-b = {
-    "white": [[1,7,7]],
-    "black": [[1,0,0]]
-    }
+
 def minimax(board, depth, player_colour, alpha, beta):
-    if depth == 3:
+    if depth == 4:
         evaluation = evaluate(player_colour, board)
         return evaluation, None
     
@@ -145,7 +141,7 @@ def minimax(board, depth, player_colour, alpha, beta):
                 best = score
                 best_action = action
             alpha = max(alpha, best)
-            if beta <= alpha:
+            if alpha >= beta:
                 #print("BROKEN")
                 break
         #print("the best action for white is", best, best_action)

@@ -1,8 +1,8 @@
-import ok_boomer.action_generator as actgen
-import ok_boomer.game as game
+import ok_boomer_greedy.action_generator as actgen
+import ok_boomer_greedy.game as game
 import random
-from ok_boomer.util import *
-from ok_boomer.constants import *
+from ok_boomer_greedy.util import *
+from ok_boomer_greedy.constants import *
 
 def search(player):
     """ Returns an action for the given player. """
@@ -38,7 +38,7 @@ def evaluate(player, action):
     else:
         eval = (before[0] - after[0]) - (before[1] - after[1])
 
-    return eval/max(1, heuristic(next_board, player.colour))
+    return eval #max(1, heuristic(next_board, player.colour))
 
 
 def apply_action(player, action):
