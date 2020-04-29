@@ -36,7 +36,7 @@ def search(player):
     actions = actgen.get_possible_actions(player.board, player.colour)
     
     for i in range(len(actions)):
-        score = evaluate(player, actions[i])
+        score = evaluate(player.colour, player.board)
         actions[i] = (actions[i], score)
     
     actions.sort(reverse=True, key=lambda pair: pair[1])
@@ -52,29 +52,26 @@ def search(player):
 
     return trimmed_actions[random.randint(0, len(trimmed_actions)-1)][0].toTuple()
 
-def evaluate(player, action):
+def evaluate(player_colour, board):
     """ Returns an evaluation value for a given action. """
     
-    before = count_tokens(player.board)    
-    next_board = apply_action(player, action)
-    after = count_tokens(next_board)
+    before = count_tokens(board)    
+    #next_board = apply_action(player_colour, action)
+    #after = count_tokens(next_board)
 
-    if player.colour == "white":
-        eval = (before[1] - after[1]) - (before[0] - after[0])
-    else:
-        eval = (before[0] - after[0]) - (before[1] - after[1])
+    eval = (before[0]) - (before[1])
 
-    return eval/max(1, heuristic(next_board, player.colour))
+    return eval/max(1, heuristic(board, player_colour))
 
 
-def apply_action(player, action):
+def apply_action(player_colour, board, action):
     """ Applies an action to the board and returns the new board configuration. """
 
     if action.action == "BOOM":
-        next_board = game.boom(action.source, player.board)
+        next_board = game.boom(action.source, board)
         
     if action.action == "MOVE":
-        next_board = game.move(action.num, action.source, action.target, player.board, player.colour)
+        next_board = game.move(action.num, action.source, action.target, board, player_colour)
     return next_board
 
 def count_tokens(board):
@@ -128,34 +125,50 @@ def opponent(colour):
 
 MIN = -1000
 MAX = 1000
-def minimax(node, depth, player_colour, alpha, beta, board):
+b = {
+    "white": [[1,7,7]],
+    "black": [[1,0,0]]
+    }
+def minimax(board, depth, player_colour, alpha, beta):
     if depth == 3:
-        return evaluate(player_colour, board)
+        evaluation = evaluate(player_colour, board)
+        return evaluation, None
     
-    if(player_colour):
-        actions = actgen.get_possible_actions(board, True)
+    if(player_colour=="white"):
+        actions = actgen.get_possible_actions(board, "white")
         best = MIN
+        best_action = None
         for action in actions:
-            next_board = apply_action(player_colour, action)
-            score = minimax(node, depth+1, False, alpha, beta, next_board)
+            next_board = apply_action(player_colour, board, action)
+            score, _ = minimax(next_board, depth+1, "black", alpha, beta)
             if score > best:
                 best = score
+                best_action = action
             alpha = max(alpha, best)
             if beta <= alpha:
+                #print("BROKEN")
                 break
-        return best
+        #print("the best action for white is", best, best_action)
+        return best, best_action
 
     else:
-        actions = actgen.get_possible_actions(board, False)
+        actions = actgen.get_possible_actions(board, "black")
         best = MAX
+        best_action = None
         for action in actions:
-            next_board = apply_action(player_colour, action)
-            score = minimax(node, depth+1, True, alpha, beta, next_board)
-            best = min(best, score)
+            #print(action)
+            next_board = apply_action(player_colour, board, action)
+            score, _ = minimax(next_board, depth+1, "white", alpha, beta)
+            if score < best:
+                best = score
+                best_action = action
             beta = min(beta, best)
-            if alpha <= beta:
+            if beta <= alpha:
+                #print("BROKEN")
                 break
-        return best
+        #print("the best action for black is", best, best_action)
+        return best, best_action
 
-
-
+#def evaluate_1(player_colour, board, action):
+ 
+#print("this is minimax", minimax(b, 1, "white", -1000, 1000))

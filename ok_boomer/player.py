@@ -27,6 +27,7 @@ class ExamplePlayer:
         # TODO: Set up state representation.
         self.board = self.INITIAL_BOARD
         self.colour = colour
+        
 
     def action(self):
         """
@@ -38,8 +39,9 @@ class ExamplePlayer:
         represented based on the spec's instructions for representing actions.
         """
         # TODO: Decide what action to take, and return it
-        an_action = bb.search(self)
-        return an_action
+        #an_action = bb.search(self)
+        an_action = bb.minimax(self.board, 1, self.colour, -1000, 1000)
+        return an_action[1].toTuple()
 
 
     def update(self, colour, action):

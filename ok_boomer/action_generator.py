@@ -25,7 +25,7 @@ class Action:
 def get_possible_actions(board, player_colour):
     all_moves = []
     stacks = board[player_colour]
-    print(player_colour, stacks)
+    #print(player_colour, stacks)
     for stack_from in stacks:
         all_moves += get_possible_actions_from_stack(stack_from, board, player_colour)
     
