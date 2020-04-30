@@ -2,6 +2,18 @@
 Module for all functions related to decision making
 """
 from ok_boomer.game import *
+from ok_boomer.util import *
+import logging
+
+FORMAT = '%(asctime)s: %(levelname)s: %(message)s'
+
+formatter = logging.Formatter(FORMAT)
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+file_handler = logging.FileHandler(filename='action-gen.log', mode='w')
+file_handler.setFormatter(formatter)
+logger.addHandler(file_handler)
 
 class Action:
     def __init__(self, action, num, source, target):
@@ -23,20 +35,47 @@ class Action:
         return str(self.toTuple())
 
 def get_possible_actions(board, player_colour):
+    logger.debug(print_board(get_grid_format(board)))
     all_moves = []
     stacks = board[player_colour]
     #print(player_colour, stacks)
     for stack_from in stacks:
         all_moves += get_possible_actions_from_stack(stack_from, board, player_colour)
     
+    all_moves.sort(key=lambda x: x.action=="MOVE")
     return all_moves
+
+def detect_suicide(coordinate, board, player_colour):
+    next_board = boom(coordinate, board)
+    before_w, before_b = count_tokens(board)
+    after_w, after_b = count_tokens(next_board)
+    
+    return (before_w == after_w) ^ (before_b == after_b)    # True if only white or black's tokens change, but not both
+
+# Copied from big brains
+def count_tokens(board):
+    """ Returns the number of white and black tokens on the board """
+    count = [0, 0]
+
+    for n, x, y in board["white"]:
+        count[0] += n
+
+    for n, x, y in board["black"]:
+        count[1] += n
+    
+    return count
 
 # returns possible moves for a given stack
 def get_possible_actions_from_stack(stack_from, board, player_colour):
     grid_board = get_grid_format(board)
     possible_actions = []
     x_pos, y_pos = stack_from[X_POS],  stack_from[Y_POS]
-    possible_actions.append(Action("BOOM", 1, (x_pos, y_pos), (x_pos, y_pos)))
+    
+
+    if not (detect_suicide((x_pos, y_pos), board, player_colour)):
+        possible_actions.append(Action("BOOM", 1, (x_pos, y_pos), (x_pos, y_pos)))
+    else:
+        logger.debug("{colour} BOOM at ({x}, {y}) is suicide".format(colour = player_colour, x = x_pos, y = y_pos))
     
     # for each possible stack of n tokens 
     for n in range(1, stack_from[N_TOKENS]+1):
