@@ -1,8 +1,20 @@
 import ok_boomer.action_generator as actgen
 import ok_boomer.game as game
 import random
+import logging
+import math
 from ok_boomer.util import *
 from ok_boomer.constants import *
+
+FORMAT = '%(asctime)s: %(levelname)s: %(message)s'
+
+formatter = logging.Formatter(FORMAT)
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+file_handler = logging.FileHandler(filename='big-brains.log', mode='w')
+file_handler.setFormatter(formatter)
+logger.addHandler(file_handler)
 
 
 class Node:
@@ -54,14 +66,17 @@ def search(player):
 
 def evaluate(player_colour, board):
     """ Returns an evaluation value for a given action. """
-    
-    before = count_tokens(board)    
-    #next_board = apply_action(player_colour, action)
-    #after = count_tokens(next_board)
+    WEIGHT = 0.9    # Controls importance of removing pieces vs moving closer
+    EPSILON = 1
 
-    eval = (before[0]) - (before[1])
+    before = count_tokens(board) 
+    eval = (before[0]) - (before[1])    # Higher = More white removed
+    distance_heuristic = 1/max(EPSILON, math.tanh(heuristic(board, player_colour))) # Higher = White is closer to black
 
-    return eval #heuristic(board, player_colour)
+    if player_colour == "black":
+       distance_heuristic *= -1
+
+    return math.tanh(eval)
 
 def apply_action(player_colour, board, action):
     """ Applies an action to the board and returns the new board configuration. """
@@ -98,7 +113,10 @@ def heuristic(board, colour):
     for stack in board[opponent(colour)]:
         distances.append(min_distance_from_stack(stack, board[colour]))
     
-    return sum(distances)//best_stack
+    w, b = count_tokens(board)
+    count = w if colour=="white" else b
+
+    return sum(distances)//count
 
 def min_distance_from_stack(source, stack_list):
     # Minimum distance from a black stack to one of the white stacks
@@ -125,13 +143,27 @@ def opponent(colour):
 MIN = -1000
 MAX = 1000
 
+def is_game_over(board):
+    n_white, n_black = count_tokens(board)
+    return n_white == 0 or n_black == 0
+
+def utility(board):
+    n_white, n_black = count_tokens(board)
+    if n_white == 0 and n_black == 0: return 0
+    elif n_white == 0: return -1
+    else: return 1
+
 def minimax(board, depth, player_colour, alpha, beta):
+    if is_game_over(board):
+        return utility(board), None
+
     if depth == 4:
         evaluation = evaluate(player_colour, board)
         return evaluation, None
     
     if(player_colour=="white"):
         actions = actgen.get_possible_actions(board, "white")
+       
         best = MIN
         best_action = None
         for action in actions:
@@ -141,11 +173,11 @@ def minimax(board, depth, player_colour, alpha, beta):
                 best = score
                 best_action = action
             alpha = max(alpha, best)
+
             if alpha >= beta:
                 #print("BROKEN")
                 break
         #print("the best action for white is", best, best_action)
-        return best, best_action
 
     else:
         actions = actgen.get_possible_actions(board, "black")
@@ -155,6 +187,7 @@ def minimax(board, depth, player_colour, alpha, beta):
             #print(action)
             next_board = apply_action(player_colour, board, action)
             score, _ = minimax(next_board, depth+1, "white", alpha, beta)
+            
             if score < best:
                 best = score
                 best_action = action
@@ -163,7 +196,12 @@ def minimax(board, depth, player_colour, alpha, beta):
                 #print("BROKEN")
                 break
         #print("the best action for black is", best, best_action)
-        return best, best_action
+    
+    if (depth==1):
+        logger.debug(print_board(game.get_grid_format(board)))
+        logger.debug("{colour} played {action} with an evaluation score: {score}".format(colour=player_colour, action=best_action, score=best))
+        
+    return best, best_action
 
 #def evaluate_1(player_colour, board, action):
  

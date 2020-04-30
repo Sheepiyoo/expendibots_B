@@ -1,6 +1,7 @@
 from ok_boomer.constants import *
 from ok_boomer.game import *
 import ok_boomer.big_brains as bb
+import time
 
 class ExamplePlayer:
     _BLACK_START_SQUARES = [(0,7), (1,7),   (3,7), (4,7),   (6,7), (7,7),
@@ -27,7 +28,8 @@ class ExamplePlayer:
         # TODO: Set up state representation.
         self.board = self.INITIAL_BOARD
         self.colour = colour
-        
+        self.time_elapsed = 0
+        self.depth_limit = 4
 
     def action(self):
         """
@@ -40,7 +42,10 @@ class ExamplePlayer:
         """
         # TODO: Decide what action to take, and return it
         #an_action = bb.search(self)
+        start = time.time()
         an_action = bb.minimax(self.board, 1, self.colour, -1000, 1000)
+        print(an_action)
+        self.time_elapsed += time.time() - start
         return an_action[1].toTuple()
 
 

@@ -148,4 +148,5 @@ def print_board(board_dict, message="", unicode=False, compact=True, **kwargs):
         else:
             cells.append(str(board_dict[xy])[:3].center(3))
     # print it
-    print(template.format(message, *cells), **kwargs)
+    #print(template.format(message, *cells), **kwargs)
+    return template.format(message, *cells)
