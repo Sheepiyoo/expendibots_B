@@ -36,13 +36,22 @@ def get_possible_actions_from_stack(stack_from, board, player_colour):
     grid_board = get_grid_format(board)
     possible_actions = []
     x_pos, y_pos = stack_from[X_POS],  stack_from[Y_POS]
+
+    # generate the order of moves depending on the number of white in top half, bottom half, left half, right half, 
+    if player_colour == "white":
+        opponent_colour = "black"
+    else:
+        opponent_colour="white"
+    
+    order = analyse_board(board, opponent_colour)
+
     possible_actions.append(Action("BOOM", 1, (x_pos, y_pos), (x_pos, y_pos)))
     
     # for each possible stack of n tokens 
     for n in range(1, stack_from[N_TOKENS]+1):
         
         # for each possible position from given position
-        for (x, y) in possible_positions(stack_from[X_POS], stack_from[Y_POS], n):
+        for (x, y) in possible_positions(stack_from[X_POS], stack_from[Y_POS], n, order):
 
             # if a stack already exists on the board, add the stack
             if (x, y) in grid_board:
@@ -64,16 +73,35 @@ def is_opponent(colour_n, player_colour):
     return False
 
 # returns a list of in-bound positions n spaces away from given x,y
-def possible_positions(x, y, n):
-    positions = []
-    if y+n < BOARD_SIZE:
-        positions.append((x, y+n))
-    if x+n < BOARD_SIZE:
-        positions.append((x+n, y))
-    if (x-n) >= 0:
-        positions.append((x-n, y))
-    if y-n >= 0:
-        positions.append((x, y-n))
+def possible_positions(x, y, n, order):
+    ordered_positions = []
+    positions = {}
+    if y+n < BOARD_SIZE: #up
+        positions["up"] = (x, y+n)
+    if x+n < BOARD_SIZE: #right
+        positions["right"] = (x+n, y)
+    if (x-n) >= 0: #left
+        positions["left"] = (x-n, y)
+    if y-n >= 0: # down
+        positions["down"] = (x, y-n)
     #print('the positions are', positions)
-    return positions
+    for direction in order:
+        if direction[0] in positions.keys():
+            ordered_positions.append(positions[direction[0]])
+    return ordered_positions
+
+# returns Left, Right, Up, Down, in order of which half has the most tokens of the colour given
+def analyse_board(board, colour):
+    order = {"up":0, "down":0, "left":0, "right":0}
+    for stack in board[colour]:
+        if stack[X_POS] <= BOARD_SIZE/2:
+            order["left"] += stack[N_TOKENS]
+        if stack[X_POS] > BOARD_SIZE/2:
+            order["right"] += stack[N_TOKENS]
+        if stack[Y_POS] <= BOARD_SIZE/2:
+            order["down"] += stack[N_TOKENS]
+        if stack[Y_POS] > BOARD_SIZE/2:
+            order["up"] += stack[N_TOKENS]
+    final_order = sorted(order.items(), key=lambda x: x[1], reverse=True)
+    return final_order
 
