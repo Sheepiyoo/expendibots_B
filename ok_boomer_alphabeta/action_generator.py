@@ -81,11 +81,12 @@ def get_possible_actions_from_stack(stack_from, board, player_colour):
 
     possible_actions.append(Action("BOOM", 1, (x_pos, y_pos), (x_pos, y_pos)))
     
-
+    """
     if not (detect_suicide((x_pos, y_pos), board, player_colour)):
         possible_actions.append(Action("BOOM", 1, (x_pos, y_pos), (x_pos, y_pos)))
     else:
         logger.debug("{colour} BOOM at ({x}, {y}) is suicide".format(colour = player_colour, x = x_pos, y = y_pos))
+    """
     
     # for each possible stack of n tokens 
     for n in range(1, stack_from[N_TOKENS]+1):

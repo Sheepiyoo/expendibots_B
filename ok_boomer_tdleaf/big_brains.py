@@ -48,7 +48,14 @@ def evaluate(weights, state):
     features = get_features(state)
     eval = np.dot(weights, features)
     reward = math.tanh(eval)
+
     return reward
+
+def evaluate_leaf_for_ML(weights, state):
+    w, b = count_tokens(state)
+
+    # For training data, just use alpha beta
+    return w - b 
 
 def apply_action(player_colour, board, action):
     """ Applies an action to the board and returns the new board configuration. """
@@ -127,12 +134,54 @@ def utility(board):
     elif n_white == 0: return -1
     else: return 1
 
-def minimax(board, depth, weights, player_colour, alpha, beta):
+
+def minimax_wrapper(board, depth, weights, player_colour, alpha, beta, depth_limit):
+    actions = actgen.get_possible_actions(board, player_colour)
+    action_rank = []
+
+    for action in actions:
+        next_board = apply_action(player_colour, board, action)
+
+        if action.action == "BOOM" and detect_suicide(board, next_board):
+            continue
+        
+        if player_colour == "white":
+            score, _, best_leaf = minimax(next_board, depth+1, weights, "black", alpha, beta, depth_limit)
+            action_rank.append((score, action, best_leaf))
+        else:
+            score, _, best_leaf = minimax(next_board, depth+1, weights, "white", alpha, beta, depth_limit)
+            action_rank.append((score, action, best_leaf))
+
+    action_rank.sort(reverse=(player_colour=="white"), key=lambda x: x[0])
+    
+    trimmed_actions = [action_rank[0]]
+
+    for i in range(1, len(action_rank)):
+        if action_rank[i-1][0] == action_rank[i][0]:
+            trimmed_actions.append(action_rank[i])
+        else:
+            break
+    
+    print(len(action_rank))
+    print(len(trimmed_actions))
+    if (len(action_rank) != len(trimmed_actions)):
+        print(trimmed_actions)
+
+    selected_action = action_rank[random.randint(0, len(trimmed_actions)-1)]
+    best, best_action, best_leaf_state = selected_action
+
+    #logger.debug(print_board(game.get_grid_format(best_leaf_state)))
+    feature_string = [str(x) for x in get_features(best_leaf_state)]
+    logger.debug("{},{}".format(evaluate(weights, best_leaf_state), ",".join(feature_string)))
+
+    return selected_action
+
+def minimax(board, depth, weights, player_colour, alpha, beta, depth_limit):
     best_leaf_state = board
     if is_game_over(board):
         return utility(board), None, board
 
-    if depth == 3:
+    if depth == depth_limit:
         evaluation = evaluate(weights, board)
         return evaluation, None, board
     
@@ -144,7 +193,11 @@ def minimax(board, depth, weights, player_colour, alpha, beta):
         
         for action in actions:
             next_board = apply_action(player_colour, board, action)
-            score, _, best_leaf = minimax(next_board, depth+1, weights, "black", alpha, beta)
+
+            if action.action == "BOOM" and detect_suicide(board, next_board):
+                continue
+
+            score, _, best_leaf = minimax(next_board, depth+1, weights, "black", alpha, beta, depth_limit)
             if score > best:
                 best = score
                 best_action = action
@@ -152,7 +205,7 @@ def minimax(board, depth, weights, player_colour, alpha, beta):
             alpha = max(alpha, best)
 
             if alpha >= beta:
-                #print("BROKEN")
+                #print("MAX BROKEN")
                 break
         #print("the best action for white is", best, best_action)
 
@@ -163,7 +216,11 @@ def minimax(board, depth, weights, player_colour, alpha, beta):
         for action in actions:
             #print(action)
             next_board = apply_action(player_colour, board, action)
-            score, _, best_leaf = minimax(next_board, depth+1, weights, "white", alpha, beta)
+
+            if action.action == "BOOM" and detect_suicide(board, next_board):
+                continue
+
+            score, _, best_leaf = minimax(next_board, depth+1, weights, "white", alpha, beta, depth_limit)
             
             if score < best:
                 best = score
@@ -171,19 +228,21 @@ def minimax(board, depth, weights, player_colour, alpha, beta):
                 best_leaf_state = best_leaf
             beta = min(beta, best)
             if beta <= alpha:
-                #print("BROKEN")
+                #print("MIN BROKEN")
                 break
         #print("the best action for black is", best, best_action)
-    
-    if (depth==1):
-        #logger.debug(print_board(game.get_grid_format(best_leaf_state)))
-        feature_string = [str(x) for x in get_features(best_leaf_state)]
-        logger.debug("{},{}".format(best, ",".join(feature_string)))
         
     return best, best_action, best_leaf_state
 
+def detect_suicide(board, next_board):
+    before_w, before_b = count_tokens(board)
+    next_w, next_b = count_tokens(next_board)
+    return (before_w != next_w) ^ (before_b != next_b)
+
 def get_features(state):
     features = []
+
+    grid_format = game.get_grid_format(state)
 
     # difference of tokens
     nw, nb = count_tokens(state)
@@ -200,7 +259,50 @@ def get_features(state):
     # difference of distances
     #features.append(heuristic(state, "white") - heuristic(state, "black"))
 
+    # difference in corner positions
+    #score_corners(grid_format)
+
+    # difference in edge positions
+    
+    # difference in centre positions
+
+    # number in opponent half
+    features.append(calc_white_half(state))
+    features.append(calc_black_half(state))
+
     return np.array(features)
+
+"""
+def score_corners(grid_state):
+    corners = [(0, 0), (0, 7), (7, 7), (0, 0)]
+    print(grid_state)
+    for point in corners:
+        pass
+"""
+
+def calc_white_half(state):
+    count = 0
+    for stack in state["white"]:
+        if stack[Y_POS] <= 3:
+            count += stack[N_TOKENS]
+
+    for stack in state["black"]:
+        if stack[Y_POS] <= 3:
+            count -= stack[N_TOKENS]
+
+    return count
+
+def calc_black_half(state):
+    count = 0
+    for stack in state["white"]:
+        if stack[Y_POS] >= 4:
+            count += stack[N_TOKENS]
+
+    for stack in state["black"]:
+        if stack[Y_POS] >= 4:
+            count -= stack[N_TOKENS]
+
+    return count
 
 def get_chunks(board_dict):
     chunks = [] 

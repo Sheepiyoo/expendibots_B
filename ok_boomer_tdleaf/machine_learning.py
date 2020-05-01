@@ -1,8 +1,8 @@
 import numpy as np
 import glob
 
-DECAY = 0.99
-LR = 0.01
+DECAY = 0.95
+LR = 0.1
 WEIGHT_FILE = 'weights.csv'
 
 def load_data(filename):
@@ -17,8 +17,9 @@ def update_weights(weights, rewards, features, lr, gamma):
     r1 = rewards[:num_steps-1]
     r2 = rewards[1:]
     differences = r2 - r1
+    print(differences)
     
-    for i in range(1, num_steps-1):
+    for i in range(0, num_steps-1):
         decay_term = 0
         coefficient = 1
         for j in range(i, num_steps):
@@ -31,7 +32,7 @@ def update_weights(weights, rewards, features, lr, gamma):
     
     #update weight
     weights = weights + lr * accumulator
-    
+        
     return weights
 
 def load_weights():

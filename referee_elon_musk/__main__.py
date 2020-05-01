@@ -55,6 +55,9 @@ def main():
         # Display the final result of the game to the user.
         out.comment("game over!", depth=-1)
         out.print(result)
+        logger.debug("------------------------------------------------------------------")
+        logger.debug("white: {}".format(options.player1_loc))
+        logger.debug("black: {}".format(options.player2_loc))
         logger.debug(result)
         logger.debug(p1.timer.status())
         logger.debug(p2.timer.status())

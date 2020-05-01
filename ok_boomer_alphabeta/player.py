@@ -44,7 +44,7 @@ class ExamplePlayer:
         #an_action = bb.search(self)
         start = time.time()
         an_action = bb.minimax(self.board, 1, self.colour, -1000, 1000)
-        print(an_action)
+        #print(an_action)
         self.time_elapsed += time.time() - start
         return an_action[1].toTuple()
 

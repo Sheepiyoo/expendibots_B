@@ -168,6 +168,10 @@ def minimax(board, depth, player_colour, alpha, beta):
         best_action = None
         for action in actions:
             next_board = apply_action(player_colour, board, action)
+        
+            if action.action == "BOOM" and detect_suicide(board, next_board):
+                continue
+
             score, _ = minimax(next_board, depth+1, "black", alpha, beta)
             if score > best:
                 best = score
@@ -186,6 +190,10 @@ def minimax(board, depth, player_colour, alpha, beta):
         for action in actions:
             #print(action)
             next_board = apply_action(player_colour, board, action)
+            
+            if action.action == "BOOM" and detect_suicide(board, next_board):
+                continue
+
             score, _ = minimax(next_board, depth+1, "white", alpha, beta)
             
             if score < best:
@@ -206,3 +214,8 @@ def minimax(board, depth, player_colour, alpha, beta):
 #def evaluate_1(player_colour, board, action):
  
 #print("this is minimax", minimax(b, 1, "white", -1000, 1000))
+
+def detect_suicide(board, next_board):
+    before_w, before_b = count_tokens(board)
+    next_w, next_b = count_tokens(next_board)
+    return (before_w != next_w) ^ (before_b != next_b)

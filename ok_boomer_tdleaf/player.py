@@ -18,7 +18,7 @@ class ExamplePlayer:
     }
 
     WEIGHT_FILE = ml.WEIGHT_FILE
-    N_FEATURES = 3 # No bias
+    N_FEATURES = 5 # No bias
 
 
     def __init__(self, colour):
@@ -37,7 +37,7 @@ class ExamplePlayer:
         self.board = self.INITIAL_BOARD
         self.colour = colour
         self.time_elapsed = 0
-        self.depth_limit = 4
+        self.depth_limit = 3
 
         # Generate random weights if no weight file present
         if not os.path.exists(self.WEIGHT_FILE):
@@ -60,8 +60,9 @@ class ExamplePlayer:
         # TODO: Decide what action to take, and return it
         #an_action = bb.search(self)
         start = time.time()
-        an_action = bb.minimax(self.board, 1, self.weights, self.colour, -1000, 1000)
-        print(an_action)
+        print(self.depth_limit)
+        an_action = bb.minimax_wrapper(self.board, 1, self.weights, self.colour, -1000, 1000, self.depth_limit)
+        #print(an_action)
         self.time_elapsed += time.time() - start
         return an_action[1].toTuple()
 
@@ -92,5 +93,15 @@ class ExamplePlayer:
         if(action[0] == "MOVE"):
             next_board = move(action[1], action[2], action[3], curr_board, colour)
             self.board = next_board
-        
+
+        # Linearly increase depth limit
+        w, b = bb.count_tokens(self.board)
+        #self.depth_limit = 6 - (w+b)//8
+
+        """
+        if self.colour == "white":
+            self.depth_limit = 6 - w//3
+        else:
+            self.depth_limit = 6 - b//3
+        """
 

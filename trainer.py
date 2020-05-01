@@ -14,16 +14,15 @@ file_handler.setFormatter(formatter)
 logger.addHandler(file_handler)
 
 num_tests = 0
-MAX_TESTS = 100
+MAX_TESTS = 20
 
 logger.debug("------------------- New Training Session ----------------")
+swap = False
 
 while num_tests < MAX_TESTS:
-    #(help)
-    swap = True
-    
+
     white = "ok_boomer_tdleaf"
-    black = "ok_boomer_alphabeta"
+    black = "ok_boomer_alphabeta" #"ok_boomer_greedy" 
     
     if swap:
         temp = black
@@ -33,8 +32,6 @@ while num_tests < MAX_TESTS:
     referee = "referee_elon_musk"
     p = subprocess.Popen(["python", "-m", referee, white, black])
     p.wait()
-    # record who wins
-
 
     # Update weights
     weights = ml.load_weights()
@@ -45,4 +42,6 @@ while num_tests < MAX_TESTS:
     np.savetxt(ml.WEIGHT_FILE, new_weights, delimiter=',')
 
     num_tests += 1
+    swap = not swap
+
                                                                 

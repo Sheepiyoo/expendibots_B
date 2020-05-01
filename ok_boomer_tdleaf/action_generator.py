@@ -62,7 +62,7 @@ def get_possible_actions(board, player_colour):
     for stack_from in stacks:
         all_moves += get_possible_actions_from_stack(stack_from, board, player_colour)
     
-    #all_moves.sort(key=lambda x: x.action=="MOVE")
+    all_moves.sort(key=lambda x: x.action=="MOVE")
     return all_moves
 
 # returns possible moves for a given stack

@@ -14,7 +14,7 @@ def search(player):
         actions[i] = (actions[i], score)
     
     actions.sort(reverse=True, key=lambda pair: pair[1])
-    print(actions)
+    #print(actions)
     
     # Trim the list
     trimmed_actions = [actions[0]]
