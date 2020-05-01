@@ -1,7 +1,7 @@
 # Converts from (x,y) as keys to "white", "black" as keys
 # {(x, y): "wn"} --> {"white": [n, x, y]}
-from ok_boomer.constants import *
-from ok_boomer.util import *
+from ok_boomer_tdleaf.constants import *
+from ok_boomer_tdleaf.util import *
 
 def get_token_format(grid_dict):
     token_format = {"white":[], "black": []}

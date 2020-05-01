@@ -1,6 +1,6 @@
-from ok_boomer.constants import *
-from ok_boomer.game import *
-import ok_boomer.big_brains as bb
+from ok_boomer_alphabeta.constants import *
+from ok_boomer_alphabeta.game import *
+import ok_boomer_alphabeta.big_brains as bb
 import time
 
 class ExamplePlayer:

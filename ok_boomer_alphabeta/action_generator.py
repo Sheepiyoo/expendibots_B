@@ -1,8 +1,8 @@
 """
 Module for all functions related to decision making
 """
-from ok_boomer.game import *
-from ok_boomer.util import *
+from ok_boomer_alphabeta.game import *
+from ok_boomer_alphabeta.util import *
 import logging
 
 FORMAT = '%(asctime)s: %(levelname)s: %(message)s'

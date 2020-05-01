@@ -14,6 +14,7 @@ def search(player):
         actions[i] = (actions[i], score)
     
     actions.sort(reverse=True, key=lambda pair: pair[1])
+    print(actions)
     
     # Trim the list
     trimmed_actions = [actions[0]]
@@ -29,16 +30,15 @@ def search(player):
 def evaluate(player, action):
     """ Returns an evaluation value for a given action. """
     
-    before = count_tokens(player.board)    
     next_board = apply_action(player, action)
-    after = count_tokens(next_board)
-
+    w, b = count_tokens(next_board) 
+   
     if player.colour == "white":
-        eval = (before[1] - after[1]) - (before[0] - after[0])
+        eval = w - b
     else:
-        eval = (before[0] - after[0]) - (before[1] - after[1])
+        eval = b - w
 
-    return eval #max(1, heuristic(next_board, player.colour))
+    return eval #max(1, heuristic(next_board, player.colour)))
 
 
 def apply_action(player, action):
