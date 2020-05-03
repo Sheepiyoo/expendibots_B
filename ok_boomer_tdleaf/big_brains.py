@@ -262,10 +262,15 @@ def get_features(state):
     # difference in corner positions
     #score_corners(grid_format)
 
-    # difference in amount of area covered
-    features.append((calc_spread(state, "white") - calc_spread(state, "black"))/32)
+    avg_white_x, avg_white_y = get_avg_loc(state, "white")
+    avg_black_x, avg_black_y = get_avg_loc(state, "black")
+    features.append((avg_white_x-avg_black_x)/8)
+    features.append((avg_white_y-avg_black_y)/8)
 
-    features.append((calc_spread(state,"white")/48)-(calc_spread(state,"black")/48))
+    # difference in amount of area covered
+    #features.append((calc_spread(state, "white") - calc_spread(state, "black"))/32)
+
+    #features.append((calc_dist_middle(state,"white")/48)-(calc_dist_middle(state,"black")/48))
 
     # difference in edge positions
     
@@ -277,17 +282,21 @@ def get_features(state):
     return np.array(features)
 
 #calculate the distance from the middle
-def calc_spread(state, colour):
+def calc_dist_middle(state, colour):
     spread = 0
-    for stack in state:
-        spread += manhattan_distance(stack, [0, 3.5, 3.5])*stack[0]
+    for stack in state[colour]:
+        spread += manhattan_distance(stack, [0, 3.5, 3.5])
     return spread
 
 def get_avg_loc(state, colour):
     x, y = 0, 0
     for stack in state[colour]:
         x += stack[1]*stack[0]
-        y += stack[2]+stack[0]
+        y += stack[2]*stack[0]
+    x = x/len(state[colour])
+    y = y/len(state[colour])
+    return x, y
+
 
 """
 def score_corners(grid_state):
@@ -367,3 +376,8 @@ def chunk_recursive(x, y, grid_format, chunk):
     else:
       return
     return   
+
+
+
+# normalise the weights !!!
+# does the chunkc calculation outweight the benefit of having a larger depth
