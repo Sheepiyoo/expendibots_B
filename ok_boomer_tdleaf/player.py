@@ -46,6 +46,7 @@ class ExamplePlayer:
             np.savetxt(self.WEIGHT_FILE, weights, delimiter=',')
             
         self.weights = np.loadtxt(open(self.WEIGHT_FILE, "rb"), delimiter=",")
+        print(self.weights, self.N_FEATURES)
         assert (len(self.weights) == self.N_FEATURES)
 
     def action(self):

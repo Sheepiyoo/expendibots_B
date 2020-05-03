@@ -262,13 +262,15 @@ def get_features(state):
     # difference in corner positions
     #score_corners(grid_format)
 
+    # difference in amount of area covered
+    features.append(calc_spread(state, "white") - calc_spread(state, "black"))
+
     # difference in edge positions
     
     # difference in centre positions
 
     # number in opponent half
-    features.append(calc_white_half(state))
-    features.append(calc_black_half(state))
+    features.append(calc_white_half(state)-calc_black_half(state))
 
     return np.array(features)
 
@@ -279,6 +281,22 @@ def score_corners(grid_state):
     for point in corners:
         pass
 """
+
+def calc_spread(state, colour):
+    x_positions = []
+    y_positions = []
+    if len(state[colour]) == 0:
+        return 0
+    for stack in state[colour]:
+        x_positions.append(stack[1])
+        y_positions.append(stack[2])
+    x_positions.sort()
+    y_positions.sort()
+    #print(x_positions)
+    x_spread = x_positions[-1] - x_positions[0]
+    y_spread = y_positions[-1] - y_positions[0]
+    return x_spread*y_spread
+
 
 def calc_white_half(state):
     count = 0
