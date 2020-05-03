@@ -2,7 +2,7 @@ import numpy as np
 import glob
 
 DECAY = 0.95
-LR = 0.1
+LR = 0.001
 WEIGHT_FILE = 'weights.csv'
 
 def load_data(filename):

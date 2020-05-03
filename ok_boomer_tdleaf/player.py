@@ -1,3 +1,4 @@
+# coding: utf-8
 from ok_boomer_tdleaf.constants import *
 from ok_boomer_tdleaf.game import *
 import ok_boomer_tdleaf.big_brains as bb
@@ -5,6 +6,7 @@ import ok_boomer_tdleaf.machine_learning as ml
 import time
 import numpy as np
 import os
+
 
 class ExamplePlayer:
     _BLACK_START_SQUARES = [(0,7), (1,7),   (3,7), (4,7),   (6,7), (7,7),

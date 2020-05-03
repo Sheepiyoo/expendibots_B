@@ -30,7 +30,7 @@ while num_tests < MAX_TESTS:
         white = temp
 
     referee = "referee_elon_musk"
-    p = subprocess.Popen(["python", "-m", referee, white, black])
+    p = subprocess.Popen(["python3", "-m", referee, white, black])
     p.wait()
 
     # Update weights
@@ -42,6 +42,6 @@ while num_tests < MAX_TESTS:
     np.savetxt(ml.WEIGHT_FILE, new_weights, delimiter=',')
 
     num_tests += 1
-    swap = not swap
+    #swap = not swap
 
                                                                 

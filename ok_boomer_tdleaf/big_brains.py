@@ -246,15 +246,15 @@ def get_features(state):
 
     # difference of tokens
     nw, nb = count_tokens(state)
-    features.append(nw-nb)
+    features.append((nw-nb)/12)
 
     # difference of stacks  
-    features.append(len(state["white"]) - len(state["black"]))
+    features.append((len(state["white"]) - len(state["black"]))/12)
     
     # difference of chunks
     white_chunks = len(get_chunks({"white": state["white"]}))
     black_chunks = len(get_chunks({"black": state["black"]}))
-    features.append(white_chunks-black_chunks)
+    features.append((white_chunks-black_chunks)/12)
 
     # difference of distances
     #features.append(heuristic(state, "white") - heuristic(state, "black"))
@@ -263,16 +263,31 @@ def get_features(state):
     #score_corners(grid_format)
 
     # difference in amount of area covered
-    features.append(calc_spread(state, "white") - calc_spread(state, "black"))
+    features.append((calc_spread(state, "white") - calc_spread(state, "black"))/32)
+
+    features.append((calc_spread(state,"white")/48)-(calc_spread(state,"black")/48))
 
     # difference in edge positions
     
     # difference in centre positions
 
     # number in opponent half
-    features.append(calc_white_half(state)-calc_black_half(state))
+    #features.append((calc_white_half(state)-calc_black_half(state))/12)
 
     return np.array(features)
+
+#calculate the distance from the middle
+def calc_spread(state, colour):
+    spread = 0
+    for stack in state:
+        spread += manhattan_distance(stack, [0, 3.5, 3.5])*stack[0]
+    return spread
+
+def get_avg_loc(state, colour):
+    x, y = 0, 0
+    for stack in state[colour]:
+        x += stack[1]*stack[0]
+        y += stack[2]+stack[0]
 
 """
 def score_corners(grid_state):
