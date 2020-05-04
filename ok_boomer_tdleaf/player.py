@@ -20,7 +20,7 @@ class ExamplePlayer:
     }
 
     WEIGHT_FILE = ml.WEIGHT_FILE
-    N_FEATURES = 5 # No bias
+    N_FEATURES = 8 # No bias
 
 
     def __init__(self, colour):

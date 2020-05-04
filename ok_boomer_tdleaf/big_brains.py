@@ -27,7 +27,7 @@ def search(player):
     actions = actgen.get_possible_actions(player.board, player.colour)
     
     for i in range(len(actions)):
-        score = evaluate(player.colour, player.board)
+        score = evaluate(player.weights, player.board, player.colour) # im confised why was this player.colour and not player.weights
         actions[i] = (actions[i], score)
     
     actions.sort(reverse=True, key=lambda pair: pair[1])
@@ -43,9 +43,15 @@ def search(player):
 
     return trimmed_actions[random.randint(0, len(trimmed_actions)-1)][0].toTuple()
 
-def evaluate(weights, state):
+def evaluate(weights, state, colour):
     """ Returns an evaluation value for a given action. """
-    features = get_features(state)
+    if colour == "black":
+        new_state = {}
+        new_state["white"] = state["black"]
+        new_state["black"] = state["white"]
+        features = get_features(new_state)
+    else:
+        features = get_features(state)
     eval = np.dot(weights, features)
     reward = math.tanh(eval)
 
@@ -172,7 +178,7 @@ def minimax_wrapper(board, depth, weights, player_colour, alpha, beta, depth_lim
 
     #logger.debug(print_board(game.get_grid_format(best_leaf_state)))
     feature_string = [str(x) for x in get_features(best_leaf_state)]
-    logger.debug("{},{}".format(evaluate(weights, best_leaf_state), ",".join(feature_string)))
+    logger.debug("{},{}".format(evaluate(weights, best_leaf_state, player_colour), ",".join(feature_string)))
 
     return selected_action
 
@@ -182,7 +188,7 @@ def minimax(board, depth, weights, player_colour, alpha, beta, depth_limit):
         return utility(board), None, board
 
     if depth == depth_limit:
-        evaluation = evaluate(weights, board)
+        evaluation = evaluate(weights, board, player_colour)
         return evaluation, None, board
     
     if(player_colour=="white"):
@@ -246,6 +252,8 @@ def get_features(state):
 
     # difference of tokens
     nw, nb = count_tokens(state)
+    features.append(nw/12)
+    features.append(nb/12)
     features.append((nw-nb)/12)
 
     # difference of stacks  
@@ -268,7 +276,7 @@ def get_features(state):
     features.append((avg_white_y-avg_black_y)/8)
 
     # difference in amount of area covered
-    #features.append((calc_spread(state, "white") - calc_spread(state, "black"))/32)
+    features.append((calc_spread(state, "white") - calc_spread(state, "black"))/32)
 
     #features.append((calc_dist_middle(state,"white")/48)-(calc_dist_middle(state,"black")/48))
 
