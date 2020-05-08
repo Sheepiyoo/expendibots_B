@@ -51,23 +51,8 @@ def get_possible_actions_from_stack(stack_from, board, player_colour):
     possible_actions = []
     x_pos, y_pos = stack_from[X_POS],  stack_from[Y_POS]
 
-    # generate the order of moves depending on the number of white in top half, bottom half, left half, right half, 
-    #if player_colour == "white":
-    #    opponent_colour = "black"
-    #else:
-    #    opponent_colour="white"
-    
-    #order = analyse_board(board, opponent_colour)
-    #order = ["up", "right", "down", "left"]
     possible_actions.append(Action("BOOM", 1, (x_pos, y_pos), (x_pos, y_pos)))
     
-    """
-    if not (detect_suicide((x_pos, y_pos), board, player_colour)):
-        possible_actions.append(Action("BOOM", 1, (x_pos, y_pos), (x_pos, y_pos)))
-    else:
-        logger.debug("{colour} BOOM at ({x}, {y}) is suicide".format(colour = player_colour, x = x_pos, y = y_pos))
-    """
-
     # for each possible stack of n tokens 
     for n in range(1, stack_from[N_TOKENS]+1):
         

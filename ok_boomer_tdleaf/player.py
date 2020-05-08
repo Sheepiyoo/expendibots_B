@@ -41,6 +41,7 @@ class ExamplePlayer:
         self.colour = colour
         self.time_elapsed = 0
         self.depth_limit = 3
+        self.TTable = {}        #Transposition table; store (numTimesVisited (for draw checking), (bestMove), (depthFromThisPosition))
 
         # Generate random weights if no weight file present
         if not os.path.exists(self.WEIGHT_FILE):
