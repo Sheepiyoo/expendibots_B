@@ -54,7 +54,7 @@ def evaluate(weights, state, colour):
         features = get_features(state)
     eval = np.dot(weights, features)
     #print(eval)
-    if len(state["black"]) == len(state["white"]):
+    if len(state["black"]) == len(state["white"]) == 0 :
         reward = 0
     else: reward = math.tanh(eval)
 
