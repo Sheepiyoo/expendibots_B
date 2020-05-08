@@ -6,12 +6,18 @@ LR = 0.001
 WEIGHT_FILE = 'weights.csv'
 
 def load_data(filename):
+    """
+    Load rewards and feature data from log file
+    """
     data = np.loadtxt(filename, delimiter=',')
     rewards, features = np.split(data, [1], axis=1)
     return rewards, features
 
 
 def update_weights(weights, rewards, features, lr, gamma):
+    """
+    Update feature weights
+    """
     num_steps = len(rewards)
     accumulator = np.zeros(weights.shape)
     r1 = rewards[:num_steps-1]
@@ -19,6 +25,7 @@ def update_weights(weights, rewards, features, lr, gamma):
     differences = r2 - r1
     print(differences)
     
+    #Iterate through each step made in game
     for i in range(0, num_steps-1):
         decay_term = 0
         coefficient = 1
@@ -30,7 +37,7 @@ def update_weights(weights, rewards, features, lr, gamma):
         
     print(accumulator)
     
-    #update weight
+    #Update weights
     weights = weights + lr * accumulator
         
     return weights

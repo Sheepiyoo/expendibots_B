@@ -9,6 +9,7 @@ import os
 
 
 class ExamplePlayer:
+    # Constants
     _BLACK_START_SQUARES = [(0,7), (1,7),   (3,7), (4,7),   (6,7), (7,7),
                         (0,6), (1,6),   (3,6), (4,6),   (6,6), (7,6)]
     _WHITE_START_SQUARES = [(0,1), (1,1),   (3,1), (4,1),   (6,1), (7,1),
@@ -20,7 +21,7 @@ class ExamplePlayer:
     }
 
     WEIGHT_FILE = ml.WEIGHT_FILE
-    N_FEATURES = 7 # No bias
+    N_FEATURES = 7
 
 
     def __init__(self, colour):
@@ -48,7 +49,7 @@ class ExamplePlayer:
             np.savetxt(self.WEIGHT_FILE, weights, delimiter=',')
             
         self.weights = np.loadtxt(open(self.WEIGHT_FILE, "rb"), delimiter=",")
-        print(self.weights, self.N_FEATURES)
+        
         assert (len(self.weights) == self.N_FEATURES)
 
     def action(self):
@@ -60,8 +61,7 @@ class ExamplePlayer:
         return an allowed action to play on this turn. The action must be
         represented based on the spec's instructions for representing actions.
         """
-        # TODO: Decide what action to take, and return it
-        #an_action = bb.search(self)
+        
         start = time.time()
         print(self.depth_limit)
 
@@ -70,9 +70,6 @@ class ExamplePlayer:
         print(an_action)
         self.time_elapsed += time.time() - start
         return an_action.toTuple()
-
-#if bb.low_risk(self.board): an_action = bb.minimax_wrapper(self.board, 1, self.weights, self.colour, -1000, 1000, 1)
-#else: an_action = bb.minimax_wrapper(self.board, 1, self.weights, self.colour, -1000, 1000, self.depth_limit)
 
     def update(self, colour, action):
         """
@@ -92,7 +89,7 @@ class ExamplePlayer:
         for the player colour (your method does not need to validate the action
         against the game rules).
         """
-        # TODO: Update state representation in response to action.
+
         curr_board = self.board
         if(action[0] == "BOOM"):
             next_board = boom(action[1], curr_board)
@@ -101,7 +98,7 @@ class ExamplePlayer:
             next_board = move(action[1], action[2], action[3], curr_board, colour)
             self.board = next_board
 
-        # Linearly increase depth limit
+        # Somehow change the depth limit?
         w, b = bb.count_tokens(self.board)
         #self.depth_limit = 6 - (w+b)//8
 

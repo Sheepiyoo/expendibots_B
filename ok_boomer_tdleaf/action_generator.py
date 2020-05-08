@@ -41,7 +41,6 @@ def detect_suicide(coordinate, board, player_colour):
     
     return (before_w == after_w) ^ (before_b == after_b)    # True if only white or black's tokens change, but not both
 
-# Copied from big brains
 def count_tokens(board):
     """ Returns the number of white and black tokens on the board """
     count = [0, 0]

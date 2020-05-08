@@ -23,6 +23,8 @@ logger.addHandler(file_handler)
 
 
 def flip_board(board, colour):
+    "Flip board positions if its black"
+
     if colour == "black":
         new_state = {}
         new_state["white"] = [flip_row(stack) for stack in board["white"]]
@@ -32,6 +34,8 @@ def flip_board(board, colour):
     return new_state
 
 def flip_row(stack):
+    "Helper function for board flipper"
+
     return (stack[0], stack[1], 7 - stack[2])
 
 def flip_action(action, colour):
@@ -73,10 +77,6 @@ def evaluate(weights, state, colour):
 
     return reward
 
-def evaluate_leaf_for_ML(weights, state):
-    w, b = count_tokens(state)
-    return w - b 
-
 def apply_action(player_colour, board, action):
     """ Applies an action to the board and returns the new board configuration. """
 
@@ -89,6 +89,7 @@ def apply_action(player_colour, board, action):
 
 def count_tokens(board):
     """ Returns the number of white and black tokens on the board """
+    
     count = [0, 0]
 
     for n, x, y in board["white"]:
@@ -101,6 +102,8 @@ def count_tokens(board):
 
 
 def heuristic(board, colour):
+    """ Distance heuristic """
+    
     # Best of n stack distance
     if len(board[colour]) > 0:
         best_stack = max([stack[N_TOKENS] for stack in board[colour]])
