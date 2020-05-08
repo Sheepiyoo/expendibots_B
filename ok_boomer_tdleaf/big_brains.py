@@ -301,7 +301,7 @@ def get_features(state):
 
 
     ###-------------------- difference of stacks --------------------###
-    features.append((len(state["white"]) - len(state["black"]))/12)
+    #features.append((len(state["white"]) - len(state["black"]))/12)
     
     ###-------------------- average location of all tokens --------------------###
     # I think these features were useless bc the weights got too small 
