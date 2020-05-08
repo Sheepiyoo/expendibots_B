@@ -34,25 +34,6 @@ class Action:
     def __repr__(self):
         return str(self.toTuple())
 
-def detect_suicide(coordinate, board, player_colour):
-    next_board = boom(coordinate, board)
-    before_w, before_b = count_tokens(board)
-    after_w, after_b = count_tokens(next_board)
-    
-    return (before_w == after_w) ^ (before_b == after_b)    # True if only white or black's tokens change, but not both
-
-def count_tokens(board):
-    """ Returns the number of white and black tokens on the board """
-    count = [0, 0]
-
-    for n, x, y in board["white"]:
-        count[0] += n
-
-    for n, x, y in board["black"]:
-        count[1] += n
-    
-    return count
-
 def get_possible_actions(board, player_colour):
     logger.debug(print_board(get_grid_format(board)))
     all_moves = []

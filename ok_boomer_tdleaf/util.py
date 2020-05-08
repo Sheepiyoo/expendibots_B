@@ -150,3 +150,23 @@ def print_board(board_dict, message="", unicode=False, compact=True, **kwargs):
     # print it
     #print(template.format(message, *cells), **kwargs)
     return template.format(message, *cells)
+
+def count_tokens(board):
+    """ Returns the number of white and black tokens on the board """
+    count = [0, 0]
+
+    for n, x, y in board["white"]:
+        count[0] += n
+
+    for n, x, y in board["black"]:
+        count[1] += n
+    
+    return count
+
+def opponent(colour):
+    if colour == "white":
+        return "black"
+    elif colour == "black":
+        return "white"
+    
+    raise Exception("Invalid colour")
