@@ -21,8 +21,8 @@ swap = False
 
 while num_tests < MAX_TESTS:
 
-    white = "ok_boomer_tdleaf"
-    black = "ok_boomer_alphabeta" #"ok_boomer_greedy" 
+    white = "ok_boomer_alphabeta"
+    black =  "ok_boomer_tdleaf"#"ok_boomer_greedy" 
     
     if swap:
         temp = black

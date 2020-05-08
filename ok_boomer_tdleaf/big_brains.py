@@ -45,6 +45,7 @@ def search(player):
 
 def evaluate(weights, state, colour):
     """ Returns an evaluation value for a given action. """
+
     if colour == "black":
         new_state = {}
         new_state["white"] = state["black"]
@@ -53,7 +54,6 @@ def evaluate(weights, state, colour):
     else:
         features = get_features(state)
     eval = np.dot(weights, features)
-    #print(eval)
     if len(state["black"]) == len(state["white"]) == 0 :
         reward = 0
     else: reward = math.tanh(eval)
@@ -62,8 +62,6 @@ def evaluate(weights, state, colour):
 
 def evaluate_leaf_for_ML(weights, state):
     w, b = count_tokens(state)
-
-    # For training data, just use alpha beta
     return w - b 
 
 def apply_action(player_colour, board, action):
@@ -203,12 +201,13 @@ def minimax_wrapper(board, depth, weights, player_colour, alpha, beta, depth_lim
 
 def minimax(board, depth, weights, player_colour, alpha, beta, depth_limit):
     best_leaf_state = board
+
     if is_game_over(board):
         return utility(board), None, board
 
     if depth == depth_limit:
         evaluation = evaluate(weights, board, player_colour) # returns the reward for the given weight
-        print("this is evaluation", evaluation)
+        #print("this is evaluation", evaluation)
 
         return evaluation, None, board
     
@@ -277,6 +276,10 @@ def get_features(state):
     features.append(nb/12)
     features.append((nw-nb)/12)
 
+    ###-------------------- ratio of white:black tokens --------------------### 
+    # features.append(nw/nb)
+
+
     ###-------------------- difference of stacks --------------------###
     features.append((len(state["white"]) - len(state["black"]))/12)
     
@@ -287,13 +290,15 @@ def get_features(state):
     #features.append((avg_white_x-avg_black_x)/8)
     #features.append((avg_white_y-avg_black_y)/8)
 
+
+
     ###-------------------- difference of chunks --------------------### 
     white_chunks = len(get_chunks({"white": state["white"]}))
     black_chunks = len(get_chunks({"black": state["black"]}))
     features.append((white_chunks-black_chunks)/12)
 
     ###-------------------- difference of distances --------------------### 
-    features.append(heuristic2(state, "white"))
+    features.append(heuristic(state, "white"))
 
     ###-------------------- corner position --------------------### 
     # difference in corner positions
