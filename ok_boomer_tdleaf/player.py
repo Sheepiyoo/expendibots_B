@@ -20,7 +20,7 @@ class ExamplePlayer:
     }
 
     WEIGHT_FILE = ml.WEIGHT_FILE
-    N_FEATURES = 8 # No bias
+    N_FEATURES = 6 # No bias
 
 
     def __init__(self, colour):
@@ -69,6 +69,8 @@ class ExamplePlayer:
         self.time_elapsed += time.time() - start
         return an_action[1].toTuple()
 
+#if bb.low_risk(self.board): an_action = bb.minimax_wrapper(self.board, 1, self.weights, self.colour, -1000, 1000, 1)
+#else: an_action = bb.minimax_wrapper(self.board, 1, self.weights, self.colour, -1000, 1000, self.depth_limit)
 
     def update(self, colour, action):
         """

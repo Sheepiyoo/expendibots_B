@@ -62,7 +62,7 @@ def get_possible_actions(board, player_colour):
     for stack_from in stacks:
         all_moves += get_possible_actions_from_stack(stack_from, board, player_colour)
     
-    all_moves.sort(key=lambda x: x.action=="MOVE")
+    all_moves.sort(key=lambda x: x.action=="BOOM")
     return all_moves
 
 # returns possible moves for a given stack
@@ -72,10 +72,10 @@ def get_possible_actions_from_stack(stack_from, board, player_colour):
     x_pos, y_pos = stack_from[X_POS],  stack_from[Y_POS]
 
     # generate the order of moves depending on the number of white in top half, bottom half, left half, right half, 
-    if player_colour == "white":
-        opponent_colour = "black"
-    else:
-        opponent_colour="white"
+    #if player_colour == "white":
+    #    opponent_colour = "black"
+    #else:
+    #    opponent_colour="white"
     
     #order = analyse_board(board, opponent_colour)
     #order = ["up", "right", "down", "left"]

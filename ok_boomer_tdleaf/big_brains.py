@@ -53,7 +53,10 @@ def evaluate(weights, state, colour):
     else:
         features = get_features(state)
     eval = np.dot(weights, features)
-    reward = math.tanh(eval)
+    #print(eval)
+    if len(state["black"]) == len(state["white"]):
+        reward = 0
+    else: reward = math.tanh(eval)
 
     return reward
 
@@ -105,11 +108,27 @@ def heuristic(board, colour):
 
     return 1/max(1, distances[0])
 
+def heuristic2(board, colour):
+    # Best of n stack distance
+    if len(board[colour]) > 0:
+        best_stack = max([stack[N_TOKENS] for stack in board[colour]])
+    else:
+        best_stack = 1
+
+    distances = 0
+    
+    for stack in board[opponent(colour)]:
+        distances += min_distance_from_stack(stack, board[colour])
+    
+
+    return 1/distances
+        
+
 def min_distance_from_stack(source, stack_list):
     # Minimum distance from a black stack to one of the white stacks
     min_distance = BOARD_SIZE*2
     for i in range(len(stack_list)):
-        h_dist = manhattan_distance(source, stack_list[i]) - 1
+        h_dist = manhattan_distance(source, stack_list[i]) 
         min_distance = min(min_distance, h_dist)
 
     return min_distance
@@ -188,7 +207,9 @@ def minimax(board, depth, weights, player_colour, alpha, beta, depth_limit):
         return utility(board), None, board
 
     if depth == depth_limit:
-        evaluation = evaluate(weights, board, player_colour)
+        evaluation = evaluate(weights, board, player_colour) # returns the reward for the given weight
+        print("this is evaluation", evaluation)
+
         return evaluation, None, board
     
     if(player_colour=="white"):
@@ -250,42 +271,44 @@ def get_features(state):
 
     grid_format = game.get_grid_format(state)
 
-    # difference of tokens
+    ###-------------------- difference of tokens--------------------###
     nw, nb = count_tokens(state)
     features.append(nw/12)
     features.append(nb/12)
     features.append((nw-nb)/12)
 
-    # difference of stacks  
+    ###-------------------- difference of stacks --------------------###
     features.append((len(state["white"]) - len(state["black"]))/12)
     
-    # difference of chunks
+    ###-------------------- average location of all tokens --------------------###
+    # I think these features were useless bc the weights got too small 
+    #avg_white_x, avg_white_y = get_avg_loc(state, "white")
+    #avg_black_x, avg_black_y = get_avg_loc(state, "black")
+    #features.append((avg_white_x-avg_black_x)/8)
+    #features.append((avg_white_y-avg_black_y)/8)
+
+    ###-------------------- difference of chunks --------------------### 
     white_chunks = len(get_chunks({"white": state["white"]}))
     black_chunks = len(get_chunks({"black": state["black"]}))
     features.append((white_chunks-black_chunks)/12)
 
-    # difference of distances
-    #features.append(heuristic(state, "white") - heuristic(state, "black"))
+    ###-------------------- difference of distances --------------------### 
+    features.append(heuristic2(state, "white"))
 
+    ###-------------------- corner position --------------------### 
     # difference in corner positions
-    #score_corners(grid_format)
+    # score_corners(grid_format)
 
-    avg_white_x, avg_white_y = get_avg_loc(state, "white")
-    avg_black_x, avg_black_y = get_avg_loc(state, "black")
-    features.append((avg_white_x-avg_black_x)/8)
-    features.append((avg_white_y-avg_black_y)/8)
 
+    ###-------------------- difference of area covered --------------------### 
     # difference in amount of area covered
-    features.append((calc_spread(state, "white") - calc_spread(state, "black"))/32)
+    # features.append((calc_spread(state, "white") - calc_spread(state, "black"))/32)
 
     #features.append((calc_dist_middle(state,"white")/48)-(calc_dist_middle(state,"black")/48))
+    ###-------------------- difference in edge positions --------------------### 
+    ###-------------------- difference in centre positions --------------------### 
+    ###-------------------- number in opponent half --------------------### 
 
-    # difference in edge positions
-    
-    # difference in centre positions
-
-    # number in opponent half
-    #features.append((calc_white_half(state)-calc_black_half(state))/12)
 
     return np.array(features)
 
@@ -385,7 +408,10 @@ def chunk_recursive(x, y, grid_format, chunk):
       return
     return   
 
-
+def is_low_risk(board):
+    if((len(board["white"])+len(board["black"])>20) and (abs(len(board["white"])-len(board["black"])<2))):
+        return True
+    return False
 
 # normalise the weights !!!
 # does the chunkc calculation outweight the benefit of having a larger depth

@@ -69,12 +69,14 @@ def evaluate(player_colour, board):
     WEIGHT = 0.9    # Controls importance of removing pieces vs moving closer
     EPSILON = 1
 
+    if player_colour == "black":
+        new_state = {}
+        new_state["white"] = board["black"]
+        new_state["black"] = board["white"]
+
     before = count_tokens(board) 
     eval = (before[0]) - (before[1])    # Higher = More white removed
     distance_heuristic = 1/max(EPSILON, math.tanh(heuristic(board, player_colour))) # Higher = White is closer to black
-
-    if player_colour == "black":
-       distance_heuristic *= -1
 
     return math.tanh(eval)
 
