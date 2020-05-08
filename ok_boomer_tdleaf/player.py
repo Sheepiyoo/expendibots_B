@@ -64,17 +64,12 @@ class ExamplePlayer:
         #an_action = bb.search(self)
         start = time.time()
         print(self.depth_limit)
-        if self.colour == "black":
-            new_state = {}
-            new_state["white"] = self.board["black"]
-            new_state["black"] = self.board["white"]
-        else:
-            new_state = self.board
 
-        an_action = bb.minimax_wrapper(new_state, 1, self.weights, "white", -1000, 1000, self.depth_limit)
-        #print(an_action)
+        an_action = bb.minimax_wrapper(self.board, 1, self.weights, self.colour, -1000, 1000, self.depth_limit)
+
+        print(an_action)
         self.time_elapsed += time.time() - start
-        return an_action[1].toTuple()
+        return an_action.toTuple()
 
 #if bb.low_risk(self.board): an_action = bb.minimax_wrapper(self.board, 1, self.weights, self.colour, -1000, 1000, 1)
 #else: an_action = bb.minimax_wrapper(self.board, 1, self.weights, self.colour, -1000, 1000, self.depth_limit)

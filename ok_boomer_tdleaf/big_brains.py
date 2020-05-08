@@ -21,6 +21,25 @@ file_handler = logging.FileHandler(filename='training/data.log'.format(timestamp
 file_handler.setFormatter(formatter)
 logger.addHandler(file_handler)
 
+
+def flip_board(board, colour):
+    if colour == "black":
+        new_state = {}
+        new_state["white"] = [flip_row(stack) for stack in board["white"]]
+        new_state["black"] = [flip_row(stack) for stack in board["black"]]
+    else:
+        new_state = board
+    return new_state
+
+def flip_row(stack):
+    return (stack[0], stack[1], 7 - stack[2])
+
+def flip_action(action, colour):
+    if colour == "black":
+        action.source = (action.source[0], 7 - action.source[1])
+        action.target = (action.target[0], 7 - action.target[1])
+    return action
+
 def search(player):
     """ Returns an action for the given player. """
 
@@ -45,14 +64,8 @@ def search(player):
 
 def evaluate(weights, state, colour):
     """ Returns an evaluation value for a given action. """
-
-    if colour == "black":
-        new_state = {}
-        new_state["white"] = state["black"]
-        new_state["black"] = state["white"]
-        features = get_features(new_state)
-    else:
-        features = get_features(state)
+    
+    features = get_features(state)
     eval = np.dot(weights, features)
     if len(state["black"]) == len(state["white"]) == 0 :
         reward = 0
@@ -103,6 +116,8 @@ def heuristic(board, colour):
     count = w if colour=="white" else b
 
     distances.sort()
+
+    if len(distances) == 0: return 0
 
     return 1/max(1, distances[0])
 
@@ -159,6 +174,8 @@ def utility(board):
 
 
 def minimax_wrapper(board, depth, weights, player_colour, alpha, beta, depth_limit):
+
+    board = flip_board(board, player_colour)
     actions = actgen.get_possible_actions(board, player_colour)
     action_rank = []
 
@@ -192,12 +209,16 @@ def minimax_wrapper(board, depth, weights, player_colour, alpha, beta, depth_lim
 
     selected_action = action_rank[random.randint(0, len(trimmed_actions)-1)]
     best, best_action, best_leaf_state = selected_action
+    
+    print(best_action)
+    best_action = flip_action(best_action, player_colour)
+    print(best_action)
 
     #logger.debug(print_board(game.get_grid_format(best_leaf_state)))
     feature_string = [str(x) for x in get_features(best_leaf_state)]
     logger.debug("{},{}".format(evaluate(weights, best_leaf_state, player_colour), ",".join(feature_string)))
 
-    return selected_action
+    return best_action
 
 def minimax(board, depth, weights, player_colour, alpha, beta, depth_limit):
     best_leaf_state = board
