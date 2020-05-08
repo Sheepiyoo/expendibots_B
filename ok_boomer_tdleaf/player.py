@@ -41,7 +41,10 @@ class ExamplePlayer:
         self.colour = colour
         self.time_elapsed = 0
         self.depth_limit = 3
-        self.TTable = {}        #Transposition table; store (numTimesVisited (for draw checking), (bestMove), (depthFromThisPosition))
+        self.TTable = bb.TTable()    ##TTable for draw avoidance
+        
+        self.TTable.addState(self.board)
+        #Transposition table; store (numTimesVisited (for draw checking), (bestMove), (depthFromThisPosition))
 
         # Generate random weights if no weight file present
         if not os.path.exists(self.WEIGHT_FILE):
@@ -66,7 +69,7 @@ class ExamplePlayer:
         start = time.time()
         print(self.depth_limit)
 
-        an_action = bb.minimax_wrapper(self.board, 1, self.weights, self.colour, -1000, 1000, self.depth_limit)
+        an_action = bb.minimax_wrapper(self.board, 1, self.weights, self.colour, -1000, 1000, self.depth_limit, self.TTable)
 
         print(an_action)
         self.time_elapsed += time.time() - start
@@ -92,6 +95,7 @@ class ExamplePlayer:
         """
 
         curr_board = self.board
+
         if(action[0] == "BOOM"):
             next_board = boom(action[1], curr_board)
             self.board = next_board
@@ -99,8 +103,10 @@ class ExamplePlayer:
             next_board = move(action[1], action[2], action[3], curr_board, colour)
             self.board = next_board
 
+        self.TTable.addState(self.board)
+        
         # Somehow change the depth limit?
-        w, b = bb.count_tokens(self.board)
+        # w, b = bb.count_tokens(self.board)
         #self.depth_limit = 6 - (w+b)//8
 
         """

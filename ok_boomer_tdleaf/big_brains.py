@@ -22,7 +22,36 @@ file_handler = logging.FileHandler(filename='training/data.log'.format(timestamp
 file_handler.setFormatter(formatter)
 logger.addHandler(file_handler)
 
-def minimax_wrapper(board, depth, weights, player_colour, alpha, beta, depth_limit):
+class TTable:
+    def __init__(self):
+        self.visited_states = {}
+
+    def addState(self, board):
+        State = self.dict_to_set(board)
+
+        if State in self.visited_states.keys():
+            self.visited_states[State] += 1
+        else:
+            self.visited_states[State] = 0
+
+    def getCount(self, board):
+        State = self.dict_to_set(board)
+        if State in self.visited_states.keys():
+            return self.visited_states[State]
+        
+        return 0
+
+    def dict_to_set(self, board_dict):
+        new_dict = set()
+        for i in board_dict["white"]:
+            new_dict.add(tuple([0] + i))
+
+        for i in board_dict["black"]:
+            new_dict.add(tuple([1] + i))
+        
+        return frozenset(new_dict)
+
+def minimax_wrapper(board, depth, weights, player_colour, alpha, beta, depth_limit, ttable):
 
     board = flip_board(board, player_colour)
     actions = actgen.get_possible_actions(board, player_colour)
@@ -34,13 +63,12 @@ def minimax_wrapper(board, depth, weights, player_colour, alpha, beta, depth_lim
         if action.action == "BOOM" and detect_suicide(board, next_board):
             continue
         
-        if player_colour == "white":
-            score, _, best_leaf = minimax(next_board, depth+1, weights, "black", alpha, beta, depth_limit)
-            action_rank.append((score, action, best_leaf))
-        else:
-            score, _, best_leaf = minimax(next_board, depth+1, weights, "white", alpha, beta, depth_limit)
-            action_rank.append((score, action, best_leaf))
+        if player_colour != "white":
+            raise Exception("Colour Error")
 
+        score, _, best_leaf = minimax(next_board, depth+1, weights, "black", alpha, beta, depth_limit, ttable)
+        action_rank.append((score, action, best_leaf))
+        
     action_rank.sort(reverse=(player_colour=="white"), key=lambda x: x[0])
     
     trimmed_actions = [action_rank[0]]
@@ -69,14 +97,14 @@ def minimax_wrapper(board, depth, weights, player_colour, alpha, beta, depth_lim
 
     return best_action
 
-def minimax(board, depth, weights, player_colour, alpha, beta, depth_limit):
+def minimax(board, depth, weights, player_colour, alpha, beta, depth_limit, ttable):
     MIN = -1000
     MAX = 1000
 
     best_leaf_state = board
 
-    if is_game_over(board):
-        return utility(board), None, board
+    if terminal_test(board, ttable):
+        return utility(board, ttable), None, board
 
     if depth == depth_limit:
         evaluation = evaluate(weights, board, player_colour) # returns the reward for the given weight
@@ -94,7 +122,7 @@ def minimax(board, depth, weights, player_colour, alpha, beta, depth_limit):
             if action.action == "BOOM" and detect_suicide(board, next_board):
                 continue
 
-            score, _, best_leaf = minimax(next_board, depth+1, weights, "black", alpha, beta, depth_limit)
+            score, _, best_leaf = minimax(next_board, depth+1, weights, "black", alpha, beta, depth_limit, ttable)
             if score > best:
                 best = score
                 best_action = action
@@ -102,22 +130,19 @@ def minimax(board, depth, weights, player_colour, alpha, beta, depth_limit):
             alpha = max(alpha, best)
 
             if alpha >= beta:
-                #print("MAX BROKEN")
                 break
-        #print("the best action for white is", best, best_action)
 
     else:
         actions = actgen.get_possible_actions(board, "black")
         best = MAX
         best_action = None
         for action in actions:
-            #print(action)
             next_board = apply_action(player_colour, board, action)
 
             if action.action == "BOOM" and detect_suicide(board, next_board):
                 continue
 
-            score, _, best_leaf = minimax(next_board, depth+1, weights, "white", alpha, beta, depth_limit)
+            score, _, best_leaf = minimax(next_board, depth+1, weights, "white", alpha, beta, depth_limit, ttable)
             
             if score < best:
                 best = score
@@ -125,9 +150,7 @@ def minimax(board, depth, weights, player_colour, alpha, beta, depth_limit):
                 best_leaf_state = best_leaf
             beta = min(beta, best)
             if beta <= alpha:
-                #print("MIN BROKEN")
                 break
-        #print("the best action for black is", best, best_action)
         
     return best, best_action, best_leaf_state
 
@@ -142,15 +165,28 @@ def evaluate(weights, state, colour):
 
     return reward
 
-def is_game_over(board):
-    n_white, n_black = count_tokens(board)
-    return n_white == 0 or n_black == 0
+def is_repeated(board, ttable):
+    return ttable.getCount(board) == 4
 
-def utility(board):
+def terminal_test(board, ttable):
     n_white, n_black = count_tokens(board)
-    if n_white == 0 and n_black == 0: return 0
-    elif n_white == 0: return -1
-    else: return 1
+    return n_white == 0 or n_black == 0 or is_repeated(board, ttable)
+
+def utility(board, ttable):
+    n_white, n_black = count_tokens(board)
+    
+    if is_repeated(board, ttable):
+        raise Exception("Draw found!")
+        return 0
+    
+    if n_white == 0 and n_black == 0: 
+        return 0
+    
+    elif n_white == 0: 
+        return -1
+    
+    else: 
+        return 1
 
 def apply_action(player_colour, board, action):
     """ Applies an action to the board and returns the new board configuration. """
@@ -180,7 +216,6 @@ def flip_board(board, colour):
 
 def flip_row(stack):
     "Helper function for board flipper"
-
     return (stack[0], stack[1], 7 - stack[2])
 
 def flip_action(action, colour):
