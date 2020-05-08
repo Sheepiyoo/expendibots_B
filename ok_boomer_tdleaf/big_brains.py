@@ -321,7 +321,7 @@ def get_features(state):
     features.append(heuristic(state, "white") - heuristic(state, "black"))
 
     ###-------------------- ratio of white:black tokens --------------------### 
-    features.append((nw/nb)/12)
+    features.append((nw+1)/(nb+1))
 
     ###-------------------- corner position --------------------### 
     # difference in corner positions
