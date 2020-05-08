@@ -118,7 +118,7 @@ def heuristic(board, colour):
     w, b = count_tokens(board)
     count = w if colour=="white" else b
 
-    return sum(distances)//count
+    return sum(distances)//max(1, best_stack)
 
 def min_distance_from_stack(source, stack_list):
     # Minimum distance from a black stack to one of the white stacks
@@ -159,7 +159,7 @@ def minimax(board, depth, player_colour, alpha, beta):
     if is_game_over(board):
         return utility(board), None
 
-    if depth == 3:
+    if depth == 4:
         evaluation = evaluate(player_colour, board)
         return evaluation, None
     

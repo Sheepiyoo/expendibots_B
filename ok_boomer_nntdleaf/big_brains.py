@@ -1,8 +1,9 @@
-import ok_boomer_tdleaf.action_generator as actgen
-import ok_boomer_tdleaf.game as game
-from ok_boomer_tdleaf.util import *
-from ok_boomer_tdleaf.constants import *
-import ok_boomer_tdleaf.calc_features as calc_features
+import ok_boomer_nntdleaf.action_generator as actgen
+import ok_boomer_nntdleaf.game as game
+from ok_boomer_nntdleaf.util import *
+from ok_boomer_nntdleaf.constants import *
+import ok_boomer_nntdleaf.calc_features as calc_features
+import ok_boomer_nntdleaf.neural_network as nn
 
 import random
 import logging
@@ -18,7 +19,7 @@ timestamp = time.time()
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
-file_handler = logging.FileHandler(filename='training/data.log'.format(timestamp), mode='w')
+file_handler = logging.FileHandler(filename='training/nn_data.log'.format(timestamp), mode='w')
 file_handler.setFormatter(formatter)
 logger.addHandler(file_handler)
 
@@ -75,22 +76,14 @@ def minimax_wrapper(board, depth, weights, player_colour, alpha, beta, depth_lim
             trimmed_actions.append(action_rank[i])
         else:
             break
-    
-    print(len(action_rank))
-    print(len(trimmed_actions))
-    if (len(action_rank) != len(trimmed_actions)):
-        print(trimmed_actions)
 
     selected_action = action_rank[random.randint(0, len(trimmed_actions)-1)]
-    best, best_action, best_leaf_state = selected_action
-    
-    print(best_action)
+    best, best_action, best_leaf_state = selected_action    
     best_action = flip_action(best_action, player_colour)
-    print(best_action)
 
     #logger.debug(print_board(game.get_grid_format(best_leaf_state)))
-    feature_string = [str(x) for x in calc_features.get_features(best_leaf_state)]
-    logger.debug("{},{}".format(evaluate(weights, best_leaf_state, player_colour), ",".join(feature_string)))
+    feature_string = [str(x) for x in calc_features.get_nn_features(best_leaf_state)]
+    logger.debug("{},{}".format(evaluate(best_leaf_state), ",".join(feature_string)))
 
     return best_action
 
@@ -104,7 +97,7 @@ def minimax(board, depth, weights, player_colour, alpha, beta, depth_limit, ttab
         return utility(board, ttable, nturns), None, board
 
     if depth == depth_limit:
-        evaluation = evaluate(weights, board, player_colour) # returns the reward for the given weight
+        evaluation = evaluate(board) # returns the reward for the given weight
         return evaluation, None, board
     
     if(player_colour=="white"):
@@ -151,16 +144,11 @@ def minimax(board, depth, weights, player_colour, alpha, beta, depth_limit, ttab
         
     return best, best_action, best_leaf_state
 
-def evaluate(weights, state, colour):
+def evaluate(state):
     """ Returns an evaluation value for a given action. """
-    
-    features = calc_features.get_features(state)
-    eval = np.dot(weights, features)
-    if len(state["black"]) == len(state["white"]) == 0 :
-        reward = 0
-    else: reward = math.tanh(eval)
-
-    return reward
+    features = calc_features.get_nn_features(state)
+    eval = nn.wrapper_predict(features)
+    return eval
 
 def is_repeated(board, ttable):
     if ttable.getCount(board) == 3:

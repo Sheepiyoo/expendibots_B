@@ -1,7 +1,8 @@
 import subprocess
 import logging
-import ok_boomer_tdleaf.machine_learning as ml
+import ok_boomer_nntdleaf.neural_network as nn
 import numpy as np
+import os
 
 FORMAT = '%(asctime)s: %(levelname)s: %(message)s'
 
@@ -19,10 +20,13 @@ MAX_TESTS = 20
 logger.debug("------------------- New Training Session ----------------")
 swap = False
 
+if not os.path.exists("NN_i-h.csv") or not os.path.exists ("NN_h-o.csv"):
+    nn.reset_weights("NN_i-h.csv", "NN_h-o.csv", 64, 10, 1)
+
 while num_tests < MAX_TESTS:
 
-    white = "ok_boomer_alphabeta"
-    black =  "ok_boomer_tdleaf"#"ok_boomer_greedy" 
+    black = "ok_boomer_alphabeta"
+    white =  "ok_boomer_nntdleaf"#"ok_boomer_greedy" 
     
     if swap:
         temp = black
@@ -34,12 +38,7 @@ while num_tests < MAX_TESTS:
     p.wait()
 
     # Update weights
-    weights = ml.load_weights()
-
-    rewards, features = ml.load_data('training/data.log')
-    new_weights = ml.update_weights(weights, rewards, features, ml.LR, ml.DECAY)
-    logger.debug(new_weights)
-    np.savetxt(ml.WEIGHT_FILE, new_weights, delimiter=',')
+    nn.wrapper_update()
 
     num_tests += 1
     swap = swap
