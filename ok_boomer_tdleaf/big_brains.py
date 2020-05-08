@@ -318,10 +318,10 @@ def get_features(state):
     features.append((white_chunks-black_chunks)/12)
 
     ###-------------------- difference of distances --------------------### 
-    features.append(heuristic(state, "white"))
+    features.append(heuristic(state, "white") - heuristic(state, "black"))
 
     ###-------------------- ratio of white:black tokens --------------------### 
-    features.append(nw/nb)
+    features.append((nw/nb)/12)
 
     ###-------------------- corner position --------------------### 
     # difference in corner positions
