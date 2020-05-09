@@ -4,3 +4,6 @@
 *.pyc
 *.pyc
 *.pyc
+action-gen.log
+big-brains.log
+game-training.log
