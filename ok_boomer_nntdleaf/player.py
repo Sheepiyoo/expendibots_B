@@ -1,8 +1,8 @@
 # coding: utf-8
-from ok_boomer_tdleaf.constants import *
-from ok_boomer_tdleaf.game import *
-import ok_boomer_tdleaf.big_brains as bb
-import ok_boomer_tdleaf.machine_learning as ml
+from ok_boomer_nntdleaf.constants import *
+from ok_boomer_nntdleaf.game import *
+import ok_boomer_nntdleaf.big_brains as bb
+import ok_boomer_nntdleaf.machine_learning as ml
 import time
 import numpy as np
 import os
@@ -40,7 +40,7 @@ class ExamplePlayer:
         self.board = self.INITIAL_BOARD
         self.colour = colour
         self.time_elapsed = 0
-        self.depth_limit = 3
+        self.depth_limit = 1
         self.TTable = bb.TTable()    ##TTable for draw avoidance
         self.num_turns = 0
 
