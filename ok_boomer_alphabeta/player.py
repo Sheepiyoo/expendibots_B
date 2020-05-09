@@ -76,4 +76,6 @@ class ExamplePlayer:
             next_board = move(action[1], action[2], action[3], curr_board, colour)
             self.board = next_board
         
+        exit()
+        
 
