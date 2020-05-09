@@ -54,7 +54,7 @@ def get_possible_actions_from_stack(stack_from, board, player_colour):
     possible_actions.append(Action("BOOM", 1, (x_pos, y_pos), (x_pos, y_pos)))
     
     # for each possible stack of n tokens 
-    for n in range(1, stack_from[N_TOKENS]+1):
+    for n in range(stack_from[N_TOKENS], 0, -1):
         
         # for each possible position from given position
         for (x, y) in possible_positions(stack_from[X_POS], stack_from[Y_POS], n):
