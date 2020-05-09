@@ -45,7 +45,7 @@ class ExamplePlayer:
         self.board = self.INITIAL_BOARD
         self.colour = colour
         self.time_elapsed = 0
-        self.depth_limit = 3
+        self.depth_limit = 5
         self.TTable = bb.TTable()    ##TTable for draw avoidance
         self.num_turns = 0
 
