@@ -24,10 +24,18 @@ class ExamplePlayer:
     N_FEATURES = 6
 
     ### Testing
+    """
+    TEST_BOARD = {
+        "black": [[2,0,5],[4,1,5],[1,4,5],[1,4,6],[2,6,6],[2,7,6]],
+        "white": [[1,0,0],[1,0,1],[1,1,1],[4,3,0],[3,4,0],[1,7,0],[1,3,4]]
+    }
+    """
+    """
     TEST_BOARD = {
         "black": [[2, 0, 6], [1, 1, 6], [1, 1, 7], [1, 3, 6], [1, 3, 7], [1, 4, 6], [1, 5, 7], [1, 6, 4], [1, 6, 5], [1, 6, 6]],
         "white": [[1, 1, 1], [1, 3, 0], [2, 3, 1], [1, 4, 0], [1, 4, 1], [1, 5, 0], [1, 6, 1], [1, 7, 1], [1, 7, 0], [2, 2, 5]]
     }
+    """
 
     def __init__(self, colour):
         """
@@ -76,7 +84,7 @@ class ExamplePlayer:
 
         an_action = bb.iterative_depth_search(self.board, 1, self.weights, self.colour, -1000, 1000, self.depth_limit, self.HTable, self.num_turns)
 
-        #an_action = bb.minimax_wrapper(TEST_BOARD, 1, self.weights, self.colour, -1000, 1000, self.depth_limit, self.TTable, self.num_turns)
+        #an_action = bb.iterative_depth_search(self.TEST_BOARD, 1, self.weights, self.colour, -1000, 1000, self.depth_limit, self.HTable, self.num_turns)
         
         self.time_elapsed += time.time() - start
         return an_action.toTuple()
@@ -122,5 +130,4 @@ class ExamplePlayer:
         else:
             self.depth_limit = 6 - b//3
         """
-        exit()
 
