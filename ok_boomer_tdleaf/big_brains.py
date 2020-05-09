@@ -101,6 +101,7 @@ def minimax(board, depth, weights, player_colour, alpha, beta, depth_limit, ttab
     best_leaf_state = board
 
     if terminal_test(board, ttable, nturns):
+        print("Terminal test!")
         return utility(board, ttable, nturns), None, board
 
     if depth == depth_limit:
@@ -226,3 +227,4 @@ def flip_action(action, colour):
         action.source = (action.source[0], 7 - action.source[1])
         action.target = (action.target[0], 7 - action.target[1])
     return action
+
