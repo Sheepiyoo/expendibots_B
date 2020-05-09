@@ -2,7 +2,7 @@ import numpy as np
 import glob
 
 DECAY = 0.9
-LR = 0.05
+LR = 0.001
 WEIGHT_FILE = 'weights.csv'
 
 def load_data(filename):
@@ -23,6 +23,7 @@ def update_weights(weights, rewards, features, lr, gamma):
     r1 = rewards[:num_steps-1]
     r2 = rewards[1:]
     differences = r2 - r1
+    #print(differences)
     print(rewards)
     
     #Iterate through each step made in game

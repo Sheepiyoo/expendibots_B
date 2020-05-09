@@ -2,6 +2,7 @@ import ok_boomer_tdleaf.game as game
 from ok_boomer_tdleaf.util import *
 from ok_boomer_tdleaf.constants import *
 import numpy as np
+from ok_boomer_tdleaf.action_generator import possible_positions
 
 def get_features(state):
     features = []
@@ -35,10 +36,12 @@ def get_features(state):
     features.append((white_chunks-black_chunks)/12)
 
     ###-------------------- difference of distances --------------------### 
-    features.append(heuristic(state, "white") - heuristic(state, "black"))
+    #features.append(heuristic(state, "white") - heuristic(state, "black"))
 
     ###-------------------- ratio of white:black tokens --------------------### 
     features.append((nw+1)/(nb+1))
+
+    features.append(get_danger_score(state))
 
     ###-------------------- corner position --------------------### 
     # difference in corner positions
@@ -198,6 +201,12 @@ def heuristic2(board, colour):
     
 
     return 1/distances
+
+def get_danger_score(board):
+    score = 0
+    for stack in board["white"]:
+        score += len(possible_positions(stack[1], stack[2], 1))
+    return score/96
         
 
 def min_distance_from_stack(source, stack_list):

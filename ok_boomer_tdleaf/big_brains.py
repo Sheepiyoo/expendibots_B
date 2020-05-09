@@ -26,13 +26,24 @@ class TTable:
     def __init__(self):
         self.visited_states = {}
 
-    def addState(self, board):
+    def in_state(self, board):
         State = self.dict_to_set(board)
-
         if State in self.visited_states.keys():
-            self.visited_states[State] += 1
-        else:
-            self.visited_states[State] = 0
+            return True
+        else: return False
+
+    def get_next(self, board):
+        state = self.dict_to_set(board)
+        return self.visited_states[state]
+
+    def addState(self, board, best_leaf):
+        State = self.dict_to_set(board)
+        self.visited_states[State] = best_leaf
+
+        #if State in self.visited_states.keys():
+        #    self.visited_states[State] += 1
+        #else:
+        #    self.visited_states[State] = 0
 
     def getCount(self, board):
         State = self.dict_to_set(board)
@@ -51,6 +62,15 @@ class TTable:
         
         return frozenset(new_dict)
 
+
+def iterative_depth_search(board, depth, weights, player_colour, alpha, beta, depth_limit, ttable, nturns):
+    board = flip_board(board, player_colour)
+    for i in range(1, depth_limit):
+        best_action = minimax_wrapper(board, depth, weights, player_colour, alpha, beta, i, ttable, nturns)
+    return best_action
+
+
+
 def minimax_wrapper(board, depth, weights, player_colour, alpha, beta, depth_limit, ttable, nturns):
     # Play as white
     board = flip_board(board, player_colour)
@@ -59,35 +79,16 @@ def minimax_wrapper(board, depth, weights, player_colour, alpha, beta, depth_lim
 
     for action in actions:
         next_board = apply_action(player_colour, board, action)
-
         if action.action == "BOOM" and detect_suicide(board, next_board):
             continue
-        
+        if ttable.in_state(next_board):
+            next_board = ttable.get_next(next_board)
         score, _, best_leaf = minimax(next_board, depth+1, weights, "black", alpha, beta, depth_limit, ttable, nturns + 1)
         action_rank.append((score, action, best_leaf))
         
     action_rank.sort(reverse=True, key=lambda x: x[0])
-    
-    trimmed_actions = [action_rank[0]]
+    best, best_action, best_leaf_state = select_random_action(action_rank)
 
-    for i in range(1, len(action_rank)):
-        if action_rank[i-1][0] == action_rank[i][0]:
-            trimmed_actions.append(action_rank[i])
-        else:
-            break
-    
-    #print(len(action_rank))
-    #print(len(trimmed_actions))
-    #if (len(action_rank) != len(trimmed_actions)):
-    
-    print(trimmed_actions)
-
-    selected_action = action_rank[random.randint(0, len(trimmed_actions)-1)]
-    best, best_action, best_leaf_state = selected_action
-
-    print(best)
-    
-    #print(best_action)
     best_action = flip_action(best_action, player_colour)
     print(best_action)
 
@@ -99,6 +100,17 @@ def minimax_wrapper(board, depth, weights, player_colour, alpha, beta, depth_lim
     
     return best_action
 
+def select_random_action(action_rank):
+    trimmed_actions = [action_rank[0]]
+    print(trimmed_actions)
+    for i in range(1, len(action_rank)):
+        if action_rank[i-1][0] == action_rank[i][0]:
+            trimmed_actions.append(action_rank[i])
+        else:
+            break    
+    selected_action = action_rank[random.randint(0, len(trimmed_actions)-1)]
+    return selected_action
+
 def minimax(board, depth, weights, player_colour, alpha, beta, depth_limit, ttable, nturns):
     MIN = -1000
     MAX = 1000
@@ -106,12 +118,14 @@ def minimax(board, depth, weights, player_colour, alpha, beta, depth_limit, ttab
     best_leaf_state = board
 
     if terminal_test(board, ttable, nturns):
-        print("Terminal test!")
+        #print("Terminal test!")
         return utility(board, ttable, nturns), None, board
 
     if depth == depth_limit:
         evaluation = evaluate(weights, board) # returns the reward for the given weight
         return evaluation, None, board
+
+    
     
     if(player_colour=="white"):
         actions = actgen.get_possible_actions(board, "white")
@@ -121,11 +135,14 @@ def minimax(board, depth, weights, player_colour, alpha, beta, depth_limit, ttab
         
         for action in actions:
             next_board = apply_action(player_colour, board, action)
-
             if action.action == "BOOM" and detect_suicide(board, next_board):
                 continue
-
-            score, _, best_leaf = minimax(next_board, depth+1, weights, "black", alpha, beta, depth_limit, ttable, nturns + 1)
+            if ttable.in_state(next_board):
+                next_board = ttable.get_next(next_board)
+                score, _, best_leaf = minimax(next_board, depth+1, weights, "white", alpha, beta, depth_limit, ttable, nturns + 1)
+            else:
+                score, _, best_leaf = minimax(next_board, depth+1, weights, "white", alpha, beta, depth_limit, ttable, nturns + 1)
+                ttable.addState(next_board, best_leaf)
             if score > best:
                 best = score
                 best_action = action
@@ -144,8 +161,14 @@ def minimax(board, depth, weights, player_colour, alpha, beta, depth_limit, ttab
 
             if action.action == "BOOM" and detect_suicide(board, next_board):
                 continue
+            if ttable.in_state(next_board):
+                next_board = ttable.get_next(next_board)
+                score, _, best_leaf = minimax(next_board, depth+1, weights, "white", alpha, beta, depth_limit, ttable, nturns + 1)
+            else:
+                score, _, best_leaf = minimax(next_board, depth+1, weights, "white", alpha, beta, depth_limit, ttable, nturns + 1)
+                ttable.addState(next_board, best_leaf)
 
-            score, _, best_leaf = minimax(next_board, depth+1, weights, "white", alpha, beta, depth_limit, ttable, nturns + 1)
+            #score, _, best_leaf = minimax(next_board, depth+1, weights, "white", alpha, beta, depth_limit, ttable, nturns + 1)
             
             if score < best:
                 best = score
@@ -189,7 +212,7 @@ def terminal_test(board, ttable, nturns):
     n_white, n_black = count_tokens(board)
     if (n_white == 0 or 
         n_black == 0 or 
-        is_repeated(board, ttable) or 
+        #is_repeated(board, ttable) or 
         nturns >= 250*2 or
         n_white == 1):
         print("Terminal state found")
