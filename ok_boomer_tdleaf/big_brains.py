@@ -73,6 +73,7 @@ def iterative_depth_search(board, depth, weights, player_colour, alpha, beta, de
     for i in range(2, 6):
         best_action = minimax_wrapper(board, depth, weights, "white", alpha, beta, i, ttable, nturns)
         print(i)
+        
     ttable.clear()
     
     #best_action = minimax_wrapper(board, depth, weights, "white", alpha, beta, 4, ttable, nturns)
