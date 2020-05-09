@@ -47,8 +47,8 @@ class TTable:
 
     def getCount(self, board):
         State = self.dict_to_set(board)
-        if State in self.visited_states.keys():
-            return self.visited_states[State]
+        #if State in self.visited_states.keys():
+        #    return self.visited_states[State]
         
         return 0
 
@@ -61,19 +61,31 @@ class TTable:
             new_dict.add(tuple([1] + i))
         
         return frozenset(new_dict)
+    
+    def clear(self):
+        self.visited_states = {}
 
 
 def iterative_depth_search(board, depth, weights, player_colour, alpha, beta, depth_limit, ttable, nturns):
     board = flip_board(board, player_colour)
-    for i in range(1, depth_limit):
-        best_action = minimax_wrapper(board, depth, weights, player_colour, alpha, beta, i, ttable, nturns)
+    
+    
+    for i in range(2, 6):
+        best_action = minimax_wrapper(board, depth, weights, "white", alpha, beta, i, ttable, nturns)
+        print(i)
+        
+    ttable.clear()
+    
+    #best_action = minimax_wrapper(board, depth, weights, "white", alpha, beta, 4, ttable, nturns)
+    
+    best_action = flip_action(best_action, player_colour)
+    
     return best_action
 
 
 
 def minimax_wrapper(board, depth, weights, player_colour, alpha, beta, depth_limit, ttable, nturns):
     # Play as white
-    board = flip_board(board, player_colour)
     actions = actgen.get_possible_actions(board, "white")
     action_rank = []
 
@@ -88,9 +100,6 @@ def minimax_wrapper(board, depth, weights, player_colour, alpha, beta, depth_lim
         
     action_rank.sort(reverse=True, key=lambda x: x[0])
     best, best_action, best_leaf_state = select_random_action(action_rank)
-
-    best_action = flip_action(best_action, player_colour)
-    print(best_action)
 
     #logger.debug(print_board(game.get_grid_format(best_leaf_state)))
     feature_string = [str(x) for x in calc_features.get_features(best_leaf_state)]
@@ -122,11 +131,10 @@ def minimax(board, depth, weights, player_colour, alpha, beta, depth_limit, ttab
         return utility(board, ttable, nturns), None, board
 
     if depth == depth_limit:
+        #print("Depth limit {} reached".format(depth))
         evaluation = evaluate(weights, board) # returns the reward for the given weight
         return evaluation, None, board
 
-    
-    
     if(player_colour=="white"):
         actions = actgen.get_possible_actions(board, "white")
        
@@ -137,12 +145,13 @@ def minimax(board, depth, weights, player_colour, alpha, beta, depth_limit, ttab
             next_board = apply_action(player_colour, board, action)
             if action.action == "BOOM" and detect_suicide(board, next_board):
                 continue
-            if ttable.in_state(next_board):
+            elif ttable.in_state(next_board):
                 next_board = ttable.get_next(next_board)
                 score, _, best_leaf = minimax(next_board, depth+1, weights, "white", alpha, beta, depth_limit, ttable, nturns + 1)
             else:
                 score, _, best_leaf = minimax(next_board, depth+1, weights, "white", alpha, beta, depth_limit, ttable, nturns + 1)
                 ttable.addState(next_board, best_leaf)
+            
             if score > best:
                 best = score
                 best_action = action
@@ -161,7 +170,7 @@ def minimax(board, depth, weights, player_colour, alpha, beta, depth_limit, ttab
 
             if action.action == "BOOM" and detect_suicide(board, next_board):
                 continue
-            if ttable.in_state(next_board):
+            elif ttable.in_state(next_board):
                 next_board = ttable.get_next(next_board)
                 score, _, best_leaf = minimax(next_board, depth+1, weights, "white", alpha, beta, depth_limit, ttable, nturns + 1)
             else:

@@ -159,7 +159,7 @@ def minimax(board, depth, player_colour, alpha, beta):
     if is_game_over(board):
         return utility(board), None
 
-    if depth == 4:
+    if depth == 5:
         evaluation = evaluate(player_colour, board)
         return evaluation, None
     
