@@ -159,12 +159,16 @@ def minimax(board, depth, weights, player_colour, alpha, beta, depth_limit, ttab
 
 def evaluate(weights, state):
     """ Returns an evaluation value for a given action. """
-    
+    nw, nb = count_tokens(state)
+    reward = nw - nb
+
+    """
     features = calc_features.get_features(state)
     eval = np.dot(weights, features)
     if len(state["black"]) == len(state["white"]) == 0 :
         reward = 0
     else: reward = math.tanh(eval)
+    """
 
     return reward
 
@@ -184,39 +188,44 @@ def is_repeated(board, ttable):
 def terminal_test(board, ttable, nturns):
     n_white, n_black = count_tokens(board)
     if (n_white == 0 or 
-    n_black == 0 or 
-    is_repeated(board, ttable) or 
-    nturns >= 250*2 or
-    n_white == n_black == 1):
+        n_black == 0 or 
+        is_repeated(board, ttable) or 
+        nturns >= 250*2 or
+        n_white == 1):
         print("Terminal state found")
         return True
 
 def utility(board, ttable, nturns):
     n_white, n_black = count_tokens(board)
     
-    if n_white == n_black == 1:
-        print("Guaranteed draw")
-        return -0.01
-        
+    if n_white == 0:
+        if n_black == 0:
+            print("Draw by mutual annihilation")
+            return -0.001
+        else:
+            print("Opponent wins")
+            return -1
+
+    elif n_white == 1:
+        if n_black == 0:
+            print("I win")
+            return 1
+        elif n_black == 1:
+            print("Guaranteed draw")
+            return -0.001
+        else:
+            return -1
+    elif n_black == 0:
+        print("I win")
+        return 1
+            
     if nturns >= 250*2:
         print("Draw by steps")
-        return -0.01
+        return -0.001
 
     if is_repeated(board, ttable):
         print("Draw by repeated states")
-        return -0.01
-    
-    if n_white == 0 and n_black == 0:
-        print("Draw by mutual annihilation")
-        return 0
-    
-    elif n_white == 0: 
-        print("Opponent wins")
-        return -1
-    
-    else: 
-        print("I win")
-        return 1
+        return -0.001
 
 def apply_action(player_colour, board, action):
     """ Applies an action to the board and returns the new board configuration. """
