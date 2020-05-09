@@ -14,16 +14,17 @@ file_handler.setFormatter(formatter)
 logger.addHandler(file_handler)
 
 num_tests = 0
-MAX_TESTS = 20
+MAX_TESTS = 200
 
 logger.debug("------------------- New Training Session ----------------")
 swap = False
 
 while num_tests < MAX_TESTS:
 
-    white = "ok_boomer_alphabeta"
-    black =  "ok_boomer_tdleaf"#"ok_boomer_greedy" 
-    
+    white = "ok_boomer_tdleaf"
+    black =  "ok_boomer_greedy" 
+    #black = "ok_boomer_alphabeta"
+
     if swap:
         temp = black
         black = white
@@ -42,6 +43,6 @@ while num_tests < MAX_TESTS:
     np.savetxt(ml.WEIGHT_FILE, new_weights, delimiter=',')
 
     num_tests += 1
-    swap = swap
+    swap = not swap
 
                                                                 

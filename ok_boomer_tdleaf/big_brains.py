@@ -76,22 +76,27 @@ def minimax_wrapper(board, depth, weights, player_colour, alpha, beta, depth_lim
         else:
             break
     
-    print(len(action_rank))
-    print(len(trimmed_actions))
-    if (len(action_rank) != len(trimmed_actions)):
-        print(trimmed_actions)
+    #print(len(action_rank))
+    #print(len(trimmed_actions))
+    #if (len(action_rank) != len(trimmed_actions)):
+    
+    print(trimmed_actions)
 
     selected_action = action_rank[random.randint(0, len(trimmed_actions)-1)]
     best, best_action, best_leaf_state = selected_action
+
+    print(best)
     
-    print(best_action)
+    #print(best_action)
     best_action = flip_action(best_action, player_colour)
     print(best_action)
 
     #logger.debug(print_board(game.get_grid_format(best_leaf_state)))
     feature_string = [str(x) for x in calc_features.get_features(best_leaf_state)]
-    logger.debug("{},{}".format(evaluate(weights, best_leaf_state, player_colour), ",".join(feature_string)))
+    logger.debug("{},{}".format(best, ",".join(feature_string)))
 
+    #evaluate_best_leaf(weights, best_leaf_state, ttable)
+    
     return best_action
 
 def minimax(board, depth, weights, player_colour, alpha, beta, depth_limit, ttable, nturns):
@@ -104,7 +109,7 @@ def minimax(board, depth, weights, player_colour, alpha, beta, depth_limit, ttab
         return utility(board, ttable, nturns), None, board
 
     if depth == depth_limit:
-        evaluation = evaluate(weights, board, player_colour) # returns the reward for the given weight
+        evaluation = evaluate(weights, board) # returns the reward for the given weight
         return evaluation, None, board
     
     if(player_colour=="white"):
@@ -151,7 +156,7 @@ def minimax(board, depth, weights, player_colour, alpha, beta, depth_limit, ttab
         
     return best, best_action, best_leaf_state
 
-def evaluate(weights, state, colour):
+def evaluate(weights, state):
     """ Returns an evaluation value for a given action. """
     
     features = calc_features.get_features(state)
@@ -162,19 +167,37 @@ def evaluate(weights, state, colour):
 
     return reward
 
+#def evaluate_best_leaf(weights, state, ttable):
+#    # Ignores draws due to exceeding number of moves
+#    if terminal_test(state, ttable, 0):
+#        return utility(state, ttable, 0)
+#    else:
+#        return evaluate(weights, state)
+
 def is_repeated(board, ttable):
+    #Previously visited 3 times  - this time is the 4th
     if ttable.getCount(board) == 3:
         print("Draw!")
         return True
 
 def terminal_test(board, ttable, nturns):
     n_white, n_black = count_tokens(board)
-    return n_white == 0 or n_black == 0 or is_repeated(board, ttable) or nturns == 250
+    if (n_white == 0 or 
+    n_black == 0 or 
+    is_repeated(board, ttable) or 
+    nturns >= 250*2 or
+    n_white == n_black == 1):
+        print("Terminal state found")
+        return True
 
 def utility(board, ttable, nturns):
     n_white, n_black = count_tokens(board)
     
-    if nturns == 250:
+    if n_white == n_black == 1:
+        print("Guaranteed draw")
+        return -0.01
+        
+    if nturns >= 250*2:
         print("Draw by steps")
         return -0.01
 
@@ -182,13 +205,16 @@ def utility(board, ttable, nturns):
         print("Draw by repeated states")
         return -0.01
     
-    if n_white == 0 and n_black == 0: 
+    if n_white == 0 and n_black == 0:
+        print("Draw by mutual annihilation")
         return 0
     
     elif n_white == 0: 
+        print("Opponent wins")
         return -1
     
     else: 
+        print("I win")
         return 1
 
 def apply_action(player_colour, board, action):
