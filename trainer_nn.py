@@ -15,7 +15,7 @@ file_handler.setFormatter(formatter)
 logger.addHandler(file_handler)
 
 num_tests = 0
-MAX_TESTS = 20
+MAX_TESTS = 2000
 
 logger.debug("------------------- New Training Session ----------------")
 swap = False
@@ -41,6 +41,6 @@ while num_tests < MAX_TESTS:
     nn.wrapper_update()
 
     num_tests += 1
-    swap = swap
+    swap = not swap
 
                                                                 

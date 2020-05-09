@@ -2,8 +2,8 @@ import numpy as np
 from scipy.special import expit
 import sys
 
-LR = 0.01
-DECAY = 0.95
+LR = 0.1
+DECAY = 0.995
 WEIGHT_FILE = 'training/nn_data.log'
 
 class neuralNetwork:
@@ -61,7 +61,7 @@ class neuralNetwork:
             for r in range(0, self.wih.shape[0]):
                 for c in range(0, self.wih.shape[1]):
                     delta = (1+rewards[r]**2)*self.who[r]*self.sigmoid_deriv(hinputs[r])*features[i][c]
-                    print(delta)
+                    #print(delta)
                     wih_accumulator[r][c] += delta
 
             wih_accumulator *= decay_term

@@ -23,6 +23,11 @@ class ExamplePlayer:
     WEIGHT_FILE = ml.WEIGHT_FILE
     N_FEATURES = 6
 
+    ### Testing
+    TEST_BOARD = {
+        "black": [[2, 0, 6], [1, 1, 6], [1, 1, 7], [1, 3, 6], [1, 3, 7], [1, 4, 6], [1, 5, 7], [1, 6, 4], [1, 6, 5], [1, 6, 6]],
+        "white": [[1, 1, 1], [1, 3, 0], [2, 3, 1], [1, 4, 0], [1, 4, 1], [1, 5, 0], [1, 6, 1], [1, 7, 1], [1, 7, 0], [2, 2, 5]]
+    }
 
     def __init__(self, colour):
         """
@@ -50,7 +55,7 @@ class ExamplePlayer:
         # Generate random weights if no weight file present
         if not os.path.exists(self.WEIGHT_FILE):
             print("* Generating random weights")
-            weights = np.random.uniform(low=-1.0, high = 1.0, size=(self.N_FEATURES, ))
+            weights = np.random.normal(0.0, 1.0, size=(self.N_FEATURES, ))
             np.savetxt(self.WEIGHT_FILE, weights, delimiter=',')
             
         self.weights = np.loadtxt(open(self.WEIGHT_FILE, "rb"), delimiter=",")
@@ -71,6 +76,8 @@ class ExamplePlayer:
         print(self.depth_limit)
 
         an_action = bb.minimax_wrapper(self.board, 1, self.weights, self.colour, -1000, 1000, self.depth_limit, self.TTable, self.num_turns)
+
+        #an_action = bb.minimax_wrapper(TEST_BOARD, 1, self.weights, self.colour, -1000, 1000, self.depth_limit, self.TTable, self.num_turns)
         
         self.time_elapsed += time.time() - start
         return an_action.toTuple()
