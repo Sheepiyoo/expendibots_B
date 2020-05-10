@@ -134,8 +134,8 @@ def iterative_depth_search(board, depth, weights, player_colour, alpha, beta, de
 
     board = flip_board(board, player_colour)
     
-    for i in range(3,5):
-        best_action = minimax_wrapper(board, depth, weights, "white", alpha, beta, i, htable, ttable, nturns)
+    for i in range(4,7):
+        evaluation, best_action, best_leaf = minimax(board, depth, weights, "white", alpha, beta, i, htable, ttable, nturns)
         print(i)
     
     #logger.debug(str(ttable))
@@ -176,6 +176,13 @@ def minimax_wrapper(board, depth, weights, player_colour, alpha, beta, depth_lim
     
     best, best_action, best_leaf_state = select_random_action(action_rank)
 
+    if ttable.contains(player_colour, board):
+        record_eval, record_depth, b_leaf, _ = ttable.get_info(player_colour, board).unpack()
+        if depth_limit - depth >= record_depth:
+            ttable.addState(player_colour, board, score, depth_limit-depth, best_leaf_state, best_action)
+    else:
+        ttable.addState(player_colour, board, score, depth_limit-depth, best_leaf_state, best_action)
+
     #logger.debug(print_board(game.get_grid_format(best_leaf_state)))
     feature_string = [str(x) for x in calc_features.get_features(best_leaf_state)]
     logger.debug("{},{}".format(best, ",".join(feature_string)))
@@ -199,7 +206,8 @@ def minimax(board, depth, weights, player_colour, alpha, beta, depth_limit, htab
         #print("Terminal test!")
         return utility(board, htable, nturns), None, board
 
-    if depth == depth_limit:
+    if depth >= depth_limit:
+        if(depth > depth_limit): exit()
         #print("Depth limit {} reached".format(depth))
         evaluation = evaluate(weights, board) # returns the reward for the given weight
         return evaluation, None, board
@@ -330,7 +338,7 @@ def terminal_test(board, htable, nturns):
         is_repeated(board, htable) or 
         nturns >= 250*2 or
         n_white == 1):
-        print("Terminal state found")
+        #print("Terminal state found")
         return True
 
 def utility(board, htable, nturns):
