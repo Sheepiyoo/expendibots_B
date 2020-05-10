@@ -38,7 +38,7 @@ def get_possible_actions(board, player_colour):
     #logger.debug(print_board(get_grid_format(board)))
     all_moves = []
     stacks = board[player_colour]
-    stacks.sort(reverse=True, key=lambda stack: stack[N_TOKENS])
+    #stacks.sort(reverse=True, key=lambda stack: stack[N_TOKENS])
     
     #print(stacks)
     

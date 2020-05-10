@@ -81,19 +81,13 @@ def get_possible_actions_from_stack(stack_from, board, player_colour):
 
     possible_actions.append(Action("BOOM", 1, (x_pos, y_pos), (x_pos, y_pos)))
     
-    """
-    if not (detect_suicide((x_pos, y_pos), board, player_colour)):
-        possible_actions.append(Action("BOOM", 1, (x_pos, y_pos), (x_pos, y_pos)))
-    else:
-        logger.debug("{colour} BOOM at ({x}, {y}) is suicide".format(colour = player_colour, x = x_pos, y = y_pos))
-    """
+ 
     
     # for each possible stack of n tokens 
     for n in range(1, stack_from[N_TOKENS]+1):
-        
         # for each possible position from given position
-        for (x, y) in possible_positions(stack_from[X_POS], stack_from[Y_POS], n, order):
-
+        #for (x, y) in possible_positions(stack_from[X_POS], stack_from[Y_POS], n, order):
+        for (x, y) in possible_positions(stack_from[X_POS], stack_from[Y_POS], n):
             # if a stack already exists on the board, add the stack
             if (x, y) in grid_board:
                 if not is_opponent(grid_board[(x, y)], player_colour):
@@ -113,8 +107,21 @@ def is_opponent(colour_n, player_colour):
         return True
     return False
 
+def possible_positions(x, y, n):
+    positions = []
+    if y+n < BOARD_SIZE: #up
+        positions.append((x, y+n))
+    if x+n < BOARD_SIZE: #right
+        positions.append((x+n, y))
+    if (x-n) >= 0: #left
+        positions.append((x-n, y))
+    if y-n >= 0: # down
+        positions.append((x, y-n))
+    #print('the positions are', positions)
+    return positions
+
 # returns a list of in-bound positions n spaces away from given x,y
-def possible_positions(x, y, n, order):
+def possible_positions1(x, y, n, order):
     ordered_positions = []
     positions = {}
     if y+n < BOARD_SIZE: #up

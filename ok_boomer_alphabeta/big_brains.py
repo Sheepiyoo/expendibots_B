@@ -62,23 +62,26 @@ def search(player):
         else:
             break
 
-    return trimmed_actions[random.randint(0, len(trimmed_actions)-1)][0].toTuple()
+    #return trimmed_actions[random.randint(0, len(trimmed_actions)-1)][0].toTuple()
+    return trimmed_actions[0][0].toTuple()
+
 
 def evaluate(player_colour, board):
     """ Returns an evaluation value for a given action. """
     WEIGHT = 0.9    # Controls importance of removing pieces vs moving closer
     EPSILON = 1
 
-    if player_colour == "black":
+    """     if player_colour == "black":
         new_state = {}
         new_state["white"] = board["black"]
-        new_state["black"] = board["white"]
+        new_state["black"] = board["white"] """
 
-    before = count_tokens(board) 
-    eval = (before[0]) - (before[1])    # Higher = More white removed
+    w, b = count_tokens(board) 
+    eval = w-b
+    #eval = (before[0]) - (before[1])    # Higher = More white removed
     distance_heuristic = 1/max(EPSILON, math.tanh(heuristic(board, player_colour))) # Higher = White is closer to black
 
-    return math.tanh(eval)
+    return math.tanh(eval/12)
 
 def apply_action(player_colour, board, action):
     """ Applies an action to the board and returns the new board configuration. """
@@ -159,7 +162,7 @@ def minimax(board, depth, player_colour, alpha, beta):
     if is_game_over(board):
         return utility(board), None
 
-    if depth == 4:
+    if depth == 3:
         evaluation = evaluate(player_colour, board)
         return evaluation, None
     
