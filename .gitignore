@@ -8,3 +8,7 @@ action-gen.log
 big-brains.log
 game-training.log
 *.log
+referee/__pycache__/__main__.cpython-37.pyc
+referee/__pycache__/game.cpython-37.pyc
+referee/__pycache__/options.cpython-37.pyc
+referee/__pycache__/player.cpython-37.pyc
