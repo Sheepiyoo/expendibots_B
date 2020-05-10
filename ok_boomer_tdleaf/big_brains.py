@@ -149,7 +149,6 @@ def minimax_wrapper(board, depth, weights, player_colour, alpha, beta, depth_lim
         if action.action == "BOOM" and detect_suicide(board, next_board):
             continue
         
-        """
         if ttable.contains(player_colour, next_board):
             record_eval, record_depth, b_leaf, _ = ttable.get_info(player_colour, next_board).unpack()
         
@@ -159,19 +158,16 @@ def minimax_wrapper(board, depth, weights, player_colour, alpha, beta, depth_lim
             else: score, _, best_leaf = minimax(next_board, depth+1, weights, "black", alpha, beta, depth_limit, htable, ttable, nturns + 1)            
         else:
             score, _, best_leaf = minimax(next_board, depth+1, weights, "black", alpha, beta, depth_limit, htable, ttable, nturns + 1)
-        """
-        score, opp_action, best_leaf = minimax(next_board, depth+1, weights, "black", alpha, beta, depth_limit, htable, ttable, nturns + 1)
-        #alpha = max(score, alpha)
+        
+        #score, opp_action, best_leaf = minimax(next_board, depth+1, weights, "black", alpha, beta, depth_limit, htable, ttable, nturns + 1)
+        alpha = max(score, alpha)
+        
         #print(score)
         #print("White" + str(action))
         #print("Black: " + str(opp_action))
         
         action_rank.append((score, action, best_leaf))
     
-    action_rank.sort(reverse=True, key=lambda x: x[0])
-    
-    print(action_rank)
-
     best, best_action, best_leaf_state = select_random_action(action_rank)
 
     #logger.debug(print_board(game.get_grid_format(best_leaf_state)))
@@ -183,14 +179,22 @@ def minimax_wrapper(board, depth, weights, player_colour, alpha, beta, depth_lim
     return best_action
 
 def select_random_action(action_rank):
+    action_rank.sort(reverse=True, key=lambda x: x[0])
     trimmed_actions = [action_rank[0]]
-    #print(trimmed_actions)
+
     for i in range(1, len(action_rank)):
         if action_rank[i-1][0] == action_rank[i][0]:
             trimmed_actions.append(action_rank[i])
         else:
-            break    
-    selected_action = action_rank[random.randint(0, len(trimmed_actions)-1)]
+            break
+
+    trimmed_actions.sort(reverse=True, key=lambda x: x[1].action=="BOOM")
+    
+    if trimmed_actions[0][1].action == "BOOM":
+        selected_action = trimmed_actions[0]
+    else:
+        selected_action = trimmed_actions[random.randint(0, len(trimmed_actions)-1)]
+
     return selected_action
 
 def minimax(board, depth, weights, player_colour, alpha, beta, depth_limit, htable, ttable, nturns):
@@ -230,7 +234,7 @@ def minimax(board, depth, weights, player_colour, alpha, beta, depth_limit, htab
             next_board = apply_action(player_colour, board, action)
             if action.action == "BOOM" and detect_suicide(board, next_board):
                 continue
-            """
+            
             elif ttable.contains(player_colour, next_board):
                 #print("Maximiser: Found visited state. Depth: ", depth)
                 #check if depth limit 
@@ -245,8 +249,8 @@ def minimax(board, depth, weights, player_colour, alpha, beta, depth_limit, htab
                 
                 #ttable.addState(player_colour, next_board, score, depth_limit-depth, best_leaf, action)
                 ## We are storing the move that leads to that action, instead of the best move from that action
-            """
-            score, _, best_leaf = minimax(next_board, depth+1, weights, "black", alpha, beta, depth_limit, htable, ttable, nturns + 1)
+            
+            #score, _, best_leaf = minimax(next_board, depth+1, weights, "black", alpha, beta, depth_limit, htable, ttable, nturns + 1)
 
             if score > best:
                 best = score
@@ -274,7 +278,7 @@ def minimax(board, depth, weights, player_colour, alpha, beta, depth_limit, htab
 
             if action.action == "BOOM" and detect_suicide(board, next_board):
                 continue
-            """
+            
             elif ttable.contains(player_colour, next_board):
                 #print("Minimiser: Found visited state. Depth: ", depth)
                 #check if depth limit 
@@ -287,8 +291,8 @@ def minimax(board, depth, weights, player_colour, alpha, beta, depth_limit, htab
             else:
                 score, _, best_leaf = minimax(next_board, depth+1, weights, "white", alpha, beta, depth_limit, htable, ttable, nturns + 1)
                 #ttable.addState(player_colour, next_board, score, depth_limit-depth, best_leaf, action)
-            """
-            score, _, best_leaf = minimax(next_board, depth+1, weights, "white", alpha, beta, depth_limit, htable, ttable, nturns + 1)
+            
+            #score, _, best_leaf = minimax(next_board, depth+1, weights, "white", alpha, beta, depth_limit, htable, ttable, nturns + 1)
             
             if score < best:
                 best = score

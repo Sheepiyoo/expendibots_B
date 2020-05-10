@@ -208,8 +208,8 @@ def minimax(board, depth, player_colour, alpha, beta):
         #print("the best action for black is", best, best_action)
     
     if (depth==1):
-        logger.debug(print_board(game.get_grid_format(board)))
-        logger.debug("{colour} played {action} with an evaluation score: {score}".format(colour=player_colour, action=best_action, score=best))
+        #logger.debug(print_board(game.get_grid_format(board)))
+        #logger.debug("{colour} played {action} with an evaluation score: {score}".format(colour=player_colour, action=best_action, score=best))
         
     return best, best_action
 

@@ -35,7 +35,7 @@ class Action:
         return str(self.toTuple())
 
 def get_possible_actions(board, player_colour):
-    logger.debug(print_board(get_grid_format(board)))
+    #logger.debug(print_board(get_grid_format(board)))
     all_moves = []
     stacks = board[player_colour]
     #print(player_colour, stacks)
