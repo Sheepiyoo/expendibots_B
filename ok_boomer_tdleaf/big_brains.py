@@ -117,23 +117,28 @@ class HTable:
 
     def in_state(self, board):
         State = self.dict_to_set(board)
-        if State in self.visited_states.keys():
+        try:
+            x = visited_states[State]
             return True
-        else: return False
+        except:
+            return False
 
     def addState(self, board):
         State = self.dict_to_set(board)
-        if State in self.visited_states.keys():
+        if self.in_state(board):
             self.visited_states[State] += 1
         else:
-            self.visited_states[State] = 0
+            self.visited_states[State] = 1
 
     def getCount(self, board):
         State = self.dict_to_set(board)
-        if State in self.visited_states.keys():
-            return self.visited_states[State]
         
-        return 0
+        if self.in_state(board):
+            print("Is in state")
+            return self.visited_states[State]
+        else: 
+            #print("Not in state")
+            return 0
 
     def dict_to_set(self, board_dict):
         new_dict = set()
@@ -149,20 +154,18 @@ class HTable:
         self.visited_states = {}
 
 
-def iterative_depth_search(board, depth, weights, player_colour, alpha, beta, depth_limit, htable, ttable, nturns):
+def iterative_depth_search(board, depth, weights, player_colour, alpha, beta, depth_limit, htable, ttable, nturns, histable):
 
     board = flip_board(board, player_colour)
-    player_colour = "white"
 
-    max_depth = 4 #min(6, int(3 + (24-sum(count_tokens(board)))//8))
-    print(max_depth)
+    max_depth = 3 #min(6, int(3 + (24-sum(count_tokens(board)))//8))
+    #print(max_depth)
 
-    for i in range(2,max_depth):
-        best_action = minimax_wrapper(board, depth, weights, player_colour, alpha, beta, i, htable, ttable, nturns)    
-    
+    for i in range(2,max_depth+1):
+        best_action = minimax_wrapper(board, depth, weights, "white", alpha, beta, i, htable, ttable, nturns, histable)    
+
     best_action = flip_action(best_action, player_colour)
 
-    global W_EXPLORED, B_EXPLORED    
     return best_action
 
 
@@ -176,7 +179,7 @@ def iterative_depth_search(board, depth, weights, player_colour, alpha, beta, de
     3a. If the records are useful use instead of minimax - 
     3b. If not useful, minimax needs to be applied
     4. If records don't exist, minimax """
-def minimax_wrapper(board, depth, weights, player_colour, alpha, beta, depth_limit, htable, ttable, nturns):
+def minimax_wrapper(board, depth, weights, player_colour, alpha, beta, depth_limit, htable, ttable, nturns, histable):
     actions = actgen.get_possible_actions(board, player_colour)
     action_rank = []
     
@@ -200,7 +203,7 @@ def minimax_wrapper(board, depth, weights, player_colour, alpha, beta, depth_lim
         else:
             score, opp, best_leaf = minimax(next_board, depth+1, weights, "black", alpha, beta, depth_limit, htable, ttable, nturns + 1)
         """    
-        score, best_opp_action, best_leaf = minimax(next_board, depth+1, weights, "black", alpha, beta, depth_limit, htable, ttable, nturns + 1)
+        score, best_opp_action, best_leaf = minimax(next_board, depth+1, weights, "black", alpha, beta, depth_limit, htable, ttable, nturns + 1, histable)
         alpha = max(score, alpha)
         action_rank.append((score, action, best_leaf))
 
@@ -211,13 +214,13 @@ def minimax_wrapper(board, depth, weights, player_colour, alpha, beta, depth_lim
     
     #logger.debug(print_board(game.get_grid_format(best_leaf_state)))
     feature_string = [str(x) for x in calc_features.get_features(best_leaf_state)]
-    #logger.debug("{},{}".format(best, ",".join(feature_string)))
+    logger.debug("{},{}".format(best, ",".join(feature_string)))
     
     return best_action
 
 
 
-def minimax(board, depth, weights, player_colour, alpha, beta, depth_limit, htable, ttable, nturns):
+def minimax(board, depth, weights, player_colour, alpha, beta, depth_limit, htable, ttable, nturns, histable):
     MIN = -1000
     MAX = 1000
     global W_EXPLORED
@@ -232,10 +235,14 @@ def minimax(board, depth, weights, player_colour, alpha, beta, depth_limit, htab
         return utility(board, htable, nturns), None, board
 
     if depth == depth_limit: 
-        return evaluate(weights, board), None, board
+        score = evaluate(weights, board)
+        #score = quiesce(board, depth, weights, player_colour, alpha, beta, depth_limit, htable, ttable, nturns, histable)
+        return score, None, board
 
     actions = actgen.get_possible_actions(board, player_colour)
-    
+    #print(actions)
+    #actions = histable.order_actions(actgen.get_possible_actions(board, player_colour))
+    #print(actions)
     best_action = ttable.actionLookup(player_colour, board)
     if (best_action != None):
         actions.insert(0, best_action) 
@@ -258,7 +265,7 @@ def minimax(board, depth, weights, player_colour, alpha, beta, depth_limit, htab
             
             else:
             """
-            score, a, best_leaf = minimax(next_board, depth+1, weights, "black", alpha, beta, depth_limit, htable, ttable, nturns + 1) 
+            score, a, best_leaf = minimax(next_board, depth+1, weights, "black", alpha, beta, depth_limit, htable, ttable, nturns + 1, histable) 
 
             if score > best: best, best_action, best_leaf_state = score, action, best_leaf
 
@@ -291,7 +298,7 @@ def minimax(board, depth, weights, player_colour, alpha, beta, depth_limit, htab
                     score, a, best_leaf = minimax(next_board, depth+1, weights, "white", alpha, beta, depth_limit, htable, ttable, nturns + 1)
             else:"""
 
-            score, a, best_leaf = minimax(next_board, depth+1, weights, "white", alpha, beta, depth_limit, htable, ttable, nturns + 1) 
+            score, a, best_leaf = minimax(next_board, depth+1, weights, "white", alpha, beta, depth_limit, htable, ttable, nturns + 1, histable) 
             
 
             if score < best: best, best_action, best_leaf_state = score, action, best_leaf
@@ -301,6 +308,7 @@ def minimax(board, depth, weights, player_colour, alpha, beta, depth_limit, htab
 
             if beta <= alpha:
                 ttable.addState(player_colour, board, beta, depth_limit-depth, best_leaf_state, best_action)
+                histable.add_history(best_action, depth)
     
                 return beta, best_action, best_leaf_state
                 count_prune()
@@ -310,18 +318,58 @@ def minimax(board, depth, weights, player_colour, alpha, beta, depth_limit, htab
                  
     return best, best_action, best_leaf_state
 
-def quiesce(board, depth, weights, player_colour, alpha, beta, depth_limit, htable, ttable, nturns):
-    MIN = -1000
-    MAX = 1000
+def quiesce(board, depth, weights, player_colour, alpha, beta, depth_limit, htable, ttable, nturns, histable):
+    MIN = 0
+    MAX = 0
     
     if terminal_test(board, htable, nturns):
-        return utility(board, htable, nturns), None, board
+        #print("Quesncent terminal")
+        return utility(board, htable, nturns)
+    
+    actions = actgen.get_possible_violent_actions(board, player_colour)
 
-    pass
+    next_boards = []
+
+    for action in actions:
+        next_board = apply_action(player_colour, board, action)
+        if not detect_suicide(board, next_board):
+            next_boards.append(next_board)
+            
+    """ if len(next_boards) == 0:
+        eval = evaluate(weights, board)
+        #if eval != 0:
+        #    print(eval)
+        return eval
+
+    if(player_colour=="white"):    
+        best = MIN 
+        for next_board in next_boards:
+        
+            score = quiesce(next_board, depth+1, weights, "black", alpha, beta, depth_limit, htable, ttable, nturns + 1, histable) 
+            
+            alpha = max(alpha, score)
+            
+            if alpha >= beta: return alpha
+        
+        return alpha
+                
+    if (player_colour=="black"):
+        best = MAX
+        
+        for next_board in next_boards:
+            
+            score = quiesce(next_board, depth+1, weights, "white", alpha, beta, depth_limit, htable, ttable, nturns + 1, histable) 
+                    
+            beta = min(beta, score)
+
+            if beta <= alpha: return beta
+        
+        return beta """
+                              
 
 def evaluate(weights, state):
     """ Returns an evaluation value for a given action."""
-    
+    """
     WEIGHT = 0.9    # Controls importance of removing pieces vs moving closer
     EPSILON = 1
 
@@ -330,25 +378,28 @@ def evaluate(weights, state):
     #distance_heuristic = 1/max(EPSILON, math.tanh(calc_features.heuristic(state, "white"))) # Higher = White is closer to black
 
     return math.tanh(eval)
-    
     """
+    
     features = calc_features.get_features(state)
     eval = np.dot(weights, features)
-    if len(state["black"]) == len(state["white"]) == 0 :
-        reward = 0
-    else: reward = math.tanh(eval)
+    reward = math.tanh(eval)
     
-    return reward"""
+    return reward
     
 
 def is_repeated(board, htable):
     #Previously visited 3 times  - this time is the 4th
-    if htable.getCount(board) == 3:
+    state_count = htable.getCount(board)
+    
+    if state_count >= 3:
         print("Draw!")
         return True
+    else:
+        return False
 
 def terminal_test(board, htable, nturns):
     n_white, n_black = count_tokens(board)
+    
     if (n_white == 0 or 
         n_black == 0 or 
         is_repeated(board, htable) or 
@@ -363,7 +414,7 @@ def utility(board, htable, nturns):
     if n_white == 0:
         if n_black == 0:
             #print("Draw by mutual annihilation")
-            return -0.001
+            return -0.05
         else:
             #print("Opponent wins")
             return -1
@@ -374,7 +425,7 @@ def utility(board, htable, nturns):
             return 1
         elif n_black == 1:
             #print("Guaranteed draw")
-            return -0.001
+            return -0.05
         else:
             #print("Likely loss")
             return -1
@@ -384,11 +435,11 @@ def utility(board, htable, nturns):
             
     if nturns >= 250*2:
         #print("Draw by steps")
-        return -0.001
+        return -0.5
 
     if is_repeated(board, htable):
         #print("Draw by repeated states")
-        return -0.001
+        return -0.05
 
 def apply_action(player_colour, board, action):
     """ Applies an action to the board and returns the new board configuration. """
@@ -442,7 +493,7 @@ def select_random_action(action_rank):
     if trimmed_actions[0][1].action == "BOOM":
         selected_action = trimmed_actions[0]
     else:
-        selected_action = trimmed_actions[0]
-        #random.randint(0, len(trimmed_actions)-1)
+        #selected_action = trimmed_actions[0]
+        selected_action = trimmed_actions[random.randint(0, len(trimmed_actions)-1)]
 
     return selected_action

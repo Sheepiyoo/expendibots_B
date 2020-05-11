@@ -11296,3 +11296,591 @@
 2020-05-10 06:09:50,287: DEBUG: draw detected: maximum number of turns reached.
 2020-05-10 06:09:50,287: DEBUG: time:  + 0.016s  (just elapsed)  184.516s  (game total)
 2020-05-10 06:09:50,287: DEBUG: time:  + 0.000s  (just elapsed)   54.109s  (game total)
+2020-05-11 22:59:59,656: DEBUG: ------------------------------------------------------------------
+2020-05-11 23:00:00,022: DEBUG: white: ('ok_boomer_tdleaf', 'Player')
+2020-05-11 23:00:00,022: DEBUG: black: ('ok_boomer_alphabeta', 'Player')
+2020-05-11 23:00:00,022: DEBUG: winner: black
+2020-05-11 23:00:00,022: DEBUG: time:  + 0.000s  (just elapsed)  256.328s  (game total)
+2020-05-11 23:00:00,039: DEBUG: time:  + 0.000s  (just elapsed)   42.359s  (game total)
+2020-05-11 23:03:47,288: DEBUG: ------------------------------------------------------------------
+2020-05-11 23:03:47,288: DEBUG: white: ('ok_boomer_tdleaf', 'Player')
+2020-05-11 23:03:47,288: DEBUG: black: ('ok_boomer_alphabeta', 'Player')
+2020-05-11 23:03:47,288: DEBUG: draw detected: game state occurred 4 times.
+2020-05-11 23:03:47,288: DEBUG: time:  + 0.000s  (just elapsed)   18.938s  (game total)
+2020-05-11 23:03:47,288: DEBUG: time:  + 0.000s  (just elapsed)   60.844s  (game total)
+2020-05-11 23:11:08,398: DEBUG: ------------------------------------------------------------------
+2020-05-11 23:11:08,399: DEBUG: white: ('ok_boomer_tdleaf', 'Player')
+2020-05-11 23:11:08,399: DEBUG: black: ('ok_boomer_alphabeta', 'Player')
+2020-05-11 23:11:08,399: DEBUG: winner: black
+2020-05-11 23:11:08,399: DEBUG: time:  + 0.000s  (just elapsed)   11.516s  (game total)
+2020-05-11 23:11:08,399: DEBUG: time:  + 0.000s  (just elapsed)   35.547s  (game total)
+2020-05-11 23:22:28,083: DEBUG: ------------------------------------------------------------------
+2020-05-11 23:22:28,094: DEBUG: white: ('ok_boomer_tdleaf', 'Player')
+2020-05-11 23:22:28,094: DEBUG: black: ('ok_boomer_alphabeta', 'Player')
+2020-05-11 23:22:28,095: DEBUG: winner: black
+2020-05-11 23:22:28,095: DEBUG: time:  + 0.000s  (just elapsed)   29.969s  (game total)
+2020-05-11 23:22:28,095: DEBUG: time:  + 0.000s  (just elapsed)   52.953s  (game total)
+2020-05-11 23:28:48,566: DEBUG: ------------------------------------------------------------------
+2020-05-11 23:28:48,567: DEBUG: white: ('ok_boomer_tdleaf', 'Player')
+2020-05-11 23:28:48,567: DEBUG: black: ('ok_boomer_alphabeta', 'Player')
+2020-05-11 23:28:48,567: DEBUG: winner: white
+2020-05-11 23:28:48,567: DEBUG: time:  + 0.000s  (just elapsed)    3.578s  (game total)
+2020-05-11 23:28:48,567: DEBUG: time:  + 0.000s  (just elapsed)    7.453s  (game total)
+2020-05-11 23:29:11,701: DEBUG: ------------------------------------------------------------------
+2020-05-11 23:29:11,701: DEBUG: white: ('ok_boomer_alphabeta', 'Player')
+2020-05-11 23:29:11,701: DEBUG: black: ('ok_boomer_tdleaf', 'Player')
+2020-05-11 23:29:11,702: DEBUG: winner: black
+2020-05-11 23:29:11,702: DEBUG: time:  + 0.000s  (just elapsed)    8.672s  (game total)
+2020-05-11 23:29:11,702: DEBUG: time:  + 0.000s  (just elapsed)    5.984s  (game total)
+2020-05-11 23:29:32,281: DEBUG: ------------------------------------------------------------------
+2020-05-11 23:29:32,282: DEBUG: white: ('ok_boomer_tdleaf', 'Player')
+2020-05-11 23:29:32,282: DEBUG: black: ('ok_boomer_alphabeta', 'Player')
+2020-05-11 23:29:32,282: DEBUG: winner: white
+2020-05-11 23:29:32,282: DEBUG: time:  + 0.000s  (just elapsed)    4.000s  (game total)
+2020-05-11 23:29:32,282: DEBUG: time:  + 0.000s  (just elapsed)    7.281s  (game total)
+2020-05-11 23:29:51,734: DEBUG: ------------------------------------------------------------------
+2020-05-11 23:29:51,734: DEBUG: white: ('ok_boomer_alphabeta', 'Player')
+2020-05-11 23:29:51,734: DEBUG: black: ('ok_boomer_tdleaf', 'Player')
+2020-05-11 23:29:51,734: DEBUG: winner: black
+2020-05-11 23:29:51,734: DEBUG: time:  + 0.000s  (just elapsed)    7.500s  (game total)
+2020-05-11 23:29:51,734: DEBUG: time:  + 0.000s  (just elapsed)    4.922s  (game total)
+2020-05-11 23:30:40,479: DEBUG: ------------------------------------------------------------------
+2020-05-11 23:30:40,480: DEBUG: white: ('ok_boomer_tdleaf', 'Player')
+2020-05-11 23:30:40,480: DEBUG: black: ('ok_boomer_alphabeta', 'Player')
+2020-05-11 23:30:40,480: DEBUG: winner: white
+2020-05-11 23:30:40,480: DEBUG: time:  + 0.000s  (just elapsed)    8.641s  (game total)
+2020-05-11 23:30:40,480: DEBUG: time:  + 0.000s  (just elapsed)   26.203s  (game total)
+2020-05-11 23:31:10,929: DEBUG: ------------------------------------------------------------------
+2020-05-11 23:31:10,931: DEBUG: white: ('ok_boomer_alphabeta', 'Player')
+2020-05-11 23:31:10,931: DEBUG: black: ('ok_boomer_tdleaf', 'Player')
+2020-05-11 23:31:10,931: DEBUG: winner: black
+2020-05-11 23:31:10,931: DEBUG: time:  + 0.000s  (just elapsed)   10.547s  (game total)
+2020-05-11 23:31:10,932: DEBUG: time:  + 0.000s  (just elapsed)    6.703s  (game total)
+2020-05-11 23:31:44,750: DEBUG: ------------------------------------------------------------------
+2020-05-11 23:31:44,750: DEBUG: white: ('ok_boomer_tdleaf', 'Player')
+2020-05-11 23:31:44,751: DEBUG: black: ('ok_boomer_alphabeta', 'Player')
+2020-05-11 23:31:44,751: DEBUG: winner: white
+2020-05-11 23:31:44,751: DEBUG: time:  + 0.000s  (just elapsed)    6.953s  (game total)
+2020-05-11 23:31:44,751: DEBUG: time:  + 0.016s  (just elapsed)   12.781s  (game total)
+2020-05-11 23:32:26,990: DEBUG: ------------------------------------------------------------------
+2020-05-11 23:32:26,990: DEBUG: white: ('ok_boomer_alphabeta', 'Player')
+2020-05-11 23:32:26,990: DEBUG: black: ('ok_boomer_tdleaf', 'Player')
+2020-05-11 23:32:26,990: DEBUG: draw detected: no tokens remaining
+2020-05-11 23:32:26,990: DEBUG: time:  + 0.000s  (just elapsed)   14.906s  (game total)
+2020-05-11 23:32:26,991: DEBUG: time:  + 0.000s  (just elapsed)    7.469s  (game total)
+2020-05-11 23:33:04,534: DEBUG: ------------------------------------------------------------------
+2020-05-11 23:33:04,535: DEBUG: white: ('ok_boomer_tdleaf', 'Player')
+2020-05-11 23:33:04,535: DEBUG: black: ('ok_boomer_alphabeta', 'Player')
+2020-05-11 23:33:04,535: DEBUG: winner: white
+2020-05-11 23:33:04,535: DEBUG: time:  + 0.000s  (just elapsed)    7.906s  (game total)
+2020-05-11 23:33:04,535: DEBUG: time:  + 0.000s  (just elapsed)   15.453s  (game total)
+2020-05-11 23:33:14,785: DEBUG: ------------------------------------------------------------------
+2020-05-11 23:33:14,785: DEBUG: white: ('ok_boomer_alphabeta', 'Player')
+2020-05-11 23:33:14,785: DEBUG: black: ('ok_boomer_tdleaf', 'Player')
+2020-05-11 23:33:14,785: DEBUG: winner: black
+2020-05-11 23:33:14,785: DEBUG: time:  + 0.000s  (just elapsed)    3.812s  (game total)
+2020-05-11 23:33:14,785: DEBUG: time:  + 0.000s  (just elapsed)    2.859s  (game total)
+2020-05-11 23:37:12,754: DEBUG: ------------------------------------------------------------------
+2020-05-11 23:37:12,755: DEBUG: white: ('ok_boomer_tdleaf', 'Player')
+2020-05-11 23:37:12,755: DEBUG: black: ('ok_boomer_alphabeta', 'Player')
+2020-05-11 23:37:12,755: DEBUG: winner: black
+2020-05-11 23:37:12,755: DEBUG: time:  + 0.000s  (just elapsed)    8.297s  (game total)
+2020-05-11 23:37:12,755: DEBUG: time:  + 0.000s  (just elapsed)  180.578s  (game total)
+2020-05-11 23:38:53,742: DEBUG: ------------------------------------------------------------------
+2020-05-11 23:38:53,742: DEBUG: white: ('ok_boomer_alphabeta', 'Player')
+2020-05-11 23:38:53,743: DEBUG: black: ('ok_boomer_tdleaf', 'Player')
+2020-05-11 23:38:53,743: DEBUG: draw detected: game state occurred 4 times.
+2020-05-11 23:38:53,743: DEBUG: time:  + 0.000s  (just elapsed)   78.391s  (game total)
+2020-05-11 23:38:53,743: DEBUG: time:  + 0.000s  (just elapsed)    7.281s  (game total)
+2020-05-11 23:41:23,524: DEBUG: ------------------------------------------------------------------
+2020-05-11 23:41:23,524: DEBUG: white: ('ok_boomer_tdleaf', 'Player')
+2020-05-11 23:41:23,524: DEBUG: black: ('ok_boomer_alphabeta', 'Player')
+2020-05-11 23:41:23,525: DEBUG: winner: white
+2020-05-11 23:41:23,525: DEBUG: time:  + 0.000s  (just elapsed)    4.953s  (game total)
+2020-05-11 23:41:23,525: DEBUG: time:  + 0.000s  (just elapsed)  126.016s  (game total)
+2020-05-11 23:43:16,955: DEBUG: ------------------------------------------------------------------
+2020-05-11 23:43:16,956: DEBUG: white: ('ok_boomer_alphabeta', 'Player')
+2020-05-11 23:43:16,956: DEBUG: black: ('ok_boomer_tdleaf', 'Player')
+2020-05-11 23:43:16,956: DEBUG: draw detected: no tokens remaining
+2020-05-11 23:43:16,956: DEBUG: time:  + 0.000s  (just elapsed)   90.922s  (game total)
+2020-05-11 23:43:16,956: DEBUG: time:  + 0.000s  (just elapsed)    6.578s  (game total)
+2020-05-11 23:45:45,171: DEBUG: ------------------------------------------------------------------
+2020-05-11 23:45:45,172: DEBUG: white: ('ok_boomer_tdleaf', 'Player')
+2020-05-11 23:45:45,172: DEBUG: black: ('ok_boomer_alphabeta', 'Player')
+2020-05-11 23:45:45,172: DEBUG: winner: black
+2020-05-11 23:45:45,172: DEBUG: time:  + 0.000s  (just elapsed)    6.047s  (game total)
+2020-05-11 23:45:45,172: DEBUG: time:  + 0.000s  (just elapsed)  125.156s  (game total)
+2020-05-11 23:47:16,581: DEBUG: ------------------------------------------------------------------
+2020-05-11 23:47:16,582: DEBUG: white: ('ok_boomer_alphabeta', 'Player')
+2020-05-11 23:47:16,583: DEBUG: black: ('ok_boomer_tdleaf', 'Player')
+2020-05-11 23:47:16,584: DEBUG: winner: black
+2020-05-11 23:47:16,584: DEBUG: time:  + 0.000s  (just elapsed)   70.438s  (game total)
+2020-05-11 23:47:16,584: DEBUG: time:  + 0.000s  (just elapsed)    5.938s  (game total)
+2020-05-11 23:51:11,064: DEBUG: ------------------------------------------------------------------
+2020-05-11 23:51:11,064: DEBUG: white: ('ok_boomer_tdleaf', 'Player')
+2020-05-11 23:51:11,064: DEBUG: black: ('ok_boomer_alphabeta', 'Player')
+2020-05-11 23:51:11,064: DEBUG: winner: black
+2020-05-11 23:51:11,064: DEBUG: time:  + 0.000s  (just elapsed)    7.656s  (game total)
+2020-05-11 23:51:11,064: DEBUG: time:  + 0.000s  (just elapsed)  207.516s  (game total)
+2020-05-12 00:07:40,456: DEBUG: ------------------------------------------------------------------
+2020-05-12 00:07:40,457: DEBUG: white: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 00:07:40,459: DEBUG: black: ('ok_boomer_greedy', 'Player')
+2020-05-12 00:07:40,459: DEBUG: winner: white
+2020-05-12 00:07:40,460: DEBUG: time:  + 0.000s  (just elapsed)    3.328s  (game total)
+2020-05-12 00:07:40,460: DEBUG: time:  + 0.000s  (just elapsed)    0.062s  (game total)
+2020-05-12 00:07:49,490: DEBUG: ------------------------------------------------------------------
+2020-05-12 00:07:49,491: DEBUG: white: ('ok_boomer_greedy', 'Player')
+2020-05-12 00:07:49,491: DEBUG: black: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 00:07:49,491: DEBUG: winner: black
+2020-05-12 00:07:49,491: DEBUG: time:  + 0.000s  (just elapsed)    0.031s  (game total)
+2020-05-12 00:07:49,491: DEBUG: time:  + 0.000s  (just elapsed)    4.188s  (game total)
+2020-05-12 00:07:54,956: DEBUG: ------------------------------------------------------------------
+2020-05-12 00:07:54,956: DEBUG: white: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 00:07:54,957: DEBUG: black: ('ok_boomer_greedy', 'Player')
+2020-05-12 00:07:54,957: DEBUG: winner: white
+2020-05-12 00:07:54,957: DEBUG: time:  + 0.000s  (just elapsed)    2.703s  (game total)
+2020-05-12 00:07:54,957: DEBUG: time:  + 0.000s  (just elapsed)    0.031s  (game total)
+2020-05-12 00:08:13,055: DEBUG: ------------------------------------------------------------------
+2020-05-12 00:08:13,055: DEBUG: white: ('ok_boomer_greedy', 'Player')
+2020-05-12 00:08:13,055: DEBUG: black: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 00:08:13,055: DEBUG: winner: black
+2020-05-12 00:08:13,055: DEBUG: time:  + 0.000s  (just elapsed)    0.109s  (game total)
+2020-05-12 00:08:13,056: DEBUG: time:  + 0.000s  (just elapsed)    7.156s  (game total)
+2020-05-12 00:08:18,616: DEBUG: ------------------------------------------------------------------
+2020-05-12 00:08:18,617: DEBUG: white: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 00:08:18,618: DEBUG: black: ('ok_boomer_greedy', 'Player')
+2020-05-12 00:08:18,618: DEBUG: winner: white
+2020-05-12 00:08:18,619: DEBUG: time:  + 0.000s  (just elapsed)    2.797s  (game total)
+2020-05-12 00:08:18,619: DEBUG: time:  + 0.000s  (just elapsed)    0.031s  (game total)
+2020-05-12 00:08:28,240: DEBUG: ------------------------------------------------------------------
+2020-05-12 00:08:28,240: DEBUG: white: ('ok_boomer_greedy', 'Player')
+2020-05-12 00:08:28,240: DEBUG: black: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 00:08:28,241: DEBUG: winner: black
+2020-05-12 00:08:28,241: DEBUG: time:  + 0.000s  (just elapsed)    0.062s  (game total)
+2020-05-12 00:08:28,241: DEBUG: time:  + 0.000s  (just elapsed)    4.172s  (game total)
+2020-05-12 00:08:35,287: DEBUG: ------------------------------------------------------------------
+2020-05-12 00:08:35,288: DEBUG: white: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 00:08:35,288: DEBUG: black: ('ok_boomer_greedy', 'Player')
+2020-05-12 00:08:35,288: DEBUG: winner: white
+2020-05-12 00:08:35,288: DEBUG: time:  + 0.000s  (just elapsed)    4.469s  (game total)
+2020-05-12 00:08:35,288: DEBUG: time:  + 0.000s  (just elapsed)    0.047s  (game total)
+2020-05-12 00:08:43,301: DEBUG: ------------------------------------------------------------------
+2020-05-12 00:08:43,302: DEBUG: white: ('ok_boomer_greedy', 'Player')
+2020-05-12 00:08:43,302: DEBUG: black: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 00:08:43,302: DEBUG: winner: black
+2020-05-12 00:08:43,302: DEBUG: time:  + 0.000s  (just elapsed)    0.078s  (game total)
+2020-05-12 00:08:43,302: DEBUG: time:  + 0.000s  (just elapsed)    4.438s  (game total)
+2020-05-12 00:08:51,856: DEBUG: ------------------------------------------------------------------
+2020-05-12 00:08:51,856: DEBUG: white: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 00:08:51,856: DEBUG: black: ('ok_boomer_greedy', 'Player')
+2020-05-12 00:08:51,856: DEBUG: winner: white
+2020-05-12 00:08:51,856: DEBUG: time:  + 0.000s  (just elapsed)    3.250s  (game total)
+2020-05-12 00:08:51,856: DEBUG: time:  + 0.000s  (just elapsed)    0.094s  (game total)
+2020-05-12 00:09:08,650: DEBUG: ------------------------------------------------------------------
+2020-05-12 00:09:08,651: DEBUG: white: ('ok_boomer_alphabeta', 'Player')
+2020-05-12 00:09:08,651: DEBUG: black: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 00:09:08,652: DEBUG: winner: black
+2020-05-12 00:09:08,652: DEBUG: time:  + 0.000s  (just elapsed)    5.781s  (game total)
+2020-05-12 00:09:08,652: DEBUG: time:  + 0.000s  (just elapsed)    5.141s  (game total)
+2020-05-12 00:09:16,276: DEBUG: ------------------------------------------------------------------
+2020-05-12 00:09:16,277: DEBUG: white: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 00:09:16,277: DEBUG: black: ('ok_boomer_greedy', 'Player')
+2020-05-12 00:09:16,277: DEBUG: winner: white
+2020-05-12 00:09:16,277: DEBUG: time:  + 0.000s  (just elapsed)    3.688s  (game total)
+2020-05-12 00:09:16,277: DEBUG: time:  + 0.000s  (just elapsed)    0.078s  (game total)
+2020-05-12 00:09:28,261: DEBUG: ------------------------------------------------------------------
+2020-05-12 00:09:28,262: DEBUG: white: ('ok_boomer_alphabeta', 'Player')
+2020-05-12 00:09:28,262: DEBUG: black: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 00:09:28,262: DEBUG: winner: black
+2020-05-12 00:09:28,262: DEBUG: time:  + 0.000s  (just elapsed)    4.672s  (game total)
+2020-05-12 00:09:28,262: DEBUG: time:  + 0.000s  (just elapsed)    3.828s  (game total)
+2020-05-12 00:09:33,423: DEBUG: ------------------------------------------------------------------
+2020-05-12 00:09:33,424: DEBUG: white: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 00:09:33,425: DEBUG: black: ('ok_boomer_greedy', 'Player')
+2020-05-12 00:09:33,425: DEBUG: winner: white
+2020-05-12 00:09:33,425: DEBUG: time:  + 0.000s  (just elapsed)    2.797s  (game total)
+2020-05-12 00:09:33,425: DEBUG: time:  + 0.000s  (just elapsed)    0.062s  (game total)
+2020-05-12 00:09:40,714: DEBUG: ------------------------------------------------------------------
+2020-05-12 00:09:40,714: DEBUG: white: ('ok_boomer_greedy', 'Player')
+2020-05-12 00:09:40,714: DEBUG: black: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 00:09:40,714: DEBUG: winner: black
+2020-05-12 00:09:40,715: DEBUG: time:  + 0.000s  (just elapsed)    0.062s  (game total)
+2020-05-12 00:09:40,715: DEBUG: time:  + 0.000s  (just elapsed)    3.406s  (game total)
+2020-05-12 00:09:59,650: DEBUG: ------------------------------------------------------------------
+2020-05-12 00:09:59,650: DEBUG: white: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 00:09:59,651: DEBUG: black: ('ok_boomer_alphabeta', 'Player')
+2020-05-12 00:09:59,651: DEBUG: winner: white
+2020-05-12 00:09:59,651: DEBUG: time:  + 0.000s  (just elapsed)    4.219s  (game total)
+2020-05-12 00:09:59,651: DEBUG: time:  + 0.000s  (just elapsed)    8.219s  (game total)
+2020-05-12 00:10:36,178: DEBUG: ------------------------------------------------------------------
+2020-05-12 00:10:36,179: DEBUG: white: ('ok_boomer_alphabeta', 'Player')
+2020-05-12 00:10:36,179: DEBUG: black: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 00:10:36,180: DEBUG: winner: white
+2020-05-12 00:10:36,180: DEBUG: time:  + 0.000s  (just elapsed)   13.422s  (game total)
+2020-05-12 00:10:36,180: DEBUG: time:  + 0.000s  (just elapsed)    7.750s  (game total)
+2020-05-12 00:10:51,453: DEBUG: ------------------------------------------------------------------
+2020-05-12 00:10:51,454: DEBUG: white: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 00:10:51,454: DEBUG: black: ('ok_boomer_greedy', 'Player')
+2020-05-12 00:10:51,454: DEBUG: winner: white
+2020-05-12 00:10:51,454: DEBUG: time:  + 0.000s  (just elapsed)    7.844s  (game total)
+2020-05-12 00:10:51,454: DEBUG: time:  + 0.000s  (just elapsed)    0.125s  (game total)
+2020-05-12 00:11:19,214: DEBUG: ------------------------------------------------------------------
+2020-05-12 00:11:19,214: DEBUG: white: ('ok_boomer_alphabeta', 'Player')
+2020-05-12 00:11:19,214: DEBUG: black: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 00:11:19,214: DEBUG: winner: black
+2020-05-12 00:11:19,215: DEBUG: time:  + 0.000s  (just elapsed)   11.094s  (game total)
+2020-05-12 00:11:19,215: DEBUG: time:  + 0.000s  (just elapsed)    7.016s  (game total)
+2020-05-12 00:11:30,527: DEBUG: ------------------------------------------------------------------
+2020-05-12 00:11:30,527: DEBUG: white: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 00:11:30,527: DEBUG: black: ('ok_boomer_greedy', 'Player')
+2020-05-12 00:11:30,527: DEBUG: winner: white
+2020-05-12 00:11:30,527: DEBUG: time:  + 0.000s  (just elapsed)    4.406s  (game total)
+2020-05-12 00:11:30,528: DEBUG: time:  + 0.016s  (just elapsed)    0.109s  (game total)
+2020-05-12 00:11:45,287: DEBUG: ------------------------------------------------------------------
+2020-05-12 00:11:45,287: DEBUG: white: ('ok_boomer_alphabeta', 'Player')
+2020-05-12 00:11:45,287: DEBUG: black: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 00:11:45,287: DEBUG: winner: black
+2020-05-12 00:11:45,287: DEBUG: time:  + 0.000s  (just elapsed)    5.656s  (game total)
+2020-05-12 00:11:45,287: DEBUG: time:  + 0.000s  (just elapsed)    4.141s  (game total)
+2020-05-12 00:11:51,856: DEBUG: ------------------------------------------------------------------
+2020-05-12 00:11:51,857: DEBUG: white: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 00:11:51,857: DEBUG: black: ('ok_boomer_greedy', 'Player')
+2020-05-12 00:11:51,857: DEBUG: winner: white
+2020-05-12 00:11:51,858: DEBUG: time:  + 0.000s  (just elapsed)    3.781s  (game total)
+2020-05-12 00:11:51,858: DEBUG: time:  + 0.000s  (just elapsed)    0.078s  (game total)
+2020-05-12 00:12:31,043: DEBUG: ------------------------------------------------------------------
+2020-05-12 00:12:31,044: DEBUG: white: ('ok_boomer_alphabeta', 'Player')
+2020-05-12 00:12:31,044: DEBUG: black: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 00:12:31,044: DEBUG: winner: black
+2020-05-12 00:12:31,044: DEBUG: time:  + 0.000s  (just elapsed)   30.156s  (game total)
+2020-05-12 00:12:31,044: DEBUG: time:  + 0.000s  (just elapsed)    3.938s  (game total)
+2020-05-12 00:12:35,818: DEBUG: ------------------------------------------------------------------
+2020-05-12 00:12:35,819: DEBUG: white: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 00:12:35,819: DEBUG: black: ('ok_boomer_greedy', 'Player')
+2020-05-12 00:12:35,819: DEBUG: winner: white
+2020-05-12 00:12:35,819: DEBUG: time:  + 0.000s  (just elapsed)    2.828s  (game total)
+2020-05-12 00:12:35,821: DEBUG: time:  + 0.000s  (just elapsed)    0.047s  (game total)
+2020-05-12 00:13:57,537: DEBUG: ------------------------------------------------------------------
+2020-05-12 00:13:57,537: DEBUG: white: ('ok_boomer_alphabeta', 'Player')
+2020-05-12 00:13:57,538: DEBUG: black: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 00:13:57,538: DEBUG: winner: black
+2020-05-12 00:13:57,538: DEBUG: time:  + 0.000s  (just elapsed)   62.172s  (game total)
+2020-05-12 00:13:57,538: DEBUG: time:  + 0.000s  (just elapsed)    7.609s  (game total)
+2020-05-12 00:45:26,466: DEBUG: ------------------------------------------------------------------
+2020-05-12 00:45:26,566: DEBUG: white: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 00:45:26,566: DEBUG: black: ('ok_boomer_greedy', 'Player')
+2020-05-12 00:45:26,566: DEBUG: winner: white
+2020-05-12 00:45:26,566: DEBUG: time:  + 0.000s  (just elapsed)    4.094s  (game total)
+2020-05-12 00:45:26,567: DEBUG: time:  + 0.000s  (just elapsed)    0.078s  (game total)
+2020-05-12 00:49:23,948: DEBUG: ------------------------------------------------------------------
+2020-05-12 00:49:23,948: DEBUG: white: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 00:49:23,949: DEBUG: black: ('ok_boomer_greedy', 'Player')
+2020-05-12 00:49:23,949: DEBUG: winner: white
+2020-05-12 00:49:23,949: DEBUG: time:  + 0.000s  (just elapsed)    4.031s  (game total)
+2020-05-12 00:49:23,949: DEBUG: time:  + 0.000s  (just elapsed)    0.062s  (game total)
+2020-05-12 00:49:47,586: DEBUG: ------------------------------------------------------------------
+2020-05-12 00:49:47,587: DEBUG: white: ('ok_boomer_greedy', 'Player')
+2020-05-12 00:49:47,587: DEBUG: black: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 00:49:47,587: DEBUG: winner: black
+2020-05-12 00:49:47,587: DEBUG: time:  + 0.000s  (just elapsed)    0.031s  (game total)
+2020-05-12 00:49:47,587: DEBUG: time:  + 0.000s  (just elapsed)    3.250s  (game total)
+2020-05-12 01:11:35,569: DEBUG: ------------------------------------------------------------------
+2020-05-12 01:11:35,569: DEBUG: white: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 01:11:35,570: DEBUG: black: ('ok_boomer_alphabeta', 'Player')
+2020-05-12 01:11:35,570: DEBUG: winner: black
+2020-05-12 01:11:35,570: DEBUG: time:  + 0.000s  (just elapsed)    9.984s  (game total)
+2020-05-12 01:11:35,570: DEBUG: time:  + 0.000s  (just elapsed)   16.188s  (game total)
+2020-05-12 01:12:37,210: DEBUG: ------------------------------------------------------------------
+2020-05-12 01:12:37,210: DEBUG: white: ('ok_boomer_alphabeta', 'Player')
+2020-05-12 01:12:37,211: DEBUG: black: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 01:12:37,211: DEBUG: winner: white
+2020-05-12 01:12:37,211: DEBUG: time:  + 0.000s  (just elapsed)   23.984s  (game total)
+2020-05-12 01:12:37,211: DEBUG: time:  + 0.000s  (just elapsed)   10.344s  (game total)
+2020-05-12 01:12:56,123: DEBUG: ------------------------------------------------------------------
+2020-05-12 01:12:56,123: DEBUG: white: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 01:12:56,123: DEBUG: black: ('ok_boomer_alphabeta', 'Player')
+2020-05-12 01:12:56,123: DEBUG: winner: white
+2020-05-12 01:12:56,123: DEBUG: time:  + 0.000s  (just elapsed)    3.938s  (game total)
+2020-05-12 01:12:56,123: DEBUG: time:  + 0.000s  (just elapsed)    6.766s  (game total)
+2020-05-12 01:13:19,426: DEBUG: ------------------------------------------------------------------
+2020-05-12 01:13:19,426: DEBUG: white: ('ok_boomer_alphabeta', 'Player')
+2020-05-12 01:13:19,426: DEBUG: black: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 01:13:19,426: DEBUG: winner: white
+2020-05-12 01:13:19,426: DEBUG: time:  + 0.000s  (just elapsed)   10.125s  (game total)
+2020-05-12 01:13:19,426: DEBUG: time:  + 0.000s  (just elapsed)    5.281s  (game total)
+2020-05-12 01:13:39,877: DEBUG: ------------------------------------------------------------------
+2020-05-12 01:13:39,877: DEBUG: white: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 01:13:39,877: DEBUG: black: ('ok_boomer_alphabeta', 'Player')
+2020-05-12 01:13:39,878: DEBUG: winner: white
+2020-05-12 01:13:39,878: DEBUG: time:  + 0.000s  (just elapsed)    4.734s  (game total)
+2020-05-12 01:13:39,878: DEBUG: time:  + 0.000s  (just elapsed)    7.688s  (game total)
+2020-05-12 01:14:12,993: DEBUG: ------------------------------------------------------------------
+2020-05-12 01:14:12,994: DEBUG: white: ('ok_boomer_alphabeta', 'Player')
+2020-05-12 01:14:12,994: DEBUG: black: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 01:14:12,994: DEBUG: winner: white
+2020-05-12 01:14:12,994: DEBUG: time:  + 0.000s  (just elapsed)   11.891s  (game total)
+2020-05-12 01:14:12,995: DEBUG: time:  + 0.000s  (just elapsed)    6.734s  (game total)
+2020-05-12 01:14:37,263: DEBUG: ------------------------------------------------------------------
+2020-05-12 01:14:37,264: DEBUG: white: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 01:14:37,264: DEBUG: black: ('ok_boomer_alphabeta', 'Player')
+2020-05-12 01:14:37,264: DEBUG: winner: black
+2020-05-12 01:14:37,264: DEBUG: time:  + 0.000s  (just elapsed)    6.328s  (game total)
+2020-05-12 01:14:37,264: DEBUG: time:  + 0.000s  (just elapsed)    8.547s  (game total)
+2020-05-12 01:15:09,682: DEBUG: ------------------------------------------------------------------
+2020-05-12 01:15:09,682: DEBUG: white: ('ok_boomer_alphabeta', 'Player')
+2020-05-12 01:15:09,682: DEBUG: black: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 01:15:09,682: DEBUG: winner: white
+2020-05-12 01:15:09,682: DEBUG: time:  + 0.000s  (just elapsed)   11.172s  (game total)
+2020-05-12 01:15:09,682: DEBUG: time:  + 0.000s  (just elapsed)    6.047s  (game total)
+2020-05-12 01:15:33,295: DEBUG: ------------------------------------------------------------------
+2020-05-12 01:15:33,295: DEBUG: white: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 01:15:33,295: DEBUG: black: ('ok_boomer_alphabeta', 'Player')
+2020-05-12 01:15:33,295: DEBUG: draw detected: no tokens remaining
+2020-05-12 01:15:33,296: DEBUG: time:  + 0.000s  (just elapsed)    5.438s  (game total)
+2020-05-12 01:15:33,296: DEBUG: time:  + 0.000s  (just elapsed)    7.609s  (game total)
+2020-05-12 01:15:50,055: DEBUG: ------------------------------------------------------------------
+2020-05-12 01:15:50,056: DEBUG: white: ('ok_boomer_alphabeta', 'Player')
+2020-05-12 01:15:50,056: DEBUG: black: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 01:15:50,056: DEBUG: winner: white
+2020-05-12 01:15:50,057: DEBUG: time:  + 0.000s  (just elapsed)    9.172s  (game total)
+2020-05-12 01:15:50,057: DEBUG: time:  + 0.000s  (just elapsed)    3.250s  (game total)
+2020-05-12 01:16:26,688: DEBUG: ------------------------------------------------------------------
+2020-05-12 01:16:26,689: DEBUG: white: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 01:16:26,689: DEBUG: black: ('ok_boomer_alphabeta', 'Player')
+2020-05-12 01:16:26,689: DEBUG: winner: black
+2020-05-12 01:16:26,689: DEBUG: time:  + 0.000s  (just elapsed)    7.344s  (game total)
+2020-05-12 01:16:26,689: DEBUG: time:  + 0.000s  (just elapsed)   17.328s  (game total)
+2020-05-12 01:18:21,170: DEBUG: ------------------------------------------------------------------
+2020-05-12 01:18:21,170: DEBUG: white: ('ok_boomer_alphabeta', 'Player')
+2020-05-12 01:18:21,170: DEBUG: black: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 01:18:21,170: DEBUG: winner: black
+2020-05-12 01:18:21,170: DEBUG: time:  + 0.000s  (just elapsed)   12.125s  (game total)
+2020-05-12 01:18:21,171: DEBUG: time:  + 0.000s  (just elapsed)   89.750s  (game total)
+2020-05-12 01:19:56,513: DEBUG: ------------------------------------------------------------------
+2020-05-12 01:19:56,513: DEBUG: white: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 01:19:56,514: DEBUG: black: ('ok_boomer_alphabeta', 'Player')
+2020-05-12 01:19:56,514: DEBUG: winner: white
+2020-05-12 01:19:56,514: DEBUG: time:  + 0.000s  (just elapsed)   66.922s  (game total)
+2020-05-12 01:19:56,514: DEBUG: time:  + 0.000s  (just elapsed)    6.703s  (game total)
+2020-05-12 01:22:05,638: DEBUG: ------------------------------------------------------------------
+2020-05-12 01:22:05,638: DEBUG: white: ('ok_boomer_alphabeta', 'Player')
+2020-05-12 01:22:05,638: DEBUG: black: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 01:22:05,638: DEBUG: winner: black
+2020-05-12 01:22:05,638: DEBUG: time:  + 0.000s  (just elapsed)   13.297s  (game total)
+2020-05-12 01:22:05,638: DEBUG: time:  + 0.000s  (just elapsed)   90.234s  (game total)
+2020-05-12 01:23:39,920: DEBUG: ------------------------------------------------------------------
+2020-05-12 01:23:39,921: DEBUG: white: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 01:23:39,921: DEBUG: black: ('ok_boomer_alphabeta', 'Player')
+2020-05-12 01:23:39,921: DEBUG: winner: white
+2020-05-12 01:23:39,921: DEBUG: time:  + 0.000s  (just elapsed)   73.891s  (game total)
+2020-05-12 01:23:39,921: DEBUG: time:  + 0.000s  (just elapsed)    9.844s  (game total)
+2020-05-12 01:44:46,398: DEBUG: ------------------------------------------------------------------
+2020-05-12 01:44:46,399: DEBUG: white: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 01:44:46,399: DEBUG: black: ('ok_boomer_alphabeta', 'Player')
+2020-05-12 01:44:46,399: DEBUG: draw detected: no tokens remaining
+2020-05-12 01:44:46,399: DEBUG: time:  + 0.000s  (just elapsed)   29.734s  (game total)
+2020-05-12 01:44:46,399: DEBUG: time:  + 0.000s  (just elapsed)   10.203s  (game total)
+2020-05-12 01:46:54,525: DEBUG: ------------------------------------------------------------------
+2020-05-12 01:46:54,525: DEBUG: white: ('ok_boomer_alphabeta', 'Player')
+2020-05-12 01:46:54,525: DEBUG: black: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 01:46:54,525: DEBUG: winner: white
+2020-05-12 01:46:54,525: DEBUG: time:  + 0.000s  (just elapsed)   22.156s  (game total)
+2020-05-12 01:46:54,525: DEBUG: time:  + 0.000s  (just elapsed)   58.203s  (game total)
+2020-05-12 01:50:22,804: DEBUG: ------------------------------------------------------------------
+2020-05-12 01:50:22,804: DEBUG: white: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 01:50:22,805: DEBUG: black: ('ok_boomer_alphabeta', 'Player')
+2020-05-12 01:50:22,805: DEBUG: winner: white
+2020-05-12 01:50:22,805: DEBUG: time:  + 0.000s  (just elapsed)  157.438s  (game total)
+2020-05-12 01:50:22,805: DEBUG: time:  + 0.000s  (just elapsed)   13.000s  (game total)
+2020-05-12 01:52:17,412: DEBUG: ------------------------------------------------------------------
+2020-05-12 01:52:17,412: DEBUG: white: ('ok_boomer_alphabeta', 'Player')
+2020-05-12 01:52:17,413: DEBUG: black: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 01:52:17,413: DEBUG: draw detected: game state occurred 4 times.
+2020-05-12 01:52:17,413: DEBUG: time:  + 0.000s  (just elapsed)   11.266s  (game total)
+2020-05-12 01:52:17,413: DEBUG: time:  + 0.000s  (just elapsed)   69.688s  (game total)
+2020-05-12 01:52:57,730: DEBUG: ------------------------------------------------------------------
+2020-05-12 01:52:57,731: DEBUG: white: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 01:52:57,731: DEBUG: black: ('ok_boomer_alphabeta', 'Player')
+2020-05-12 01:52:57,731: DEBUG: draw detected: no tokens remaining
+2020-05-12 01:52:57,731: DEBUG: time:  + 0.000s  (just elapsed)   21.328s  (game total)
+2020-05-12 01:52:57,731: DEBUG: time:  + 0.000s  (just elapsed)    6.203s  (game total)
+2020-05-12 01:55:00,166: DEBUG: ------------------------------------------------------------------
+2020-05-12 01:55:00,166: DEBUG: white: ('ok_boomer_alphabeta', 'Player')
+2020-05-12 01:55:00,167: DEBUG: black: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 01:55:00,167: DEBUG: winner: white
+2020-05-12 01:55:00,167: DEBUG: time:  + 0.000s  (just elapsed)   17.719s  (game total)
+2020-05-12 01:55:00,167: DEBUG: time:  + 0.000s  (just elapsed)   83.188s  (game total)
+2020-05-12 01:55:27,913: DEBUG: ------------------------------------------------------------------
+2020-05-12 01:55:27,913: DEBUG: white: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 01:55:27,913: DEBUG: black: ('ok_boomer_alphabeta', 'Player')
+2020-05-12 01:55:27,914: DEBUG: winner: white
+2020-05-12 01:55:27,914: DEBUG: time:  + 0.000s  (just elapsed)   17.969s  (game total)
+2020-05-12 01:55:27,914: DEBUG: time:  + 0.000s  (just elapsed)    3.359s  (game total)
+2020-05-12 01:56:09,205: DEBUG: ------------------------------------------------------------------
+2020-05-12 01:56:09,206: DEBUG: white: ('ok_boomer_alphabeta', 'Player')
+2020-05-12 01:56:09,206: DEBUG: black: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 01:56:09,206: DEBUG: winner: black
+2020-05-12 01:56:09,206: DEBUG: time:  + 0.000s  (just elapsed)    6.469s  (game total)
+2020-05-12 01:56:09,206: DEBUG: time:  + 0.000s  (just elapsed)   24.234s  (game total)
+2020-05-12 01:56:40,326: DEBUG: ------------------------------------------------------------------
+2020-05-12 01:56:40,326: DEBUG: white: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 01:56:40,327: DEBUG: black: ('ok_boomer_alphabeta', 'Player')
+2020-05-12 01:56:40,327: DEBUG: winner: white
+2020-05-12 01:56:40,327: DEBUG: time:  + 0.000s  (just elapsed)   15.891s  (game total)
+2020-05-12 01:56:40,327: DEBUG: time:  + 0.000s  (just elapsed)    4.656s  (game total)
+2020-05-12 01:57:14,504: DEBUG: ------------------------------------------------------------------
+2020-05-12 01:57:14,504: DEBUG: white: ('ok_boomer_alphabeta', 'Player')
+2020-05-12 01:57:14,504: DEBUG: black: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 01:57:14,504: DEBUG: winner: black
+2020-05-12 01:57:14,504: DEBUG: time:  + 0.000s  (just elapsed)    5.562s  (game total)
+2020-05-12 01:57:14,505: DEBUG: time:  + 0.000s  (just elapsed)   19.703s  (game total)
+2020-05-12 02:00:42,028: DEBUG: ------------------------------------------------------------------
+2020-05-12 02:00:42,028: DEBUG: white: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 02:00:42,028: DEBUG: black: ('ok_boomer_alphabeta', 'Player')
+2020-05-12 02:00:42,028: DEBUG: draw detected: no tokens remaining
+2020-05-12 02:00:42,028: DEBUG: time:  + 0.000s  (just elapsed)  161.109s  (game total)
+2020-05-12 02:00:42,028: DEBUG: time:  + 0.000s  (just elapsed)   21.375s  (game total)
+2020-05-12 02:01:23,068: DEBUG: ------------------------------------------------------------------
+2020-05-12 02:01:23,069: DEBUG: white: ('ok_boomer_alphabeta', 'Player')
+2020-05-12 02:01:23,069: DEBUG: black: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 02:01:23,069: DEBUG: winner: black
+2020-05-12 02:01:23,069: DEBUG: time:  + 0.000s  (just elapsed)    4.938s  (game total)
+2020-05-12 02:01:23,069: DEBUG: time:  + 0.000s  (just elapsed)   23.875s  (game total)
+2020-05-12 02:28:08,541: DEBUG: ------------------------------------------------------------------
+2020-05-12 02:28:08,637: DEBUG: white: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 02:28:08,638: DEBUG: black: ('ok_boomer_alphabeta', 'Player')
+2020-05-12 02:28:08,638: DEBUG: winner: white
+2020-05-12 02:28:08,638: DEBUG: time:  + 0.000s  (just elapsed)   45.672s  (game total)
+2020-05-12 02:28:08,638: DEBUG: time:  + 0.000s  (just elapsed)    4.625s  (game total)
+2020-05-12 02:29:39,832: DEBUG: ------------------------------------------------------------------
+2020-05-12 02:29:39,832: DEBUG: white: ('ok_boomer_alphabeta', 'Player')
+2020-05-12 02:29:39,832: DEBUG: black: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 02:29:39,833: DEBUG: winner: black
+2020-05-12 02:29:39,833: DEBUG: time:  + 0.000s  (just elapsed)    7.891s  (game total)
+2020-05-12 02:29:39,833: DEBUG: time:  + 0.000s  (just elapsed)   58.000s  (game total)
+2020-05-12 02:31:50,897: DEBUG: ------------------------------------------------------------------
+2020-05-12 02:31:50,898: DEBUG: white: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 02:31:50,898: DEBUG: black: ('ok_boomer_alphabeta', 'Player')
+2020-05-12 02:31:50,899: DEBUG: winner: black
+2020-05-12 02:31:50,899: DEBUG: time:  + 0.016s  (just elapsed)   88.891s  (game total)
+2020-05-12 02:31:50,899: DEBUG: time:  + 0.000s  (just elapsed)   12.984s  (game total)
+2020-05-12 02:37:09,158: DEBUG: ------------------------------------------------------------------
+2020-05-12 02:37:09,158: DEBUG: white: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 02:37:09,159: DEBUG: black: ('ok_boomer_alphabeta', 'Player')
+2020-05-12 02:37:09,159: DEBUG: winner: white
+2020-05-12 02:37:09,159: DEBUG: time:  + 0.000s  (just elapsed)   75.188s  (game total)
+2020-05-12 02:37:09,159: DEBUG: time:  + 0.000s  (just elapsed)    6.797s  (game total)
+2020-05-12 02:38:41,930: DEBUG: ------------------------------------------------------------------
+2020-05-12 02:38:41,931: DEBUG: white: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 02:38:41,931: DEBUG: black: ('ok_boomer_alphabeta', 'Player')
+2020-05-12 02:38:41,931: DEBUG: winner: white
+2020-05-12 02:38:41,931: DEBUG: time:  + 0.000s  (just elapsed)   33.656s  (game total)
+2020-05-12 02:38:41,933: DEBUG: time:  + 0.000s  (just elapsed)    4.375s  (game total)
+2020-05-12 02:39:56,275: DEBUG: ------------------------------------------------------------------
+2020-05-12 02:39:56,275: DEBUG: white: ('ok_boomer_alphabeta', 'Player')
+2020-05-12 02:39:56,275: DEBUG: black: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 02:39:56,275: DEBUG: winner: black
+2020-05-12 02:39:56,275: DEBUG: time:  + 0.000s  (just elapsed)    5.453s  (game total)
+2020-05-12 02:39:56,275: DEBUG: time:  + 0.000s  (just elapsed)   57.562s  (game total)
+2020-05-12 02:41:36,858: DEBUG: ------------------------------------------------------------------
+2020-05-12 02:41:36,858: DEBUG: white: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 02:41:36,858: DEBUG: black: ('ok_boomer_alphabeta', 'Player')
+2020-05-12 02:41:36,858: DEBUG: draw detected: game state occurred 4 times.
+2020-05-12 02:41:36,858: DEBUG: time:  + 0.000s  (just elapsed)   46.797s  (game total)
+2020-05-12 02:41:36,858: DEBUG: time:  + 0.000s  (just elapsed)    5.625s  (game total)
+2020-05-12 02:42:54,535: DEBUG: ------------------------------------------------------------------
+2020-05-12 02:42:54,535: DEBUG: white: ('ok_boomer_alphabeta', 'Player')
+2020-05-12 02:42:54,535: DEBUG: black: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 02:42:54,535: DEBUG: winner: black
+2020-05-12 02:42:54,535: DEBUG: time:  + 0.000s  (just elapsed)    9.375s  (game total)
+2020-05-12 02:42:54,535: DEBUG: time:  + 0.000s  (just elapsed)   46.812s  (game total)
+2020-05-12 02:47:50,215: DEBUG: ------------------------------------------------------------------
+2020-05-12 02:47:50,216: DEBUG: white: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 02:47:50,216: DEBUG: black: ('ok_boomer_alphabeta', 'Player')
+2020-05-12 02:47:50,216: DEBUG: draw detected: game state occurred 4 times.
+2020-05-12 02:47:50,216: DEBUG: time:  + 0.000s  (just elapsed)   10.500s  (game total)
+2020-05-12 02:47:50,216: DEBUG: time:  + 0.000s  (just elapsed)   23.281s  (game total)
+2020-05-12 02:48:34,802: DEBUG: ------------------------------------------------------------------
+2020-05-12 02:48:34,802: DEBUG: white: ('ok_boomer_alphabeta', 'Player')
+2020-05-12 02:48:34,803: DEBUG: black: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 02:48:34,803: DEBUG: draw detected: game state occurred 4 times.
+2020-05-12 02:48:34,803: DEBUG: time:  + 0.000s  (just elapsed)   22.547s  (game total)
+2020-05-12 02:48:34,803: DEBUG: time:  + 0.000s  (just elapsed)   11.000s  (game total)
+2020-05-12 02:49:46,238: DEBUG: ------------------------------------------------------------------
+2020-05-12 02:49:46,238: DEBUG: white: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 02:49:46,239: DEBUG: black: ('ok_boomer_alphabeta', 'Player')
+2020-05-12 02:49:46,239: DEBUG: draw detected: game state occurred 4 times.
+2020-05-12 02:49:46,239: DEBUG: time:  + 0.000s  (just elapsed)   17.812s  (game total)
+2020-05-12 02:49:46,239: DEBUG: time:  + 0.000s  (just elapsed)   44.391s  (game total)
+2020-05-12 02:50:48,061: DEBUG: ------------------------------------------------------------------
+2020-05-12 02:50:48,061: DEBUG: white: ('ok_boomer_alphabeta', 'Player')
+2020-05-12 02:50:48,061: DEBUG: black: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 02:50:48,062: DEBUG: draw detected: game state occurred 4 times.
+2020-05-12 02:50:48,062: DEBUG: time:  + 0.000s  (just elapsed)   38.578s  (game total)
+2020-05-12 02:50:48,062: DEBUG: time:  + 0.000s  (just elapsed)   14.656s  (game total)
+2020-05-12 03:02:32,139: DEBUG: ------------------------------------------------------------------
+2020-05-12 03:02:32,140: DEBUG: white: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 03:02:32,140: DEBUG: black: ('ok_boomer_alphabeta', 'Player')
+2020-05-12 03:02:32,140: DEBUG: draw detected: game state occurred 4 times.
+2020-05-12 03:02:32,140: DEBUG: time:  + 0.000s  (just elapsed)   94.922s  (game total)
+2020-05-12 03:02:32,140: DEBUG: time:  + 0.000s  (just elapsed)  130.359s  (game total)
+2020-05-12 03:06:25,147: DEBUG: ------------------------------------------------------------------
+2020-05-12 03:06:25,147: DEBUG: white: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 03:06:25,147: DEBUG: black: ('ok_boomer_alphabeta', 'Player')
+2020-05-12 03:06:25,148: DEBUG: winner: black
+2020-05-12 03:06:25,148: DEBUG: time:  + 0.000s  (just elapsed)   84.969s  (game total)
+2020-05-12 03:06:25,148: DEBUG: time:  + 0.000s  (just elapsed)   87.906s  (game total)
+2020-05-12 03:07:31,017: DEBUG: ------------------------------------------------------------------
+2020-05-12 03:07:31,017: DEBUG: white: ('ok_boomer_alphabeta', 'Player')
+2020-05-12 03:07:31,017: DEBUG: black: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 03:07:31,017: DEBUG: winner: black
+2020-05-12 03:07:31,017: DEBUG: time:  + 0.000s  (just elapsed)   20.281s  (game total)
+2020-05-12 03:07:31,017: DEBUG: time:  + 0.000s  (just elapsed)   34.438s  (game total)
+2020-05-12 03:10:36,754: DEBUG: ------------------------------------------------------------------
+2020-05-12 03:10:36,754: DEBUG: white: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 03:10:36,754: DEBUG: black: ('ok_boomer_alphabeta', 'Player')
+2020-05-12 03:10:36,754: DEBUG: winner: black
+2020-05-12 03:10:36,755: DEBUG: time:  + 0.000s  (just elapsed)   63.172s  (game total)
+2020-05-12 03:10:36,755: DEBUG: time:  + 0.000s  (just elapsed)   93.062s  (game total)
+2020-05-12 03:12:17,092: DEBUG: ------------------------------------------------------------------
+2020-05-12 03:12:17,092: DEBUG: white: ('ok_boomer_alphabeta', 'Player')
+2020-05-12 03:12:17,092: DEBUG: black: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 03:12:17,092: DEBUG: winner: white
+2020-05-12 03:12:17,092: DEBUG: time:  + 0.000s  (just elapsed)   47.719s  (game total)
+2020-05-12 03:12:17,092: DEBUG: time:  + 0.000s  (just elapsed)   35.203s  (game total)
+2020-05-12 03:16:31,277: DEBUG: ------------------------------------------------------------------
+2020-05-12 03:16:31,277: DEBUG: white: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 03:16:31,277: DEBUG: black: ('ok_boomer_alphabeta', 'Player')
+2020-05-12 03:16:31,277: DEBUG: winner: black
+2020-05-12 03:16:31,277: DEBUG: time:  + 0.000s  (just elapsed)  119.969s  (game total)
+2020-05-12 03:16:31,277: DEBUG: time:  + 0.000s  (just elapsed)   93.516s  (game total)
+2020-05-12 03:17:20,443: DEBUG: ------------------------------------------------------------------
+2020-05-12 03:17:20,443: DEBUG: white: ('ok_boomer_alphabeta', 'Player')
+2020-05-12 03:17:20,443: DEBUG: black: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 03:17:20,443: DEBUG: draw detected: no tokens remaining
+2020-05-12 03:17:20,443: DEBUG: time:  + 0.000s  (just elapsed)   21.547s  (game total)
+2020-05-12 03:17:20,443: DEBUG: time:  + 0.000s  (just elapsed)   19.703s  (game total)
+2020-05-12 03:18:38,145: DEBUG: ------------------------------------------------------------------
+2020-05-12 03:18:38,145: DEBUG: white: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 03:18:38,145: DEBUG: black: ('ok_boomer_alphabeta', 'Player')
+2020-05-12 03:18:38,145: DEBUG: winner: white
+2020-05-12 03:18:38,146: DEBUG: time:  + 0.000s  (just elapsed)   28.750s  (game total)
+2020-05-12 03:18:38,146: DEBUG: time:  + 0.000s  (just elapsed)   43.719s  (game total)
+2020-05-12 03:19:31,772: DEBUG: ------------------------------------------------------------------
+2020-05-12 03:19:31,772: DEBUG: white: ('ok_boomer_alphabeta', 'Player')
+2020-05-12 03:19:31,772: DEBUG: black: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 03:19:31,773: DEBUG: winner: black
+2020-05-12 03:19:31,773: DEBUG: time:  + 0.000s  (just elapsed)   19.703s  (game total)
+2020-05-12 03:19:31,773: DEBUG: time:  + 0.000s  (just elapsed)   28.469s  (game total)
+2020-05-12 03:21:02,497: DEBUG: ------------------------------------------------------------------
+2020-05-12 03:21:02,498: DEBUG: white: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 03:21:02,498: DEBUG: black: ('ok_boomer_alphabeta', 'Player')
+2020-05-12 03:21:02,498: DEBUG: winner: black
+2020-05-12 03:21:02,498: DEBUG: time:  + 0.000s  (just elapsed)   29.922s  (game total)
+2020-05-12 03:21:02,498: DEBUG: time:  + 0.000s  (just elapsed)   38.453s  (game total)
+2020-05-12 03:22:40,850: DEBUG: ------------------------------------------------------------------
+2020-05-12 03:22:40,850: DEBUG: white: ('ok_boomer_alphabeta', 'Player')
+2020-05-12 03:22:40,851: DEBUG: black: ('ok_boomer_tdleaf', 'Player')
+2020-05-12 03:22:40,851: DEBUG: draw detected: no tokens remaining
+2020-05-12 03:22:40,851: DEBUG: time:  + 0.000s  (just elapsed)   56.031s  (game total)
+2020-05-12 03:22:40,851: DEBUG: time:  + 0.000s  (just elapsed)   32.422s  (game total)

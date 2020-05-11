@@ -1,8 +1,8 @@
 import numpy as np
 import glob
 
-DECAY = 0.9
-LR = 0.001
+DECAY = 0.7
+LR = 0.05
 WEIGHT_FILE = 'weights.csv'
 
 def load_data(filename):
@@ -44,12 +44,13 @@ def update_weights(weights, rewards, features, lr, gamma):
 def load_weights():
     return np.loadtxt(WEIGHT_FILE, delimiter=',')
 
-if __name__ == "main":
+if __name__ == "__main__":
+    print("Updating weights")
     weights = np.loadtxt(WEIGHT_FILE, delimiter=',')
 
     print(weights.shape)
 
-    files = glob.glob('training/*.log')
+    files = glob.glob('training/data.log')
     r, f = load_data(files[0])
     print(r.shape)
     print(f.shape)
@@ -57,4 +58,6 @@ if __name__ == "main":
     print(weights)
     new_weights = update_weights(weights, r, f, LR, DECAY)
     print(new_weights)
+
+    np.savetxt(WEIGHT_FILE, new_weights, delimiter=',')
 

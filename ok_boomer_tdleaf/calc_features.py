@@ -2,63 +2,213 @@ import ok_boomer_tdleaf.game as game
 from ok_boomer_tdleaf.util import *
 from ok_boomer_tdleaf.constants import *
 import numpy as np
+import math
 from ok_boomer_tdleaf.action_generator import possible_positions
 
 def get_features(state):
     features = []
 
-    grid_format = game.get_grid_format(state)
-
     ###-------------------- difference of tokens--------------------###
-    nw, nb = count_tokens(state)
-    features.append(nw/12)
-    features.append(nb/12)
-    features.append((nw-nb)/12)
-
-
-
+    features.append(get_token_difference(state))
 
     ###-------------------- difference of stacks --------------------###
-    #features.append((len(state["white"]) - len(state["black"]))/12)
+    features.append(get_stack_difference(state))
+
+    ###-------------------- difference of chunks --------------------### 
+    features.append(get_chunk_difference(state))
     
+    ###-------------------- difference of ratio token --------------------### 
+    features.append(get_token_ratio(state))
+
+    ###-------------------- distance to opponent tokens --------------------### 
+    features.append(distance_heuristic(state, "white"))
+
+    ###-------------------- difference of neigbour count --------------------### 
+    features.append(count_neighbours(state))
+
+    ###-------------------- stack height differences --------------------### 
+    features += stack_height_difference_counter(state)
+
+    ###-------------------- difference of targetable tokens --------------------### 
+    features.append(calculate_targetable_diff(state))
+
     ###-------------------- average location of all tokens --------------------###
+    # features.append(get_average_location)
     # I think these features were useless bc the weights got too small 
     #avg_white_x, avg_white_y = get_avg_loc(state, "white")
     #avg_black_x, avg_black_y = get_avg_loc(state, "black")
     #features.append((avg_white_x-avg_black_x)/8)
     #features.append((avg_white_y-avg_black_y)/8)
 
-
-
-    ###-------------------- difference of chunks --------------------### 
-    white_chunks = len(get_chunks({"white": state["white"]}))
-    black_chunks = len(get_chunks({"black": state["black"]}))
-    features.append((white_chunks-black_chunks)/12)
-
     ###-------------------- difference of distances --------------------### 
-    #features.append(heuristic(state, "white") - heuristic(state, "black"))
-
-    ###-------------------- ratio of white:black tokens --------------------### 
-    features.append((nw+1)/(nb+1))
-
-    features.append(get_danger_score(state))
+    #features.append(distance_heuristic(state, "white") - distance_heuristic(state, "black"))
+    ###-------------------- difference of distances --------------------###
+    #features.append(get_danger_score(state))
 
     ###-------------------- corner position --------------------### 
     # difference in corner positions
     # score_corners(grid_format)
 
-
     ###-------------------- difference of area covered --------------------### 
-    # difference in amount of area covered
-    # features.append((calc_spread(state, "white") - calc_spread(state, "black"))/32)
+    # features.append(difference_of_area(state))
 
     #features.append((calc_dist_middle(state,"white")/48)-(calc_dist_middle(state,"black")/48))
     ###-------------------- difference in edge positions --------------------### 
     ###-------------------- difference in centre positions --------------------### 
     ###-------------------- number in opponent half --------------------### 
-
-
+    
+    #print(len(features))
     return np.array(features)
+
+def get_token_difference(state):
+    nw, nb = count_tokens(state)
+    #features.append(nw/12)
+    #features.append(nb/12)
+    return (nw-nb)/12
+
+def get_stack_difference(state):
+    return (len(state["white"]) - len(state["black"]))/12
+
+def get_chunk_difference(state):
+    white_chunks = len(get_chunks({"white": state["white"]}))
+    black_chunks = len(get_chunks({"black": state["black"]}))
+    return (white_chunks-black_chunks)/12
+    
+def get_token_ratio(state):
+    nw, nb = count_tokens(state)
+    return (nw+1)/(nb+1)
+
+def distance_heuristic(board, colour):
+    """ Distance heuristic """
+    
+    # Best of n stack distance
+    if len(board[colour]) > 0:
+        best_stack = max([stack[N_TOKENS] for stack in board[colour]])
+    else:
+        best_stack = 1
+
+    distances = []
+    
+    for stack in board[opponent(colour)]:
+        distances.append(min_distance_from_stack(stack, board[colour]))
+    
+    w, b = count_tokens(board)
+
+    if len(distances) == 0: return 0
+
+    return math.tanh(1/sum(distances))
+
+
+def count_neighbours(state):
+    grid = game.get_grid_format(state)
+    coordinates = grid.keys()
+    neighW = 0
+    neighB = 0
+
+    for position in coordinates:
+        x, y = position
+        isWhite = (grid[position][0] == "w")
+
+        for dx in range(-1, 2):
+            for dy in range(-1, 2):
+                point = (x+dx, y+dy)
+                if point in coordinates:
+                    if isWhite and grid[point][0] != "w":
+                        neighW += int(grid[point][1:])
+                    elif not isWhite and grid[point][0] != "b":
+                        neighB += int(grid[point][1:])
+
+    return (neighW - neighB)/12
+
+def stack_height_difference_counter(state):
+    wStacks = state["white"]
+    bStacks = state["black"]
+
+    wCounter = [0, 0, 0, 0, 0, 0]
+    bCounter = [0, 0, 0, 0, 0, 0]
+
+    for stack in wStacks:
+        if stack[N_TOKENS] >= 6:
+            wCounter[5] += 1
+        elif stack[N_TOKENS] == 5:
+            wCounter[4] += 1
+        elif stack[N_TOKENS] == 4:
+            wCounter[3] += 1
+        elif stack[N_TOKENS] == 3:
+            wCounter[2] += 1
+        elif stack[N_TOKENS] == 2:
+            wCounter[1] += 1
+        else:
+            wCounter[0] += 1    
+
+    for stack in bStacks:
+        if stack[N_TOKENS] >= 6:
+            bCounter[5] += 1
+        elif stack[N_TOKENS] == 5:
+            bCounter[4] += 1
+        elif stack[N_TOKENS] == 4:
+            bCounter[3] += 1
+        elif stack[N_TOKENS] == 3:
+            bCounter[2] += 1
+        elif stack[N_TOKENS] == 2:
+            bCounter[1] += 1
+        else:
+            bCounter[0] += 1  
+
+    diff = [wCounter[i] - bCounter[i] for i in range(len(wCounter))]
+    
+    return diff
+
+def calculate_targetable_diff(state):
+    grid = game.get_grid_format(state)
+    
+    bStacks = state["black"]
+    wStacks = state["white"]
+    bCounter = wCounter = 0
+
+    for stack in bStacks:
+        bCounter += count_targets("black", state, stack)
+    
+    for stack in wStacks:
+        wCounter += count_targets("white", state, stack)
+
+    return (wCounter - bCounter)/12
+
+
+#################################################################################
+def opponent_colour(colour):
+    if colour == "white":
+        return "black"
+    return "white"
+
+def count_targets(colour, state, stack):
+    grid = game.get_grid_format({opponent_colour(colour):state[opponent_colour(colour)]})
+    area = get_coverage(stack)
+   
+    count = 0
+
+    for point in grid.keys():
+        if point in area:
+            count += int(grid[point][1:])
+
+    return count
+
+def get_coverage(stack):
+    area = set()
+    n, x, y = stack
+
+    for i in range(max(0, x - n - 1), min(x + n + 1, 7) + 1):
+        for j in range(max(0, y - 1), min(y + 1, 7) + 1):
+            area.add((i, j))
+
+    for j in range(max(0, y - n - 1), min(y + n + 1, 7) + 1):
+        for i in range(max(0, x - 1), min(x + 1, 7) + 1):
+            area.add((i, j))
+
+    return area
+
+def difference_of_area(state):
+    return (calc_spread(state, "white") - calc_spread(state, "black"))/32
 
 #calculate the distance from the middle
 def calc_dist_middle(state, colour):
@@ -164,30 +314,9 @@ def is_low_risk(board):
 # normalise the weights !!!
 # does the chunkc calculation outweight the benefit of having a larger depth
 
-def heuristic(board, colour):
-    """ Distance heuristic """
-    
-    # Best of n stack distance
-    if len(board[colour]) > 0:
-        best_stack = max([stack[N_TOKENS] for stack in board[colour]])
-    else:
-        best_stack = 1
 
-    distances = []
-    
-    for stack in board[opponent(colour)]:
-        distances.append(min_distance_from_stack(stack, board[colour]))
-    
-    w, b = count_tokens(board)
-    count = w if colour=="white" else b
 
-    distances.sort()
-
-    if len(distances) == 0: return 0
-
-    return 1/max(1, distances[0])
-
-def heuristic2(board, colour):
+def distance_heuristic2(board, colour):
     # Best of n stack distance
     if len(board[colour]) > 0:
         best_stack = max([stack[N_TOKENS] for stack in board[colour]])

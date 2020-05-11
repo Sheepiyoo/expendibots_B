@@ -21,7 +21,7 @@ class ExamplePlayer:
     }
 
     WEIGHT_FILE = ml.WEIGHT_FILE
-    N_FEATURES = 6
+    N_FEATURES = 13
 
     ### Testing
     """
@@ -49,6 +49,36 @@ class ExamplePlayer:
         strings "white" or "black" correspondingly.
         """
         # TODO: Set up state representation.
+
+        class HistTable:
+            def __init__(self):
+                self.history = {}
+
+            def add_history(self, action, depth):
+                if action in self.history.keys():
+                    self.history[action] += depth*depth
+                else: self.history[action] = depth*depth
+            
+            def order_actions(self, actions):
+                ordered_actions = []
+                for action in actions:
+                    if action.action == "BOOM":
+                        ordered_actions.append((10000, action))
+                    else:
+                        from_pos = [action.num, action.source[0], action.source[1]]
+                        to_pos = [action.num, action.target[0], action.target[1]]
+                        if (action) in self.history.keys():
+                            ordered_actions.append(history[action], action)
+                        else:
+                            ordered_actions.append((0, action))
+                
+                ordered_actions.sort(reverse=True, key=lambda x: x[0])
+
+                
+                return [x[1] for x in ordered_actions]
+
+   
+
         
         self.board = self.INITIAL_BOARD
         self.colour = colour
@@ -57,6 +87,7 @@ class ExamplePlayer:
         self.HTable = bb.HTable()    ##HTable for draw avoidance
         self.num_turns = 0
         self.TTable = bb.TTable()
+        self.histtable = HistTable()
 
         self.HTable.addState(self.board)
         #Store (numTimesVisited (for draw checking), (bestMove), (depthFromThisPosition))
@@ -83,7 +114,7 @@ class ExamplePlayer:
         
         start = time.time()
 
-        an_action = bb.iterative_depth_search(self.board, 0, self.weights, self.colour, -1000, 1000, self.depth_limit, self.HTable, self.TTable, self.num_turns)
+        an_action = bb.iterative_depth_search(self.board, 0, self.weights, self.colour, -1000, 1000, self.depth_limit, self.HTable, self.TTable, self.num_turns, self.histtable)
 
         #an_action = bb.iterative_depth_search(self.TEST_BOARD, 1, self.weights, self.colour, -1000, 1000, self.depth_limit, self.HTable, self.num_turns)
         
@@ -121,14 +152,3 @@ class ExamplePlayer:
         self.HTable.addState(self.board)
         self.num_turns += 1
         
-        # Somehow change the depth limit?
-        # w, b = bb.count_tokens(self.board)
-        #self.depth_limit = 6 - (w+b)//8
-
-        """
-        if self.colour == "white":
-            self.depth_limit = 6 - w//3
-        else:
-            self.depth_limit = 6 - b//3
-        """
-

@@ -4,7 +4,7 @@ Module for all functions related to decision making
 from ok_boomer_alphabeta.game import *
 from ok_boomer_alphabeta.util import *
 import logging
-
+from collections import deque
 FORMAT = '%(asctime)s: %(levelname)s: %(message)s'
 
 formatter = logging.Formatter(FORMAT)
@@ -68,6 +68,39 @@ def count_tokens(board):
 # returns possible moves for a given stack
 def get_possible_actions_from_stack(stack_from, board, player_colour):
     grid_board = get_grid_format(board)
+
+    # generate the order of moves depending on the number of white in top half, bottom half, left half, right half, 
+    if player_colour == "white":
+        opponent_colour = "black"
+    else:
+        opponent_colour="white"
+
+    order = analyse_board(board, opponent_colour)
+    possible_actions = deque()
+
+    x_pos, y_pos = stack_from[X_POS],  stack_from[Y_POS]
+    
+    if not (detect_suicide((x_pos, y_pos), board, player_colour)):
+        possible_actions.appendleft(Action("BOOM", 1, (x_pos, y_pos), (x_pos, y_pos)))
+    
+    #possible_actions.appendleft(Action("BOOM", 1, (x_pos, y_pos), (x_pos, y_pos)))
+    
+    for n in range(stack_from[N_TOKENS], 0, -1):   
+        for (x, y) in possible_positions(stack_from[X_POS], stack_from[Y_POS], n, order):
+            if (x, y) in grid_board:
+                if not is_opponent(grid_board[(x, y)], player_colour):
+                    current_n_token = int(grid_board[(x,y)][1:])
+                    for i in range(1, stack_from[0]+1):
+                        possible_actions.append(Action("MOVE", i, (x_pos, y_pos), (x, y)))
+            else:
+                for i in range(1, stack_from[0]+1):
+                        possible_actions.append(Action("MOVE", i, (x_pos, y_pos), (x, y)))
+    
+    return list(possible_actions)
+
+""" # returns possible moves for a given stack
+def get_possible_actions_from_stack(stack_from, board, player_colour):
+    grid_board = get_grid_format(board)
     possible_actions = []
     x_pos, y_pos = stack_from[X_POS],  stack_from[Y_POS]
 
@@ -81,12 +114,12 @@ def get_possible_actions_from_stack(stack_from, board, player_colour):
 
     possible_actions.append(Action("BOOM", 1, (x_pos, y_pos), (x_pos, y_pos)))
     
-    """
+    
     if not (detect_suicide((x_pos, y_pos), board, player_colour)):
         possible_actions.append(Action("BOOM", 1, (x_pos, y_pos), (x_pos, y_pos)))
     else:
         logger.debug("{colour} BOOM at ({x}, {y}) is suicide".format(colour = player_colour, x = x_pos, y = y_pos))
-    """
+    
     
     # for each possible stack of n tokens 
     for n in range(1, stack_from[N_TOKENS]+1):
@@ -105,7 +138,7 @@ def get_possible_actions_from_stack(stack_from, board, player_colour):
                         possible_actions.append(Action("MOVE", i, (x_pos, y_pos), (x, y)))
 
     #print(possible_actions)
-    return possible_actions
+    return possible_actions """
 
 def is_opponent(colour_n, player_colour):
     player = colour_n[0]

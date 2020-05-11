@@ -2,6 +2,7 @@ import subprocess
 import logging
 import ok_boomer_tdleaf.machine_learning as ml
 import numpy as np
+import random
 
 FORMAT = '%(asctime)s: %(levelname)s: %(message)s'
 
@@ -14,16 +15,21 @@ file_handler.setFormatter(formatter)
 logger.addHandler(file_handler)
 
 num_tests = 0
-MAX_TESTS = 200
+MAX_TESTS = 500
 
 logger.debug("------------------- New Training Session ----------------")
 swap = False
-
 while num_tests < MAX_TESTS:
+    opponent = random.randint(0,1)
 
     white = "ok_boomer_tdleaf"
-    black =  "ok_boomer_alphabeta" 
-    #black = "ok_boomer_alphabeta"
+    black1 =  "ok_boomer_greedy" 
+    black2 = "ok_boomer_alphabeta"
+
+    if opponent == 1:
+        black = black1
+    else:
+        black = black2
 
     if swap:
         temp = black
@@ -32,6 +38,7 @@ while num_tests < MAX_TESTS:
 
     referee = "referee_elon_musk"
     p = subprocess.Popen(["python", "-m", referee, white, black])
+    #p = subprocess.Popen(["python", "-m", "battleground", "ok_boomer_tdleaf", "TwT"])
     p.wait()
 
     # Update weights

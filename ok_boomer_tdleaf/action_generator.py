@@ -38,6 +38,7 @@ class Action:
 
 
 
+
 def get_possible_actions(board, player_colour):
     all_moves = []
     stacks = board[player_colour]
@@ -50,16 +51,22 @@ def get_possible_actions(board, player_colour):
     
     return all_moves
 
-def get_possible_quiesce_actions(board, player_colour):
+def get_possible_violent_actions(board, player_colour):
+    
     all_moves = []
     stacks = board[player_colour]
     
+    #Check for booms + yeets
     for stack in stacks:
+        n_tokens = stack[N_TOKENS]
         x_pos, y_pos = stack[X_POS],  stack[Y_POS]
         all_moves.append(Action("BOOM", 1, (x_pos, y_pos), (x_pos, y_pos)))
 
-    print(all_moves)
+        #if n_tokens >= 3:
+        #    all_moves += get_possible_actions_from_stack(stack, board, player_colour)
+
     return all_moves
+
 # returns possible moves for a given stack
 def get_possible_actions_from_stack(stack_from, board, player_colour):
     grid_board = get_grid_format(board)
