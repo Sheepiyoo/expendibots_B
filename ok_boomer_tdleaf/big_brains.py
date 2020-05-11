@@ -25,6 +25,9 @@ file_handler = logging.FileHandler(filename='training/data.log'.format(timestamp
 file_handler.setFormatter(formatter)
 logger.addHandler(file_handler)
 
+def count_prune():
+    return
+
 class TTableEntry:
     def __init__(self, evaluation, depth, best_leaf, best_action):
         self.evaluation = evaluation
@@ -240,6 +243,7 @@ def minimax(board, depth, weights, player_colour, alpha, beta, depth_limit, htab
             alpha = max(alpha, best)
 
             if alpha >= beta:
+                count_prune()
                 break
                 
 
@@ -271,6 +275,7 @@ def minimax(board, depth, weights, player_colour, alpha, beta, depth_limit, htab
             beta = min(beta, best)
 
             if beta <= alpha:
+                count_prune()
                 break
 
     if ttable.contains(player_colour, board):
@@ -283,7 +288,7 @@ def minimax(board, depth, weights, player_colour, alpha, beta, depth_limit, htab
     return best, best_action, best_leaf_state
 
 def evaluate(weights, state):
-    """ Returns an evaluation value for a given action. """
+    """ Returns an evaluation value for a given action."""
     
     WEIGHT = 0.9    # Controls importance of removing pieces vs moving closer
     EPSILON = 1
@@ -301,8 +306,8 @@ def evaluate(weights, state):
         reward = 0
     else: reward = math.tanh(eval)
     
-    return reward
-    """
+    return reward"""
+    
 
 def is_repeated(board, htable):
     #Previously visited 3 times  - this time is the 4th
