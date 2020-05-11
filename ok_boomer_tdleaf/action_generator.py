@@ -4,6 +4,7 @@ Module for all functions related to decision making
 from ok_boomer_tdleaf.game import *
 from ok_boomer_tdleaf.util import *
 import logging
+from collections import deque
 
 FORMAT = '%(asctime)s: %(levelname)s: %(message)s'
 
@@ -34,52 +35,64 @@ class Action:
     def __repr__(self):
         return str(self.toTuple())
 
+
+
+
 def get_possible_actions(board, player_colour):
-    #logger.debug(print_board(get_grid_format(board)))
     all_moves = []
     stacks = board[player_colour]
     stacks.sort(reverse=True, key=lambda stack: stack[N_TOKENS])
-    
-    #print(stacks)
-    
+        
     for stack_from in stacks:
         all_moves += get_possible_actions_from_stack(stack_from, board, player_colour)
     
-    #all_moves.sort(key=lambda x: (x.action == "MOVE", -x.num))
-    all_moves.sort(key=lambda x: x.action == "MOVE")
+    all_moves.sort(reverse=True, key=lambda x: x.action == "BOOM")
     
     return all_moves
 
+def get_possible_quiesce_actions(board, player_colour):
+    all_moves = []
+    stacks = board[player_colour]
+    
+    for stack in stacks:
+        x_pos, y_pos = stack[X_POS],  stack[Y_POS]
+        all_moves.append(Action("BOOM", 1, (x_pos, y_pos), (x_pos, y_pos)))
+
+    print(all_moves)
+    return all_moves
 # returns possible moves for a given stack
 def get_possible_actions_from_stack(stack_from, board, player_colour):
     grid_board = get_grid_format(board)
-    possible_actions = []
+
+    """ for i in range(0, 8):
+        for j in range(0, 8):
+            if (i, j) not in grid_board:
+                grid_board.append(((i,j), "empty"))
+        for n in range(stack_from[N_TOKENS], 0, -1):
+            poss_pos = [(0)] """
+    possible_actions = deque()
+
     x_pos, y_pos = stack_from[X_POS],  stack_from[Y_POS]
 
-    possible_actions.append(Action("BOOM", 1, (x_pos, y_pos), (x_pos, y_pos)))
+    possible_actions.appendleft(Action("BOOM", 1, (x_pos, y_pos), (x_pos, y_pos)))
     
-    # for each possible stack of n tokens 
-    #for n in range(stack_from[N_TOKENS], 0, -1):
-    for n in range(1, stack_from[N_TOKENS]+1):   
-        # for each possible position from given position
+    for n in range(stack_from[N_TOKENS], 0, -1):   
         for (x, y) in possible_positions(stack_from[X_POS], stack_from[Y_POS], n):
-            # if a stack already exists on the board, add the stack
             if (x, y) in grid_board:
                 if not is_opponent(grid_board[(x, y)], player_colour):
                     for i in range(1, stack_from[0]+1):
-                        possible_actions.append(Action("MOVE", i, (x_pos, y_pos), (x, y)))
-                
+                        possible_actions.appendleft(Action("MOVE", i, (x_pos, y_pos), (x, y)))
             else:
                 for i in range(1, stack_from[0]+1):
                         possible_actions.append(Action("MOVE", i, (x_pos, y_pos), (x, y)))
-
-    #print(possible_actions)
-    return possible_actions
+    
+    return list(possible_actions)
 
 def is_opponent(colour_n, player_colour):
     player = colour_n[0]
     if player != player_colour[0]:
         return True
+    #if colour_n == empty
     return False
 
 def possible_positions(x, y, n):

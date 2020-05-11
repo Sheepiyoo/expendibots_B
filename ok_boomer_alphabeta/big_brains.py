@@ -40,30 +40,6 @@ class Node:
     def __lt__(self, other):
         return self.f < other.f
 
-
-
-def search(player):
-    """ Returns an action for the given player. """
-
-    actions = actgen.get_possible_actions(player.board, player.colour)
-    
-    for i in range(len(actions)):
-        score = evaluate(player.colour, player.board)
-        actions[i] = (actions[i], score)
-    
-    actions.sort(reverse=True, key=lambda pair: pair[1])
-    
-    # Trim the list
-    trimmed_actions = [actions[0]]
-
-    for i in range(1, len(actions)):
-        if actions[i-1][1] == actions[i][1]:
-            trimmed_actions.append(actions[i])
-        else:
-            break
-
-    return trimmed_actions[random.randint(0, len(trimmed_actions)-1)][0].toTuple()
-
 def evaluate(player_colour, board):
     """ Returns an evaluation value for a given action. """
     WEIGHT = 0.9    # Controls importance of removing pieces vs moving closer
