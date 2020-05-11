@@ -28,14 +28,8 @@ class Node:
         self.f = self.heuristic + self.path_cost
 
     def __str__(self):
-        return """
-# State: {}
-# Path Cost: {}
-# Heuristic: {}
-# Action: {}
-# Parent: {}
-# Children: {}
-""".format(str(self.board_dict), str(self.path_cost), str(self.heuristic), str(self.action), hex(id(self.parent)), [hex(id(child)) for child in self.children])
+        return 
+
     
     def __lt__(self, other):
         return self.f < other.f
@@ -63,6 +57,59 @@ def search(player):
             break
 
     return trimmed_actions[random.randint(0, len(trimmed_actions)-1)][0].toTuple()
+
+def minimax(board, depth, player_colour, alpha, beta):
+
+    if is_game_over(board):
+        return utility(board), None
+
+    if depth == 4:
+        evaluation = evaluate(player_colour, board)
+        return evaluation, None
+    
+    if(player_colour=="white"):
+        actions = actgen.get_possible_actions(board, "white")
+       
+        best = MIN
+        best_action = None
+        for action in actions:
+            next_board = apply_action(player_colour, board, action)
+        
+            if action.action == "BOOM" and detect_suicide(board, next_board): continue
+
+            score, _ = minimax(next_board, depth+1, "black", alpha, beta)
+            if score > best:
+                best = score
+                best_action = action
+            alpha = max(alpha, best)
+
+            if alpha >= beta:
+                break
+
+    else:
+        actions = actgen.get_possible_actions(board, "black")
+        best = MAX
+        best_action = None
+        for action in actions:
+            next_board = apply_action(player_colour, board, action)
+            
+            if action.action == "BOOM" and detect_suicide(board, next_board):
+                continue
+
+            score, _ = minimax(next_board, depth+1, "white", alpha, beta)
+            
+            if score < best:
+                best = score
+                best_action = action
+            beta = min(beta, best)
+            if beta <= alpha:
+                break
+
+        
+    return best, best_action
+
+
+
 
 def evaluate(player_colour, board):
     """ Returns an evaluation value for a given action. """
@@ -155,55 +202,6 @@ def utility(board):
     elif n_white == 0: return -1
     else: return 1
 
-def minimax(board, depth, player_colour, alpha, beta):
-    if is_game_over(board):
-        return utility(board), None
-
-    if depth == 3:
-        evaluation = evaluate(player_colour, board)
-        return evaluation, None
-    
-    if(player_colour=="white"):
-        actions = actgen.get_possible_actions(board, "white")
-       
-        best = MIN
-        best_action = None
-        for action in actions:
-            next_board = apply_action(player_colour, board, action)
-        
-            if action.action == "BOOM" and detect_suicide(board, next_board):
-                continue
-
-            score, _ = minimax(next_board, depth+1, "black", alpha, beta)
-            if score > best:
-                best = score
-                best_action = action
-            alpha = max(alpha, best)
-
-            if alpha >= beta:
-                break
-
-    else:
-        actions = actgen.get_possible_actions(board, "black")
-        best = MAX
-        best_action = None
-        for action in actions:
-            next_board = apply_action(player_colour, board, action)
-            
-            if action.action == "BOOM" and detect_suicide(board, next_board):
-                continue
-
-            score, _ = minimax(next_board, depth+1, "white", alpha, beta)
-            
-            if score < best:
-                best = score
-                best_action = action
-            beta = min(beta, best)
-            if beta <= alpha:
-                break
-
-        
-    return best, best_action
 
 #def evaluate_1(player_colour, board, action):
  

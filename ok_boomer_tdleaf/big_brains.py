@@ -36,7 +36,6 @@ class TTableEntry:
         return (self.evaluation, self.depth, self.best_leaf, self.best_action)
 
 class TTable:
-    
 
     def __init__(self):
         self.visited_states = {}
@@ -49,14 +48,16 @@ class TTable:
         except:
             return False
 
-
     def get_info(self, colour, board):
         state = self.dict_to_set(colour, board)
         #print(state)
         return self.visited_states[state]
 
     def addState(self, colour, board, evaluation, depth, best_leaf, best_action):
+        if depth ==0: return
+        if best_action == None: return
         State = self.dict_to_set(colour, board)
+
         self.visited_states[State] = TTableEntry(evaluation, depth, best_leaf, best_action)
 
     def action_counter(self, colour, board):
@@ -69,11 +70,8 @@ class TTable:
         else:
             return None
 
-
-
-
     def clear(self):
-        self.visited_states = {}
+        self.visited_states = {}        
     
     def dict_to_set(self, colour, board_dict):
         new_dict = set()
@@ -85,7 +83,6 @@ class TTable:
 
         for i in board_dict["black"]:
             new_dict.add(tuple([1] + i))
-        #print(new_dict)
         return frozenset(new_dict)
 
     def __str__(self):
@@ -129,29 +126,34 @@ class HTable:
         self.visited_states = {}
 
 
-def iterative_depth_search(board, depth, weights, player_colour, alpha, beta, depth_limit, htable, nturns):
-    ttable =TTable()
+def iterative_depth_search(board, depth, weights, player_colour, alpha, beta, depth_limit, htable, ttable, nturns):
 
     board = flip_board(board, player_colour)
+    player_colour = "white"
     
-    for i in range(4,7):
-        evaluation, best_action, best_leaf = minimax(board, depth, weights, "white", alpha, beta, i, htable, ttable, nturns)
-        print(i)
-    
-    #logger.debug(str(ttable))
+    for i in range(4,6):
+        best_action = minimax_wrapper(board, depth, weights, player_colour, alpha, beta, i, htable, ttable, nturns)    
     best_action = flip_action(best_action, player_colour)
 
-    global W_EXPLORED, B_EXPLORED
-    #logger.debug(str(W_EXPLORED) + " " + str(B_EXPLORED))
-    
+    global W_EXPLORED, B_EXPLORED    
     return best_action
 
+
+""" Finds the best action for a given node by finding the best evaluation 
+    1. Generates the actions for the root node. 
+    2. Applies minimax on all actions 
+    2.1 Checks if there are records
+    2.1.1 Records are useful - Use records instead of minimax
+    2.1.2 Records aren't 
+
+    3a. If the records are useful use instead of minimax - 
+    3b. If not useful, minimax needs to be applied
+    4. If records don't exist, minimax """
 def minimax_wrapper(board, depth, weights, player_colour, alpha, beta, depth_limit, htable, ttable, nturns):
-    # Play as white
-    actions = actgen.get_possible_actions(board, "white")
+    actions = actgen.get_possible_actions(board, player_colour)
     action_rank = []
     
-    #Use best move from previous search first?
+    # check if this board is in table
 
     for action in actions:
         next_board = apply_action(player_colour, board, action)
@@ -161,21 +163,23 @@ def minimax_wrapper(board, depth, weights, player_colour, alpha, beta, depth_lim
         if ttable.contains("white", next_board):
             record_eval, record_depth, b_leaf, _ = ttable.get_info("white", next_board).unpack()
         
-            if depth + record_depth >= depth_limit:
-                    score = record_eval
-                    best_leaf = b_leaf
-            else: score, _, best_leaf = minimax(next_board, depth+1, weights, "black", alpha, beta, depth_limit, htable, ttable, nturns + 1)            
+            if depth + record_depth >= depth_limit: score, best_leaf = record_eval, b_leaf
+
+            else: 
+                score, _, best_leaf = minimax(next_board, depth+1, weights, "black", alpha, beta, depth_limit, htable, ttable, nturns + 1)
+                ttable.addState(player_colour, next_board, score, depth_limit-depth, best_leaf, action)    
         else:
             score, _, best_leaf = minimax(next_board, depth+1, weights, "black", alpha, beta, depth_limit, htable, ttable, nturns + 1)
-        
-        #score, opp_action, best_leaf = minimax(next_board, depth+1, weights, "black", alpha, beta, depth_limit, htable, ttable, nturns + 1)
-        alpha = max(score, alpha)
+            ttable.addState(player_colour, next_board, score, depth_limit-depth, best_leaf, action)
 
+
+        alpha = max(score, alpha)
         
         action_rank.append((score, action, best_leaf))
     
     best, best_action, best_leaf_state = select_random_action(action_rank)
 
+    # Record current board, 
     if ttable.contains(player_colour, board):
         record_eval, record_depth, b_leaf, _ = ttable.get_info(player_colour, board).unpack()
         if depth_limit - depth >= record_depth:
@@ -202,97 +206,72 @@ def minimax(board, depth, weights, player_colour, alpha, beta, depth_limit, htab
 
     best_leaf_state = board
 
-    if terminal_test(board, htable, nturns):
-        #print("Terminal test!")
-        return utility(board, htable, nturns), None, board
+    if terminal_test(board, htable, nturns): return utility(board, htable, nturns), None, board
 
-    if depth >= depth_limit:
-        if(depth > depth_limit): exit()
-        #print("Depth limit {} reached".format(depth))
-        evaluation = evaluate(weights, board) # returns the reward for the given weight
-        return evaluation, None, board
+    if depth == depth_limit: return evaluate(weights, board), None, board
 
+    actions = actgen.get_possible_actions(board, player_colour)
+    best_action = ttable.actionLookup(player_colour, board)
+    if (best_action): actions.insert(0, best_action)   
 
     if(player_colour=="white"):
-        actions = actgen.get_possible_actions(board, "white")
-       
-        best = MIN
-        best_action = ttable.actionLookup(player_colour, board)
         
-        if  best_action != None:
-            actions.insert(0, best_action)
+        best = MIN 
 
         for action in actions:
             next_board = apply_action(player_colour, board, action)
-            if action.action == "BOOM" and detect_suicide(board, next_board):
-                continue
-            
+
+            if action.action == "BOOM" and detect_suicide(board, next_board): continue
+
             elif ttable.contains(player_colour, next_board):
-
                 record_eval, record_depth, b_leaf, _ = ttable.get_info(player_colour, next_board).unpack()
-                if depth + record_depth >= depth_limit:
-                    score = record_eval
-                    best_leaf = b_leaf
-                else:
-                    score, _, best_leaf = minimax(next_board, depth+1, weights, "black", alpha, beta, depth_limit, htable, ttable, nturns + 1)
-            else:
-                score, _, best_leaf = minimax(next_board, depth+1, weights, "black", alpha, beta, depth_limit, htable, ttable, nturns + 1)
-                
-                #ttable.addState(player_colour, next_board, score, depth_limit-depth, best_leaf, action)
-                ## We are storing the move that leads to that action, instead of the best move from that action
-            
-            #score, _, best_leaf = minimax(next_board, depth+1, weights, "black", alpha, beta, depth_limit, htable, ttable, nturns + 1)
+                if depth + record_depth >= depth_limit: score, best_leaf = record_eval, b_leaf
+                else: 
+                    score, a, best_leaf = minimax(next_board, depth+1, weights, "black", alpha, beta, depth_limit, htable, ttable, nturns + 1)
+                    ttable.addState(player_colour, next_board, score, depth_limit-depth, best_leaf, a)
 
-            if score > best:
-                best = score
-                best_action = action
-                best_leaf_state = best_leaf
+            
+            else: 
+                score, a, best_leaf = minimax(next_board, depth+1, weights, "black", alpha, beta, depth_limit, htable, ttable, nturns + 1)
+                ttable.addState(player_colour, next_board, score, depth_limit-depth, best_leaf, a)
+
+            if score > best: best, best_action, best_leaf_state = score, action, best_leaf
+
             alpha = max(alpha, best)
 
             if alpha >= beta:
                 break
+                
 
-    else:
-        actions = actgen.get_possible_actions(board, "black")
+    if (player_colour=="black"):
         best = MAX
-        best_action = None
-
-        best_action = ttable.actionLookup(player_colour, board)
-
-        if  best_action != None:
-            #print(board)
-            actions.insert(0, best_action)
-            #print(best_action)
 
         for action in actions:
             next_board = apply_action(player_colour, board, action)
 
-            if action.action == "BOOM" and detect_suicide(board, next_board):
-                continue
-            
+            if action.action == "BOOM" and detect_suicide(board, next_board): continue
+
             elif ttable.contains(player_colour, next_board):
-                #print("Minimiser: Found visited state. Depth: ", depth)
-                #check if depth limit 
-                record_eval, record_depth, b_leaf, _ = ttable.get_info(player_colour, next_board).unpack()
-                if depth + record_depth >= depth_limit:
-                    score = record_eval
-                    best_leaf = b_leaf
+                
+                record_eval, record_depth, record_leaf, _ = ttable.get_info(player_colour, next_board).unpack()
+                
+                if depth + record_depth >= depth_limit: score, best_leaf = record_eval, record_leaf
+
                 else:
-                    score, _, best_leaf = minimax(next_board, depth+1, weights, "white", alpha, beta, depth_limit, htable, ttable, nturns + 1)
-            else:
-                score, _, best_leaf = minimax(next_board, depth+1, weights, "white", alpha, beta, depth_limit, htable, ttable, nturns + 1)
-                #ttable.addState(player_colour, next_board, score, depth_limit-depth, best_leaf, action)
+                    score, a, best_leaf = minimax(next_board, depth+1, weights, "white", alpha, beta, depth_limit, htable, ttable, nturns + 1)
+                    ttable.addState(player_colour, next_board, score, depth_limit-depth, best_leaf, a)
+
+            else: 
+                score, a, best_leaf = minimax(next_board, depth+1, weights, "white", alpha, beta, depth_limit, htable, ttable, nturns + 1)
+                ttable.addState(player_colour, next_board, score, depth_limit-depth, best_leaf, a)
+
+
+            if score < best: best, best_action, best_leaf_state = score, action, best_leaf
             
-            #score, _, best_leaf = minimax(next_board, depth+1, weights, "white", alpha, beta, depth_limit, htable, ttable, nturns + 1)
-            
-            if score < best:
-                best = score
-                best_action = action
-                best_leaf_state = best_leaf
             beta = min(beta, best)
+
             if beta <= alpha:
                 break
-    # only update best action if the depth_limit - depth is bigger than the stored depth
 
     if ttable.contains(player_colour, board):
         record_eval, record_depth, b_leaf, _ = ttable.get_info(player_colour, board).unpack()
@@ -410,9 +389,11 @@ def flip_action(action, colour):
         action.target = (action.target[0], 7 - action.target[1])
     return action
 
+""" Selects a random action from candidates of the same evaluation """
 def select_random_action(action_rank):
     action_rank.sort(reverse=True, key=lambda x: x[0])
     trimmed_actions = [action_rank[0]]
+
 
     for i in range(1, len(action_rank)):
         if action_rank[i-1][0] == action_rank[i][0]:

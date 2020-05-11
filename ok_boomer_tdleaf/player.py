@@ -56,6 +56,7 @@ class ExamplePlayer:
         self.depth_limit = 5
         self.HTable = bb.HTable()    ##HTable for draw avoidance
         self.num_turns = 0
+        self.TTable = bb.TTable()
 
         self.HTable.addState(self.board)
         #Store (numTimesVisited (for draw checking), (bestMove), (depthFromThisPosition))
@@ -82,7 +83,7 @@ class ExamplePlayer:
         
         start = time.time()
 
-        an_action = bb.iterative_depth_search(self.board, 1, self.weights, self.colour, -1000, 1000, self.depth_limit, self.HTable, self.num_turns)
+        an_action = bb.iterative_depth_search(self.board, 1, self.weights, self.colour, -1000, 1000, self.depth_limit, self.HTable, self.TTable, self.num_turns)
 
         #an_action = bb.iterative_depth_search(self.TEST_BOARD, 1, self.weights, self.colour, -1000, 1000, self.depth_limit, self.HTable, self.num_turns)
         
