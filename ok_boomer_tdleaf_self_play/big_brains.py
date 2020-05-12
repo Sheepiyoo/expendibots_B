@@ -154,9 +154,11 @@ def iterative_depth_search(board, depth, weights, player_colour, alpha, beta, de
 
     nw, nb = count_tokens(board)
     
-    if (nw+nb) > 12: 
+    #print(time_elapsed)
+
+    if (nw+nb) > 10: 
         max_depth = 3
-    elif nb < 3:
+    elif nb < 4:
         max_depth = 5 
     else:
         max_depth = 4
@@ -447,7 +449,7 @@ def flip_board(board, colour):
 
 def flip_row(stack):
     "Helper function for board flipper"
-    return (stack[0], stack[1], 7 - stack[2])
+    return [stack[0], stack[1], 7 - stack[2]]
 
 def flip_action(action, colour):
     if colour == "black":
@@ -471,7 +473,7 @@ def select_random_action(action_rank):
     if trimmed_actions[0][1].action == "BOOM":
         selected_action = trimmed_actions[0]
     else:
-        selected_action = trimmed_actions[0]
-        #selected_action = trimmed_actions[random.randint(0, len(trimmed_actions)-1)]
+        #selected_action = trimmed_actions[0]
+        selected_action = trimmed_actions[random.randint(0, len(trimmed_actions)-1)]
 
     return selected_action

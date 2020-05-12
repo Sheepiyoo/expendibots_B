@@ -377,14 +377,14 @@ def utility(board, htable, nturns):
             return -0.1
         else:
             #print("Likely loss")
-            return -1
+            return -0.9
     elif n_black == 0:
         #print("I win")
         return 1
             
     if nturns >= 250*2:
         #print("Draw by steps")
-        return -0.7
+        return -0.1
 
     if is_repeated(board, htable):
         #print("Draw by repeated states")
@@ -397,11 +397,7 @@ def apply_action(player_colour, board, action):
         next_board = game.boom(action.source, board)
         
     if action.action == "MOVE":
-        try:
-            next_board = game.move(action.num, action.source, action.target, board, player_colour)
-        except:
-            print(action)
-            print(board)
+        next_board = game.move(action.num, action.source, action.target, board, player_colour)
     return next_board
 
 def detect_suicide(board, next_board):

@@ -1,9 +1,9 @@
 import numpy as np
 import glob
 
-DECAY = 0.9
+DECAY = 0.85
 LR = 0.01
-WEIGHT_FILE = 'weights.csv'
+WEIGHT_FILE = 'training/weights_good_bias.csv'
 
 def load_data(filename):
     """

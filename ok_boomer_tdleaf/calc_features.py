@@ -37,39 +37,6 @@ def get_features(state):
     ###-------------------- stack height differences --------------------###
     features.append(1)
 
-    ###-------------------- difference of targetable tokens --------------------### 
-    #features.append(calculate_targetable_diff(state))
-
-    ###-------------------- normalise features -------------------- ###
-    #normalise(features)
-
-
-    ###-------------------- average location of all tokens --------------------###
-    # features.append(get_average_location)
-    # I think these features were useless bc the weights got too small 
-    #avg_white_x, avg_white_y = get_avg_loc(state, "white")
-    #avg_black_x, avg_black_y = get_avg_loc(state, "black")
-    #features.append((avg_white_x-avg_black_x)/8)
-    #features.append((avg_white_y-avg_black_y)/8)
-
-    ###-------------------- difference of distances --------------------### 
-    #features.append(distance_heuristic(state, "white") - distance_heuristic(state, "black"))
-    ###-------------------- difference of distances --------------------###
-    #features.append(get_danger_score(state))
-
-    ###-------------------- corner position --------------------### 
-    # difference in corner positions
-    # score_corners(grid_format)
-
-    ###-------------------- difference of area covered --------------------### 
-    # features.append(difference_of_area(state))
-
-    #features.append((calc_dist_middle(state,"white")/48)-(calc_dist_middle(state,"black")/48))
-    ###-------------------- difference in edge positions --------------------### 
-    ###-------------------- difference in centre positions --------------------### 
-    ###-------------------- number in opponent half --------------------### 
-    
-    #print(len(features))
     return np.array(features)
 
 def normalise(features):
@@ -84,8 +51,6 @@ def normalise(features):
 def get_token_number(state):
     nw, nb = count_tokens(state)
     return nw/12, nb/12
-
-
 
 def get_token_difference(state):
     nw, nb = count_tokens(state)
@@ -240,13 +205,13 @@ def get_avg_loc(state, colour):
     return x, y
 
 
-"""
+
 def score_corners(grid_state):
     corners = [(0, 0), (0, 7), (7, 7), (0, 0)]
     print(grid_state)
     for point in corners:
         pass
-"""
+
 
 def calc_spread(state, colour):
     x_positions = []
@@ -323,11 +288,6 @@ def is_low_risk(board):
     if((len(board["white"])+len(board["black"])>20) and (abs(len(board["white"])-len(board["black"])<2))):
         return True
     return False
-
-# normalise the weights !!!
-# does the chunkc calculation outweight the benefit of having a larger depth
-
-
 
 def distance_heuristic2(board, colour):
     # Best of n stack distance
