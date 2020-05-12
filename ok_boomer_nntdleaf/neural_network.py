@@ -2,7 +2,7 @@ import numpy as np
 from scipy.special import expit
 import sys
 
-LR = 0.1
+LR = 0.01
 DECAY = 0.995
 WEIGHT_FILE = 'training/nn_data.log'
 

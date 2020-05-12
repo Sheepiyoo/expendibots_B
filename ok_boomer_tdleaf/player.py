@@ -21,7 +21,7 @@ class ExamplePlayer:
     }
 
     WEIGHT_FILE = ml.WEIGHT_FILE
-    N_FEATURES = 13
+    N_FEATURES = 7
 
     ### Testing
     """

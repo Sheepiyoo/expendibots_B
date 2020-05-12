@@ -165,6 +165,7 @@ def iterative_depth_search(board, depth, weights, player_colour, alpha, beta, de
         best_action = minimax_wrapper(board, depth, weights, "white", alpha, beta, i, htable, ttable, nturns, histable)    
 
     best_action = flip_action(best_action, player_colour)
+    print(evaluate(weights, board))
 
     return best_action
 
@@ -391,7 +392,7 @@ def is_repeated(board, htable):
     #Previously visited 3 times  - this time is the 4th
     state_count = htable.getCount(board)
     
-    if state_count >= 3:
+    if state_count >= 2:
         print("Draw!")
         return True
     else:
@@ -435,7 +436,7 @@ def utility(board, htable, nturns):
             
     if nturns >= 250*2:
         #print("Draw by steps")
-        return -0.5
+        return -0.7
 
     if is_repeated(board, htable):
         #print("Draw by repeated states")

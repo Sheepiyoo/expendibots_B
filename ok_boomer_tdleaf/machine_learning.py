@@ -1,8 +1,8 @@
 import numpy as np
 import glob
 
-DECAY = 0.7
-LR = 0.05
+DECAY = 0.9
+LR = 0.01
 WEIGHT_FILE = 'weights.csv'
 
 def load_data(filename):
@@ -13,6 +13,14 @@ def load_data(filename):
     rewards, features = np.split(data, [1], axis=1)
     return rewards, features
 
+def normalise_weight(weights):
+    total = 0
+    new_weights = []
+    for weight in weights:
+        total += weight
+    for weight in weights:
+        new_weights.append(weight/total)
+    return new_weights
 
 def update_weights(weights, rewards, features, lr, gamma):
     """
@@ -38,6 +46,7 @@ def update_weights(weights, rewards, features, lr, gamma):
     
     #Update weights
     weights = weights + lr * accumulator
+    #weights = normalise_weight(weights)
         
     return weights
 

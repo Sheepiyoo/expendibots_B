@@ -10,6 +10,9 @@ def get_features(state):
 
     ###-------------------- difference of tokens--------------------###
     features.append(get_token_difference(state))
+    nw, nb = get_token_number(state)
+    features.append(nw)
+    features.append(nb)
 
     ###-------------------- difference of stacks --------------------###
     features.append(get_stack_difference(state))
@@ -24,13 +27,17 @@ def get_features(state):
     features.append(distance_heuristic(state, "white"))
 
     ###-------------------- difference of neigbour count --------------------### 
-    features.append(count_neighbours(state))
+    #features.append(count_neighbours(state))
 
     ###-------------------- stack height differences --------------------### 
-    features += stack_height_difference_counter(state)
+    #features += stack_height_difference_counter(state)
 
     ###-------------------- difference of targetable tokens --------------------### 
-    features.append(calculate_targetable_diff(state))
+    #features.append(calculate_targetable_diff(state))
+
+    ###-------------------- normalise features -------------------- ###
+    #normalise(features)
+
 
     ###-------------------- average location of all tokens --------------------###
     # features.append(get_average_location)
@@ -59,6 +66,21 @@ def get_features(state):
     
     #print(len(features))
     return np.array(features)
+
+def normalise(features):
+    total = 0
+    normalised = []
+    for feature in features:
+        total += feature
+    for feature in features:
+        normalised.append(feature/total)
+    return normalised
+
+def get_token_number(state):
+    nw, nb = count_tokens(state)
+    return nw/12, nb/12
+
+
 
 def get_token_difference(state):
     nw, nb = count_tokens(state)
