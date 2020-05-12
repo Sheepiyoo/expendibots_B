@@ -115,12 +115,11 @@ class ExamplePlayer:
         represented based on the spec's instructions for representing actions.
         """
         start = time.time()
-        an_action = bb.iterative_depth_search(self.board, 0, self.weights, self.colour, -1000, 1000, self.depth_limit, self.HTable, self.TTable, self.num_turns, self.histtable)
-
-        #an_action = bb.iterative_depth_search(self.TEST_BOARD, 1, self.weights, self.colour, -1000, 1000, self.depth_limit, self.HTable, self.num_turns)
+        
+        an_action = bb.iterative_depth_search(self.board, 0, self.weights, self.colour, -1000, 1000, self.depth_limit, self.HTable, self.TTable, self.num_turns, self.histtable, self.time_elapsed)
         
         self.time_elapsed += time.time() - start
-        
+
         return an_action.toTuple()
 
     def update(self, colour, action):

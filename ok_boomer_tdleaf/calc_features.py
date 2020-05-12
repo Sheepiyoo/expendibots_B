@@ -89,8 +89,6 @@ def get_token_number(state):
 
 def get_token_difference(state):
     nw, nb = count_tokens(state)
-    #features.append(nw/12)
-    #features.append(nb/12)
     return (nw-nb)/12
 
 def get_stack_difference(state):
@@ -155,8 +153,6 @@ def stack_height_difference_counter(state):
     bCounter = [0, 0, 0]
 
     for stack in wStacks:
-        #if stack[N_TOKENS] >= 5:
-        #    wCounter[3] += 1
         if stack[N_TOKENS] == 4:
             wCounter[2] += 1
         elif stack[N_TOKENS] == 3:
@@ -165,8 +161,6 @@ def stack_height_difference_counter(state):
             wCounter[0] += 1   
 
     for stack in bStacks:
-        #if stack[N_TOKENS] >= 5:
-        #    bCounter[3] += 1
         if stack[N_TOKENS] == 4:
             bCounter[2] += 1
         elif stack[N_TOKENS] == 3:

@@ -237,8 +237,8 @@ def minimax(board, depth, weights, player_colour, alpha, beta, depth_limit, htab
         return utility(board, htable, nturns), None, board
 
     if depth == depth_limit: 
-        #score = evaluate(weights, board)
-        score = quiesce(board, 0, weights, player_colour, alpha, beta, depth_limit, htable, ttable, nturns, histable)
+        score = evaluate(weights, board)
+        #score = quiesce(board, 0, weights, player_colour, alpha, beta, depth_limit, htable, ttable, nturns, histable)
         return score, None, board
 
     #actions = actgen.get_possible_actions(board, player_colour)
@@ -370,7 +370,7 @@ def is_repeated(board, htable):
     # Draw avoidance
     state_count = htable.getCount(board)
     
-    if state_count >= 2:
+    if state_count >= 3:
         print("Draw!")
         return True
     else:
