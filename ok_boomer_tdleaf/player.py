@@ -21,8 +21,8 @@ class ExamplePlayer:
     }
 
     WEIGHT_FILE = ml.WEIGHT_FILE
-    N_FEATURES = 7
-
+    N_FEATURES = 12
+    
     ### Testing
     """
     TEST_BOARD = {
@@ -51,6 +51,9 @@ class ExamplePlayer:
         # TODO: Set up state representation.
 
         class HistTable:
+            def table_used():
+                pass
+            
             def __init__(self):
                 self.history = {}
 
@@ -65,9 +68,9 @@ class ExamplePlayer:
                     if action.action == "BOOM":
                         ordered_actions.append((10000, action))
                     else:
-                        from_pos = [action.num, action.source[0], action.source[1]]
-                        to_pos = [action.num, action.target[0], action.target[1]]
+                        print(self.history)
                         if (action) in self.history.keys():
+                            self.table_used()
                             ordered_actions.append(history[action], action)
                         else:
                             ordered_actions.append((0, action))

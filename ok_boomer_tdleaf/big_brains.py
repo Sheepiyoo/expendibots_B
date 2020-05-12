@@ -128,10 +128,8 @@ class HTable:
         State = self.dict_to_set(board)
         
         if self.in_state(board):
-            print("Is in state")
             return self.visited_states[State]
         else: 
-            #print("Not in state")
             return 0
 
     def dict_to_set(self, board_dict):
@@ -152,14 +150,14 @@ def iterative_depth_search(board, depth, weights, player_colour, alpha, beta, de
 
     board = flip_board(board, player_colour)
 
-    max_depth = 3 #min(6, int(3 + (24-sum(count_tokens(board)))//8))
-    #print(max_depth)
+    max_depth = 3
 
     for i in range(2,max_depth+1):
         best_action = minimax_wrapper(board, depth, weights, "white", alpha, beta, i, htable, ttable, nturns, histable)    
 
     best_action = flip_action(best_action, player_colour)
-    print(evaluate(weights, board))
+    
+    print("Evaluation: ", evaluate(weights, board))
 
     return best_action
 
@@ -234,9 +232,9 @@ def minimax(board, depth, weights, player_colour, alpha, beta, depth_limit, htab
         #score = quiesce(board, depth, weights, player_colour, alpha, beta, depth_limit, htable, ttable, nturns, histable)
         return score, None, board
 
-    actions = actgen.get_possible_actions(board, player_colour)
+    #actions = actgen.get_possible_actions(board, player_colour)
     #print(actions)
-    #actions = histable.order_actions(actgen.get_possible_actions(board, player_colour))
+    actions = histable.order_actions(actgen.get_possible_actions(board, player_colour))
     #print(actions)
     best_action = ttable.actionLookup(player_colour, board)
     if (best_action != None):
@@ -268,10 +266,11 @@ def minimax(board, depth, weights, player_colour, alpha, beta, depth_limit, htab
 
             if alpha >= beta:
                 ttable.addState(player_colour, board, alpha, depth_limit-depth, best_leaf_state, best_action)
-    
-                return alpha, best_action, best_leaf_state
-                break 
+                histable.add_history(best_action, depth)
                 
+                return best, best_action, best_leaf_state
+            
+        histable.add_history(best_action, depth)
 
     if (player_colour=="black"):
         best = MAX
@@ -295,20 +294,18 @@ def minimax(board, depth, weights, player_colour, alpha, beta, depth_limit, htab
 
             score, a, best_leaf = minimax(next_board, depth+1, weights, "white", alpha, beta, depth_limit, htable, ttable, nturns + 1, histable) 
             
-
             if score < best: best, best_action, best_leaf_state = score, action, best_leaf
-            
             
             beta = min(beta, best)
 
-            if beta <= alpha:
+            if beta <= alpha:        
                 ttable.addState(player_colour, board, beta, depth_limit-depth, best_leaf_state, best_action)
                 histable.add_history(best_action, depth)
     
-                return beta, best_action, best_leaf_state
-                count_prune()
-                break
+                return best, best_action, best_leaf_state
     
+    histable.add_history(best_action, depth)
+
     ttable.addState(player_colour, board, best, depth_limit-depth, best_leaf_state, best_action)
                  
     return best, best_action, best_leaf_state
@@ -409,7 +406,7 @@ def utility(board, htable, nturns):
     if n_white == 0:
         if n_black == 0:
             #print("Draw by mutual annihilation")
-            return -0.05
+            return -0.1
         else:
             #print("Opponent wins")
             return -1
@@ -420,7 +417,7 @@ def utility(board, htable, nturns):
             return 1
         elif n_black == 1:
             #print("Guaranteed draw")
-            return -0.05
+            return -0.1
         else:
             #print("Likely loss")
             return -1
@@ -434,7 +431,7 @@ def utility(board, htable, nturns):
 
     if is_repeated(board, htable):
         #print("Draw by repeated states")
-        return -0.05
+        return -0.1
 
 def apply_action(player_colour, board, action):
     """ Applies an action to the board and returns the new board configuration. """

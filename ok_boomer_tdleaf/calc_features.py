@@ -10,7 +10,9 @@ def get_features(state):
 
     ###-------------------- difference of tokens--------------------###
     features.append(get_token_difference(state))
+    
     nw, nb = get_token_number(state)
+
     features.append(nw)
     features.append(nb)
 
@@ -27,10 +29,13 @@ def get_features(state):
     features.append(distance_heuristic(state, "white"))
 
     ###-------------------- difference of neigbour count --------------------### 
-    #features.append(count_neighbours(state))
+    features.append(count_neighbours(state))
 
     ###-------------------- stack height differences --------------------### 
-    #features += stack_height_difference_counter(state)
+    features += stack_height_difference_counter(state)
+
+    ###-------------------- stack height differences --------------------###
+    features.append(1)
 
     ###-------------------- difference of targetable tokens --------------------### 
     #features.append(calculate_targetable_diff(state))
@@ -146,38 +151,30 @@ def stack_height_difference_counter(state):
     wStacks = state["white"]
     bStacks = state["black"]
 
-    wCounter = [0, 0, 0, 0, 0, 0]
-    bCounter = [0, 0, 0, 0, 0, 0]
+    wCounter = [0, 0, 0]
+    bCounter = [0, 0, 0]
 
     for stack in wStacks:
-        if stack[N_TOKENS] >= 6:
-            wCounter[5] += 1
-        elif stack[N_TOKENS] == 5:
-            wCounter[4] += 1
-        elif stack[N_TOKENS] == 4:
-            wCounter[3] += 1
-        elif stack[N_TOKENS] == 3:
+        #if stack[N_TOKENS] >= 5:
+        #    wCounter[3] += 1
+        if stack[N_TOKENS] == 4:
             wCounter[2] += 1
-        elif stack[N_TOKENS] == 2:
+        elif stack[N_TOKENS] == 3:
             wCounter[1] += 1
-        else:
-            wCounter[0] += 1    
+        elif stack[N_TOKENS] == 2:
+            wCounter[0] += 1   
 
     for stack in bStacks:
-        if stack[N_TOKENS] >= 6:
-            bCounter[5] += 1
-        elif stack[N_TOKENS] == 5:
-            bCounter[4] += 1
-        elif stack[N_TOKENS] == 4:
-            bCounter[3] += 1
-        elif stack[N_TOKENS] == 3:
+        #if stack[N_TOKENS] >= 5:
+        #    bCounter[3] += 1
+        if stack[N_TOKENS] == 4:
             bCounter[2] += 1
-        elif stack[N_TOKENS] == 2:
+        elif stack[N_TOKENS] == 3:
             bCounter[1] += 1
-        else:
-            bCounter[0] += 1  
+        elif stack[N_TOKENS] == 2:
+            bCounter[0] += 1
 
-    diff = [wCounter[i] - bCounter[i] for i in range(len(wCounter))]
+    diff = [(wCounter[i] - bCounter[i])/12 for i in range(len(wCounter))]
     
     return diff
 

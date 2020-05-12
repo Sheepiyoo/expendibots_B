@@ -37,8 +37,8 @@ while num_tests < MAX_TESTS:
         white = temp
 
     referee = "referee_elon_musk"
-    p = subprocess.Popen(["python", "-m", referee, white, black])
-    #p = subprocess.Popen(["python", "-m", "battleground", "ok_boomer_tdleaf", "TwT"])
+    #p = subprocess.Popen(["python", "-m", referee, white, black])
+    p = subprocess.Popen(["python", "-m", "battleground", "ok_boomer_tdleaf", "TwT"])
     p.wait()
 
     # Update weights
