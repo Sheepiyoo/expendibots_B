@@ -373,7 +373,7 @@ def utility(board, htable, nturns):
             return -0.1
         else:
             #print("Likely loss")
-            return -1
+            return -0.9
     elif n_black == 0:
         #print("I win")
         return 1
