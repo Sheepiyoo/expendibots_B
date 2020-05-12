@@ -1,5 +1,5 @@
-from ok_boomer_tdleaf.constants import *
-from ok_boomer_tdleaf.util import *
+from ok_boomer.constants import *
+from ok_boomer.util import *
 
 
 def get_token_format(grid_dict):

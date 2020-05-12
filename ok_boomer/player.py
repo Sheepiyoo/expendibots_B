@@ -1,8 +1,8 @@
 # coding: utf-8
-from ok_boomer_tdleaf.constants import *
-from ok_boomer_tdleaf.game import *
-import ok_boomer_tdleaf.big_brains as bb
-import ok_boomer_tdleaf.machine_learning as ml
+from ok_boomer.constants import *
+from ok_boomer.game import *
+import ok_boomer.big_brains as bb
+import ok_boomer.machine_learning as ml
 import time
 import numpy as np
 import os

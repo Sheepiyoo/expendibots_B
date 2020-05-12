@@ -7,11 +7,11 @@ run `python -m referee --help` for additional usage information.
 ******************************************************************
 * all messages printed by the referee after this begin with a *
 * (any other lines of output must be from your Player classes).
-* importing player 1's player class 'Player' from package 'ok_boomer_tdleaf'
+* importing player 1's player class 'Player' from package 'ok_boomer'
 * importing player 2's player class 'Player' from package 'ok_boomer_alphabeta'
 * NOTE: unable to measure memory usage on this platform (try dimefox)
 ** initialising players
-* initialising white player as a 'ok_boomer_tdleaf.player.ExamplePlayer'
+* initialising white player as a 'ok_boomer.player.ExamplePlayer'
 *   time:  + 0.000s  (just elapsed)    0.000s  (game total)
 * initialising black player as a 'ok_boomer_alphabeta.player.ExamplePlayer'
 *   time:  + 0.000s  (just elapsed)    0.000s  (game total)

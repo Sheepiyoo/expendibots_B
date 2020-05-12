@@ -1,5 +1,5 @@
 import numpy as np
-import ok_boomer_tdleaf.machine_learning as ml
+import ok_boomer.machine_learning as ml
 
 
 weights = ml.load_weights()

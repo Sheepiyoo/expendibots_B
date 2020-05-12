@@ -1,8 +1,8 @@
 """
 Module for all functions related to decision making
 """
-from ok_boomer_tdleaf.game import *
-from ok_boomer_tdleaf.util import *
+from ok_boomer.game import *
+from ok_boomer.util import *
 import logging
 from collections import deque
 

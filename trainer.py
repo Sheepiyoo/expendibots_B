@@ -1,6 +1,6 @@
 import subprocess
 import logging
-import ok_boomer_tdleaf.machine_learning as ml
+import ok_boomer.machine_learning as ml
 import numpy as np
 import random
 
@@ -22,7 +22,7 @@ swap = False
 while num_tests < MAX_TESTS:
     opponent = random.randint(0,1)
 
-    white = "ok_boomer_tdleaf"
+    white = "ok_boomer"
     black1 =  "ok_boomer_greedy" 
     black2 = "ok_boomer_alphabeta"
 
@@ -38,7 +38,7 @@ while num_tests < MAX_TESTS:
 
     referee = "referee_elon_musk"
     #p = subprocess.Popen(["python", "-m", referee, white, black])
-    p = subprocess.Popen(["python", "-m", "battleground", "ok_boomer_tdleaf", "TwT"])
+    p = subprocess.Popen(["python", "-m", "battleground", "ok_boomer", "TwT"])
     p.wait()
 
     # Update weights

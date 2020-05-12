@@ -1,8 +1,8 @@
-import ok_boomer_tdleaf_self_play.action_generator as actgen
-import ok_boomer_tdleaf_self_play.game as game
-from ok_boomer_tdleaf_self_play.util import *
-from ok_boomer_tdleaf_self_play.constants import *
-import ok_boomer_tdleaf_self_play.calc_features as calc_features
+import ok_boomer_self_play.action_generator as actgen
+import ok_boomer_self_play.game as game
+from ok_boomer_self_play.util import *
+from ok_boomer_self_play.constants import *
+import ok_boomer_self_play.calc_features as calc_features
 
 import random
 import logging

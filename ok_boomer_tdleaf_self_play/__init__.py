@@ -5,4 +5,4 @@
 # example import below, you can define it in another file and import
 # it into this module with the name 'Player':
 
-from ok_boomer_tdleaf_self_play.player import ExamplePlayer as Player
+from ok_boomer_self_play.player import ExamplePlayer as Player

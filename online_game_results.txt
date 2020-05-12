@@ -1,4 +1,4 @@
-D:\expendibots_B>python -m battleground ok_boomer_tdleaf test
+D:\expendibots_B>python -m battleground ok_boomer test
 ******************************************************************
 welcome to Expendibots client version 1.0.
 
@@ -8,7 +8,7 @@ run `python -m battleground -h` for additional usage information.
 ******************************************************************
 * all messages printed by the client after this begin with a *
 * (any other lines of output must be from your Player class).
-* importing your player's player class 'Player' from package 'ok_boomer_tdleaf'
+* importing your player's player class 'Player' from package 'ok_boomer'
 * NOTE: unable to measure memory usage on this platform (try dimefox)
 ** connecting to battleground
 * attempting to connect to the server...
@@ -26,7 +26,7 @@ run `python -m battleground -h` for additional usage information.
 * waiting for colour assignment...
 *   playing as black
 * initialising your player class...
-* initialising black player as a 'ok_boomer_tdleaf.player.ExamplePlayer'
+* initialising black player as a 'ok_boomer.player.ExamplePlayer'
 [0.76164775 0.73112966 1.02751808 0.96396313 0.99243054 0.21974134
  0.8870167 ] 7
 *   time:  + 0.000s  (just elapsed)    0.000s  (game total)
@@ -4105,11 +4105,11 @@ Traceback (most recent call last):
     action = player.action()
   File "D:\expendibots_B\referee\player.py", line 53, in action
     action = self.player.action()
-  File "D:\expendibots_B\ok_boomer_tdleaf\player.py", line 68, in action
+  File "D:\expendibots_B\ok_boomer\player.py", line 68, in action
     an_action = bb.minimax_wrapper(self.board, 1, self.weights, self.colour, -1000, 1000, self.depth_limit)
-  File "D:\expendibots_B\ok_boomer_tdleaf\big_brains.py", line 218, in minimax_wrapper
+  File "D:\expendibots_B\ok_boomer\big_brains.py", line 218, in minimax_wrapper
     feature_string = [str(x) for x in get_features(best_leaf_state)]
-  File "D:\expendibots_B\ok_boomer_tdleaf\big_brains.py", line 324, in get_features
+  File "D:\expendibots_B\ok_boomer\big_brains.py", line 324, in get_features
     features.append(nw/nb)
 ZeroDivisionError: division by zero
 
