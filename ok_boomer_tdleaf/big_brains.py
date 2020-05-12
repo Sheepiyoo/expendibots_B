@@ -73,16 +73,10 @@ class TTable:
         if self.contains(colour, board) and depth <= self.get_info(colour, board).depth: return
         
         wasIn = self.contains(colour, board)
-        
-        #if wasIn:
-        #    logger.debug("Old: " + str(self.get_info(colour, board)))
-        
+     
         State = self.dict_to_set(colour, board)
         self.visited_states[State] = TTableEntry(evaluation, depth, best_leaf, best_action)
-        
-        #if wasIn:
-        #   logger.debug("New: " + str(self.get_info(colour, board)))
-        
+            
     def action_counter(self, colour, board):
         #logger.debug("Action looked up")
         return self.get_info(colour, board).best_action
@@ -118,7 +112,7 @@ class HTable:
     def in_state(self, board):
         State = self.dict_to_set(board)
         try:
-            x = visited_states[State]
+            x = self.visited_states[State]
             return True
         except:
             return False
