@@ -6,7 +6,7 @@ import math
 from ok_boomer_alphabeta.util import *
 from ok_boomer_alphabeta.constants import *
 
-FORMAT = '%(asctime)s: %(levelname)s: %(message)s'
+""" FORMAT = '%(asctime)s: %(levelname)s: %(message)s'
 
 formatter = logging.Formatter(FORMAT)
 
@@ -15,7 +15,7 @@ logger.setLevel(logging.DEBUG)
 file_handler = logging.FileHandler(filename='big-brains.log', mode='w')
 file_handler.setFormatter(formatter)
 logger.addHandler(file_handler)
-
+ """
 
 class Node:
     def __init__(self, board_dict, path_cost, action, parent):

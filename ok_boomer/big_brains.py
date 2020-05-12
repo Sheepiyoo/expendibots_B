@@ -13,7 +13,7 @@ import numpy as np
 B_EXPLORED = 0
 W_EXPLORED = 0
 
-FORMAT = '%(message)s'
+""" FORMAT = '%(message)s'
 
 formatter = logging.Formatter(FORMAT)
 
@@ -23,7 +23,7 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 file_handler = logging.FileHandler(filename='training/data.log'.format(timestamp), mode='w')
 file_handler.setFormatter(formatter)
-logger.addHandler(file_handler)
+logger.addHandler(file_handler) """
 
 class TTableEntry:
     """

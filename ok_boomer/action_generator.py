@@ -6,7 +6,7 @@ from ok_boomer.util import *
 import logging
 from collections import deque
 
-FORMAT = '%(asctime)s: %(levelname)s: %(message)s'
+""" FORMAT = '%(asctime)s: %(levelname)s: %(message)s'
 
 formatter = logging.Formatter(FORMAT)
 
@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 file_handler = logging.FileHandler(filename='action-gen.log', mode='w')
 file_handler.setFormatter(formatter)
-logger.addHandler(file_handler)
+logger.addHandler(file_handler) """
 
 class Action:
     def __init__(self, action, num, source, target):
