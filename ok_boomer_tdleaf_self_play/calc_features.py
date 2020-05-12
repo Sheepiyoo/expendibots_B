@@ -1,9 +1,9 @@
-import ok_boomer_self_play.game as game
-from ok_boomer_self_play.util import *
-from ok_boomer_self_play.constants import *
+import ok_boomer_tdleaf_self_play.game as game
+from ok_boomer_tdleaf_self_play.util import *
+from ok_boomer_tdleaf_self_play.constants import *
 import numpy as np
 import math
-from ok_boomer_self_play.action_generator import possible_positions
+from ok_boomer_tdleaf_self_play.action_generator import possible_positions
 
 def get_features(state):
     features = []

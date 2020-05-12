@@ -1,8 +1,8 @@
-import ok_boomer_self_play.action_generator as actgen
-import ok_boomer_self_play.game as game
-from ok_boomer_self_play.util import *
-from ok_boomer_self_play.constants import *
-import ok_boomer_self_play.calc_features as calc_features
+import ok_boomer_tdleaf_self_play.action_generator as actgen
+import ok_boomer_tdleaf_self_play.game as game
+from ok_boomer_tdleaf_self_play.util import *
+from ok_boomer_tdleaf_self_play.constants import *
+import ok_boomer_tdleaf_self_play.calc_features as calc_features
 
 import random
 import logging
@@ -227,11 +227,6 @@ def minimax_wrapper(board, depth, weights, player_colour, alpha, beta, depth_lim
 def minimax(board, depth, weights, player_colour, alpha, beta, depth_limit, htable, ttable, nturns, histable):
     MIN = -1000
     MAX = 1000
-    global W_EXPLORED
-    global B_EXPLORED
-    
-    if player_colour == "white": W_EXPLORED += 1
-    else: B_EXPLORED += 1
 
     best_leaf_state = board
 
@@ -243,10 +238,7 @@ def minimax(board, depth, weights, player_colour, alpha, beta, depth_limit, htab
         #score = quiesce(board, 0, weights, player_colour, alpha, beta, depth_limit, htable, ttable, nturns, histable)
         return score, None, board
 
-    #actions = actgen.get_possible_actions(board, player_colour)
-    #print(actions)
     actions = histable.order_actions(actgen.get_possible_actions(board, player_colour))
-    #print(actions)
     best_action = ttable.actionLookup(player_colour, board)
     if (best_action != None):
         actions.insert(0, best_action) 
@@ -261,14 +253,6 @@ def minimax(board, depth, weights, player_colour, alpha, beta, depth_limit, htab
             if action.action == "BOOM" and detect_suicide(board, next_board):
                 continue
             
-            """ if ttable.contains(player_colour, next_board):
-                record_eval, record_depth, b_leaf, _ = ttable.get_info(player_colour, next_board).unpack()
-                if depth + record_depth >= depth_limit: score, best_leaf = record_eval, b_leaf
-                else: 
-                    score, a, best_leaf = minimax(next_board, depth+1, weights, "black", alpha, beta, depth_limit, htable, ttable, nturns + 1)
-            
-            else:
-            """
             score, a, best_leaf = minimax(next_board, depth+1, weights, "black", alpha, beta, depth_limit, htable, ttable, nturns + 1, histable) 
 
             if score > best: best, best_action, best_leaf_state = score, action, best_leaf
@@ -291,17 +275,6 @@ def minimax(board, depth, weights, player_colour, alpha, beta, depth_limit, htab
 
             if action.action == "BOOM" and detect_suicide(board, next_board):
                 continue
-            
-            """ if ttable.contains(player_colour, next_board):
-                
-                record_eval, record_depth, record_leaf, _ = ttable.get_info(player_colour, next_board).unpack()
-                
-                if depth + record_depth >= depth_limit:
-                    score, best_leaf = record_eval, record_leaf
-            
-                else:
-                    score, a, best_leaf = minimax(next_board, depth+1, weights, "white", alpha, beta, depth_limit, htable, ttable, nturns + 1)
-            else:"""
 
             score, a, best_leaf = minimax(next_board, depth+1, weights, "white", alpha, beta, depth_limit, htable, ttable, nturns + 1, histable) 
             

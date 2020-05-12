@@ -15,7 +15,7 @@ file_handler.setFormatter(formatter)
 logger.addHandler(file_handler)
 
 num_tests = 0
-MAX_TESTS = 500
+MAX_TESTS = 20
 
 logger.debug("------------------- New Training Session ----------------")
 swap = False

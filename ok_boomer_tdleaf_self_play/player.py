@@ -1,8 +1,8 @@
 # coding: utf-8
-from ok_boomer_self_play.constants import *
-from  ok_boomer_self_play.game import *
-import ok_boomer_self_play.big_brains as bb
-import  ok_boomer_self_play.machine_learning as ml
+from ok_boomer_tdleaf_self_play.constants import *
+from  ok_boomer_tdleaf_self_play.game import *
+import ok_boomer_tdleaf_self_play.big_brains as bb
+import  ok_boomer_tdleaf_self_play.machine_learning as ml
 import time
 import numpy as np
 import os
@@ -117,8 +117,6 @@ class ExamplePlayer:
         start = time.time()
         an_action = bb.iterative_depth_search(self.board, 0, self.weights, self.colour, -1000, 1000, self.depth_limit, self.HTable, self.TTable, self.num_turns, self.histtable)
 
-        #an_action = bb.iterative_depth_search(self.TEST_BOARD, 1, self.weights, self.colour, -1000, 1000, self.depth_limit, self.HTable, self.num_turns)
-        
         self.time_elapsed += time.time() - start
         return an_action.toTuple()
 

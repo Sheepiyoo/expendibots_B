@@ -150,7 +150,7 @@ def iterative_depth_search(board, depth, weights, player_colour, alpha, beta, de
     
     #print(time_elapsed)
 
-    if time_elapsed > 40:
+    if time_elapsed > 35:
         max_depth = 3
     elif (nw+nb) > 10: 
         max_depth = 3
@@ -279,7 +279,8 @@ def minimax(board, depth, weights, player_colour, alpha, beta, depth_limit, htab
     ttable.addState(player_colour, board, best, depth_limit-depth, best_leaf_state, best_action)
                  
     return best, best_action, best_leaf_state
-
+    
+""" 
 def quiesce(board, qdepth, weights, player_colour, alpha, beta, depth_limit, htable, ttable, nturns, histable):
     #Not used
     MIN = 0
@@ -304,20 +305,15 @@ def quiesce(board, qdepth, weights, player_colour, alpha, beta, depth_limit, hta
     if (player_colour=="white"):    
         best = MIN 
         for next_board in next_boards:
-        
             score = quiesce(next_board, qdepth+1, weights, "black", alpha, beta, depth_limit, htable, ttable, nturns + 1, histable) 
-            
             alpha = max(alpha, score)
-            
             if alpha >= beta: return alpha
-        
         return alpha
                 
     if (player_colour=="black"):
         best = MAX
         
         for next_board in next_boards:
-            
             score = quiesce(next_board, qdepth+1, weights, "white", alpha, beta, depth_limit, htable, ttable, nturns + 1, histable) 
                     
             beta = min(beta, score)
@@ -325,7 +321,7 @@ def quiesce(board, qdepth, weights, player_colour, alpha, beta, depth_limit, hta
             if beta <= alpha: return beta
         
         return beta
-                              
+  """                             
 
 def evaluate(weights, state):
     """ Returns an evaluation value for a given board state."""
@@ -377,14 +373,14 @@ def utility(board, htable, nturns):
             return -0.1
         else:
             #print("Likely loss")
-            return -0.9
+            return -1
     elif n_black == 0:
         #print("I win")
         return 1
             
     if nturns >= 250*2:
         #print("Draw by steps")
-        return -0.1
+        return -0.7
 
     if is_repeated(board, htable):
         #print("Draw by repeated states")
