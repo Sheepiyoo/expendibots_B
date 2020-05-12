@@ -1,8 +1,8 @@
 # coding: utf-8
-from ok_boomer_tdleaf.constants import *
-from ok_boomer_tdleaf.game import *
-import ok_boomer_tdleaf.big_brains as bb
-import ok_boomer_tdleaf.machine_learning as ml
+from ok_boomer_tdleaf_self_play.constants import *
+from  ok_boomer_tdleaf_self_play.game import *
+import ok_boomer_tdleaf_self_play.big_brains as bb
+import  ok_boomer_tdleaf_self_play.machine_learning as ml
 import time
 import numpy as np
 import os
@@ -21,7 +21,7 @@ class ExamplePlayer:
     }
 
     WEIGHT_FILE = ml.WEIGHT_FILE
-    N_FEATURES = 12
+    N_FEATURES = 11
     
     ### Testing
     """
@@ -120,7 +120,6 @@ class ExamplePlayer:
         #an_action = bb.iterative_depth_search(self.TEST_BOARD, 1, self.weights, self.colour, -1000, 1000, self.depth_limit, self.HTable, self.num_turns)
         
         self.time_elapsed += time.time() - start
-        
         return an_action.toTuple()
 
     def update(self, colour, action):

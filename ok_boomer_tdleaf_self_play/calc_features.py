@@ -35,7 +35,7 @@ def get_features(state):
     features += stack_height_difference_counter(state)
 
     ###-------------------- stack height differences --------------------###
-    features.append(1)
+    #features.append(1)
 
     ###-------------------- difference of targetable tokens --------------------### 
     #features.append(calculate_targetable_diff(state))

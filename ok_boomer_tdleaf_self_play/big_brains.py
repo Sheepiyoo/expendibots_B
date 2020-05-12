@@ -1,8 +1,8 @@
-import ok_boomer_tdleaf.action_generator as actgen
-import ok_boomer_tdleaf.game as game
-from ok_boomer_tdleaf.util import *
-from ok_boomer_tdleaf.constants import *
-import ok_boomer_tdleaf.calc_features as calc_features
+import ok_boomer_tdleaf_self_play.action_generator as actgen
+import ok_boomer_tdleaf_self_play.game as game
+from ok_boomer_tdleaf_self_play.util import *
+from ok_boomer_tdleaf_self_play.constants import *
+import ok_boomer_tdleaf_self_play.calc_features as calc_features
 
 import random
 import logging
@@ -18,13 +18,13 @@ FORMAT = '%(message)s'
 formatter = logging.Formatter(FORMAT)
 
 timestamp = time.time()
-
+""" 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 file_handler = logging.FileHandler(filename='training/data.log'.format(timestamp), mode='w')
 file_handler.setFormatter(formatter)
 logger.addHandler(file_handler)
-
+ """
 def count_prune():
     return
 
@@ -156,7 +156,7 @@ def iterative_depth_search(board, depth, weights, player_colour, alpha, beta, de
     
     if (nw+nb) > 12: 
         max_depth = 3
-    elif nb < 4:
+    elif nb < 3:
         max_depth = 5 
     else:
         max_depth = 4
@@ -216,7 +216,7 @@ def minimax_wrapper(board, depth, weights, player_colour, alpha, beta, depth_lim
     
     #logger.debug(print_board(game.get_grid_format(best_leaf_state)))
     feature_string = [str(x) for x in calc_features.get_features(best_leaf_state)]
-    logger.debug("{},{}".format(best, ",".join(feature_string)))
+    #logger.debug("{},{}".format(best, ",".join(feature_string)))
     
     return best_action
 
@@ -336,7 +336,7 @@ def quiesce(board, depth, weights, player_colour, alpha, beta, depth_limit, htab
         if not detect_suicide(board, next_board):
             next_boards.append(next_board)
             
-    """ if len(next_boards) == 0:
+    if len(next_boards) == 0:
         eval = evaluate(weights, board)
         #if eval != 0:
         #    print(eval)
@@ -360,12 +360,12 @@ def quiesce(board, depth, weights, player_colour, alpha, beta, depth_limit, htab
         for next_board in next_boards:
             
             score = quiesce(next_board, depth+1, weights, "white", alpha, beta, depth_limit, htable, ttable, nturns + 1, histable) 
-                    
+    
             beta = min(beta, score)
 
             if beta <= alpha: return beta
         
-        return beta """
+        return beta 
                               
 
 def evaluate(weights, state):
