@@ -335,7 +335,7 @@ def quiesce(board, depth, weights, player_colour, alpha, beta, depth_limit, htab
         next_board = apply_action(player_colour, board, action)
         if not detect_suicide(board, next_board):
             next_boards.append(next_board)
-            
+     """       
     if len(next_boards) == 0:
         eval = evaluate(weights, board)
         #if eval != 0:
@@ -365,7 +365,7 @@ def quiesce(board, depth, weights, player_colour, alpha, beta, depth_limit, htab
 
             if beta <= alpha: return beta
         
-        return beta 
+        return beta"""
                               
 
 def evaluate(weights, state):
