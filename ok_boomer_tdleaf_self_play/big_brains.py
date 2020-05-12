@@ -237,8 +237,8 @@ def minimax(board, depth, weights, player_colour, alpha, beta, depth_limit, htab
         return utility(board, htable, nturns), None, board
 
     if depth == depth_limit: 
-        score = evaluate(weights, board)
-        #score = quiesce(board, depth, weights, player_colour, alpha, beta, depth_limit, htable, ttable, nturns, histable)
+        #score = evaluate(weights, board)
+        score = quiesce(board, 0, weights, player_colour, alpha, beta, depth_limit, htable, ttable, nturns, histable)
         return score, None, board
 
     #actions = actgen.get_possible_actions(board, player_colour)
@@ -319,12 +319,12 @@ def minimax(board, depth, weights, player_colour, alpha, beta, depth_limit, htab
                  
     return best, best_action, best_leaf_state
 
-def quiesce(board, depth, weights, player_colour, alpha, beta, depth_limit, htable, ttable, nturns, histable):
-    MIN = 0
-    MAX = 0
+"""
+def quiesce(board, q_depth, weights, player_colour, alpha, beta, depth_limit, htable, ttable, nturns, histable):
+    MIN = -1000
+    MAX = 1000
     
     if terminal_test(board, htable, nturns):
-        #print("Quesncent terminal")
         return utility(board, htable, nturns)
     
     actions = actgen.get_possible_violent_actions(board, player_colour)
@@ -335,52 +335,30 @@ def quiesce(board, depth, weights, player_colour, alpha, beta, depth_limit, htab
         next_board = apply_action(player_colour, board, action)
         if not detect_suicide(board, next_board):
             next_boards.append(next_board)
-     """       
-    if len(next_boards) == 0:
+            
+    if q_depth == 2 or len(next_boards) == 0:
         eval = evaluate(weights, board)
-        #if eval != 0:
-        #    print(eval)
         return eval
 
     if(player_colour=="white"):    
         best = MIN 
         for next_board in next_boards:
-        
-            score = quiesce(next_board, depth+1, weights, "black", alpha, beta, depth_limit, htable, ttable, nturns + 1, histable) 
-            
+            score = quiesce(next_board, q_depth+1, weights, "black", alpha, beta, depth_limit, htable, ttable, nturns + 1, histable) 
             alpha = max(alpha, score)
-            
-            if alpha >= beta: return alpha
-        
+            if alpha >= beta: return beta
         return alpha
                 
     if (player_colour=="black"):
         best = MAX
-        
         for next_board in next_boards:
-            
-            score = quiesce(next_board, depth+1, weights, "white", alpha, beta, depth_limit, htable, ttable, nturns + 1, histable) 
-    
+            score = quiesce(next_board, q_depth+1, weights, "white", alpha, beta, depth_limit, htable, ttable, nturns + 1, histable)
             beta = min(beta, score)
-
-            if beta <= alpha: return beta
-        
-        return beta"""
-                              
+            if beta <= alpha: return alpha
+        return alpha
+"""                      
 
 def evaluate(weights, state):
     """ Returns an evaluation value for a given action."""
-    """
-    WEIGHT = 0.9    # Controls importance of removing pieces vs moving closer
-    EPSILON = 1
-
-    before = count_tokens(state) 
-    eval = ((before[0]) - (before[1]))/12   # Higher = More white removed
-    #distance_heuristic = 1/max(EPSILON, math.tanh(calc_features.heuristic(state, "white"))) # Higher = White is closer to black
-
-    return math.tanh(eval)
-    """
-    
     features = calc_features.get_features(state)
     eval = np.dot(weights, features)
     reward = math.tanh(eval)
@@ -389,7 +367,7 @@ def evaluate(weights, state):
     
 
 def is_repeated(board, htable):
-    #Previously visited 3 times  - this time is the 4th
+    # Draw avoidance
     state_count = htable.getCount(board)
     
     if state_count >= 2:
@@ -406,7 +384,6 @@ def terminal_test(board, htable, nturns):
         is_repeated(board, htable) or 
         nturns >= 250*2 or
         n_white == 1):
-        #print("Terminal state found")
         return True
 
 def utility(board, htable, nturns):

@@ -3,7 +3,7 @@ import glob
 
 DECAY = 0.9
 LR = 0.01
-WEIGHT_FILE = 'training/weight_good.csv'
+WEIGHT_FILE = 'weights.csv'
 
 def load_data(filename):
     """
